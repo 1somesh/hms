@@ -1,0 +1,44 @@
+
+ <% if @appointment.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>
+	        <%= pluralize(@appointment.errors.count, "error") %> prohibited
+	        this article from being saved:
+	      </h2>
+	      <ul>
+	        <% @appointment.errors.full_messages.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+ 	 <% end %>
+<div class="container" align="center">
+<div align="center" style="border: 2	px solid;width: 330px	">
+	
+	
+ 
+	<%= form_for @appointment do |f| %>
+		<div class="label_">
+			<%= f.label :doctor_name %>	
+		</div>
+		<%= f.collection_select :doctor_id, User.where({:role => "doctor"}), :id, :first_name %><br/>
+		<div class="label_">
+			<%= f.label :date %>		
+		</div>
+			<%= f.datetime_select :date, start_year: 2018 %><br />
+		<div class="label_">
+			<%= f.label :cause %>
+		</div><br />
+		<%= hidden_field(current_user,:id) %>
+		<%= text_area :note,:description %><br />	
+ 		<div class="label_">
+ 			Upload Image 
+ 		</div>
+ 		<div class="field">
+		    <%= f.file_field :image %>
+		 </div><br>
+	 	<%= f.submit 'Create Appointment' %>
+
+	<% end %>	
+</div>
+</div>

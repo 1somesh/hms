@@ -1,0 +1,27 @@
+	 <% if @appointment.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>
+	        <%= pluralize(@appointment.errors.count, "error") %> prohibited
+	        this article from being saved:
+	      </h2>
+	      <ul>
+	        <% @appointment.errors.full_messages.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+ 	 <% end %>
+
+<div align="center">
+	<div align="left" style="width: 300px">
+	<%= form_for @appointment do |f| %>
+		New Date: 	<%= f.datetime_select :date, start_year: 2018 %><br />
+<br>
+		Add Image: 
+			<div class="field">
+		    		<%= f.file_field :image  %><br>
+		  	</div>
+		<%= f.submit "Change"%>
+	<% end %>
+	</div>
+</div>

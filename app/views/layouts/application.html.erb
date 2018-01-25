@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctorpatient</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if user_signed_in? %>
+    <font color="#005CB9" face="courier" size="3">Hello, <%= current_user.first_name %>  </font>
+    <div align="right"><font color="#005CB9" face="courier" size="3" ><%= link_to "Sign Out", destroy_user_session_path, :method => 'delete' %>
+    <div class="profile_pic"><%= image_tag(current_user.image.image_url.to_s) %></div>
+
+    </div>
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/home/profile">Profile</a>
+      <a href="#">About</a>
+      <a href="/appointments">Appointments</a>
+      <a href="">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+
+<% end %>
+<%= yield %>
+
+</body>
+</html>

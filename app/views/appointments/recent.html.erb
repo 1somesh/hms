@@ -1,0 +1,19 @@
+
+
+  <div class="list">
+    <% @appointments.each do |appointments| %>
+    <br />
+
+          <div class="container" align="center">
+        
+              <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
+              <div style="padding-left:50px ">
+                  <%= appointments.date %><br />
+          </div>
+              <%= link_to 'Show', appointments%>
+              <div align="left">Status: <%= appointments.status %></div>
+
+          </div><br />
+     
+    <% end %>  
+    </div> 

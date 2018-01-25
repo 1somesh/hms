@@ -1,0 +1,22 @@
+<br /><br/>
+<i>Appointment information</i>
+<br /><br />
+<div align="center">
+  <div style="background: grey; width: 700px;height: 300px " >
+         <div class="first_name" align="left"><%= @date %></div><br>
+         <div class="first_name" align="left">Notes:<br /></div><br>
+         <div align="center" style="background-color: #d4edfc;width: 500px" > 
+            <% @notes.each_with_index do |note,index| %>
+               <div ><%= note.description %>,</div></br>  
+            <% end %>
+         </div>   
+  </div>
+  <br />
+  	<div class="profile_pic">
+        <% @appointment.images.each do |i| %>
+           <%= image_tag(i.image_url.to_s) %>
+        <% end %>
+    </div>
+  </div>
+</div>
+<%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build) %>

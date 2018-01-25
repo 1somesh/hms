@@ -1,0 +1,62 @@
+.container{
+	height:150px;
+	background:#fcfdff;
+	font: italic small-caps bold 18px Georgia, sans-serif;
+
+}
+.button {
+	/*background-color: #1a8cff;
+	height: 40px;
+	width: 70px;*/
+	box-sizing: border-box;
+    background: rgba(153,50,204,.95);
+    color: whitesmoke;
+    font: inherit;
+    border: 1px solid transparent;
+    text-align: left;
+    position: relative;
+    padding: .5rem 3rem .5rem .5rem;
+    overflow: hidden;
+    border-radius: 3px;
+} 
+.button_destroy{
+	background-color: #ff4d4d; 
+	height: 40px;
+	width: 70px;
+}
+
+.list{
+	background-color: #d0d3db;
+	padding-left:  400px;
+	padding-right: 400px;
+}
+.first_name{
+	color: #00bfff;
+	font-size: 200%;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+.header  {
+    top: 0px;
+    left:50%;
+    transform:translateX(-50%);
+    position: fixed;
+    background-color: #999999;
+    width:100%;
+    max-width: 940px;
+    z-index: 1;
+    text-align: center;
+    display: block; 
+    height: 45px;   
+}
+.profile_pic{
+
+}
+.qwe{
+    color: red;
+}
+.label_{
+    color="#005CB9";
+    face="courier";
+      size="3"
+}

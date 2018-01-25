@@ -1,0 +1,15 @@
+<br />
+<p>
+  <%= flash[:alert] unless flash[:alert].blank? %>
+</p>
+
+<div class="container" align="center" >
+<div align="left" style="border: 1px solid;width: 430px;height: 250px" >
+<%= label_tag "first name" %>:  <%= current_user.first_name %> <br />
+<%= label_tag "last name" %>:  	<%= current_user.last_name %> <br />
+<%= label_tag "role" %>: 		<%= current_user.role %><br />
+<%= link_to "Edit Profile" ,"edit" %>
+<% if current_user.image !=nil %>
+<% end %>
+</div>
+</div>
