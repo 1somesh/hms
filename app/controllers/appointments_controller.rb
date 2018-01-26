@@ -1,31 +1,28 @@
 class AppointmentsController < ApplicationController
   
 
-  before_action :should_be_patient, only: [:new,:create,:edit,:update]
-  before_action :should_be_doctor, only: [:recent]
+  before_action :should_be_patient?, only: [:new,:create,:edit,:update]
+  before_action :should_be_doctor?, only: [:recent]
 
   def index
-    @list = current_user.appointment_list
+      #@appointment_list = Appointment.includes(:doctor).where(patient_id: current_user.id)
+      @appointment_list = current_user.future_appointment_list
   end
 
   def new
-    @appointment = current_user.doctor_appointments.build
+    @appointment = current_user.patient_appointments.build
   end
 
   def create
-    image = params[:appointment][:image]
-    cause = params[:note][:description]    
     @appointment = current_user.patient_appointments.new(appointment_params)
-    @note = Note.new({:user_id => current_user.id,:description => cause})
-     
-     if @appointment.valid?  &&  @note.valid?
-           
-         @appointment.save
-         @note.appointment_id = @appointment.id
-         @note.save
+    @appointment.create_note(current_user.id,@appointment.note)
+
+     if @appointment.save
+
+         image = params[:appointment][:image]
 
          if !image.blank?
-             @appointment.images.create({:image => image})
+             @appointment.images.create(:image => image)
          end
              redirect_to '/appointments'
 
@@ -42,16 +39,13 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.find params[:id]
     
 
-    image = params[:appointment][:image]
-    if image!= nil
-       @appointment.images.create({:image => image})
-    end
+      image = params[:appointment][:image]
+
+      if image!= nil
+         @appointment.images.create(image: image)
+      end
     
-    # if appointment_date < @appointment.date
-    #    @appointment.errors.add(:appointment_date, "should be more than current booking date")
-    #   render 'edit'
-    # else
-     
+
       if  @appointment.update_attributes(appointment_update_params)
          redirect_to "/appointments"
       else
@@ -62,8 +56,7 @@ class AppointmentsController < ApplicationController
 
   def destroy
     @appointment = Appointment.find params[:id]
-    @appointment.status = 2
-    @appointment.save
+    @appointment.update(status: 2)
     redirect_to "/appointments"
   end
 
@@ -78,29 +71,18 @@ class AppointmentsController < ApplicationController
   end
 
   def recent
-    @appointments = Appointment.where(["date < ?" ,DateTime.now])
+    @appointments = current_user.past_appointment_list
   end
 
   private
 
   def appointment_params
-    params.require(:appointment).permit(:doctor_id,:date)
+    params.require(:appointment).permit(:doctor_id,:date,:note)
   end
 
   def appointment_update_params
     params.require(:appointment).permit(:date)
   end
 
-  def should_be_patient
-    if !current_user.patient?
-        redirect_to '/appointments'     
-    end  
-  end
-
-  def should_be_doctor
-    if !current_user.doctor?
-        redirect_to '/appointments'
-    end 
-  end
 
 end

@@ -7,14 +7,20 @@ class Appointment < ActiveRecord::Base
 
 	validates :date ,presence: true
 	validate :check_appointment_date
+	validates_associated :notes
 
 	enum status: [:pending,:completed,:cancelled]
+	attr_accessor :note
+
 
   def check_appointment_date
     if  date < Date.today
       errors.add(:appointment_date, "can't be in the past")
     end
   end
-	
+
+  def create_note(user_id,note)
+  	self.notes.new(user_id: user_id, description: note)
+  end	
 
 end

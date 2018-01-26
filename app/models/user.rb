@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => EMAIL_REGEX , message: "Please enter a valid email id" 
   validates :first_name ,presence: true
 
-  def appointment_list
+  def future_appointment_list
       if self.doctor?
         @list = self.doctor_appointments.where(["date >= ?" ,DateTime.now]).order(:date)
       else
@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
       end 
 
       @list
+  end 
+
+  def past_appointment_list
+      @list = self.doctor_appointments.where(["date < ?" ,DateTime.now]).order(:date)
   end 
 
 end

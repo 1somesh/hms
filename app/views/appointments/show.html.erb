@@ -2,12 +2,16 @@
 <i>Appointment information</i>
 <br /><br />
 <div align="center">
-  <div style="background: grey; width: 700px;height: 300px " >
+  <div style=" width: 700px;height: 300px " >
          <div class="first_name" align="left"><%= @date %></div><br>
          <div class="first_name" align="left">Notes:<br /></div><br>
-         <div align="center" style="background-color: #d4edfc;width: 500px" > 
+         <div align="left" style="background-color: #d4edfc;width: 500px" > 
             <% @notes.each_with_index do |note,index| %>
-               <div ><%= note.description %>,</div></br>  
+               <div ><%= note.description %></div></br>  
+               <div align="right">
+                 By: <%= User.find(note.user_id).first_name %> 
+               </div>
+               <hr>
             <% end %>
          </div>   
   </div>
