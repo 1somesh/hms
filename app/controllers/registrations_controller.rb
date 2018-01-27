@@ -3,14 +3,13 @@ class RegistrationsController < Devise::RegistrationsController
 
 	def create
 		@user = User.new(sign_up_params)
+		@user.create_image(params[:user][:image])	
+
 		if @user.save
-			@user.image = Image.create({:image => params[:user][:image]})	
-			@user.save
-			redirect_to "/users/sign_in"
+			redirect_to "/appointments"
 		else
 			render 'new'
 		end		
-
 	end	
 
 	private 

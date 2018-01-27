@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_one :image ,as: :imageable
 
   enum role: [:doctor,:patient]
+  #attr_accessor :image
 
   #Validations
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -33,5 +34,9 @@ class User < ActiveRecord::Base
   def past_appointment_list
       @list = self.doctor_appointments.where(["date < ?" ,DateTime.now]).order(:date)
   end 
+
+  def create_image(image)
+    self.image = Image.new(image: image)
+  end  
 
 end
