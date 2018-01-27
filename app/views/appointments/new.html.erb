@@ -25,11 +25,17 @@
 		<div class="label_">
 			<%= f.label :date %>		
 		</div>
-			<%= f.datetime_select :date, start_year: 2018 %><br />
+			<%= f.date_select :date, start_year: 2018 %><br />
 		<div class="label_">
 			<%= f.label :cause %>
 		</div><br />
-		<%= hidden_field(current_user,:id) %>
+		<%= hidden_field(current_user,:id) %><br>
+
+		<div align="center" >
+			<% @slots.each do |slot| %>
+				<%= link_to  slot ,{action: :book_appointment,params: {value: slot}},{remote: true, method: :post  ,class: "booking_slot"} %> <hr>
+			<% end %>	
+		</div>
 		<%= f.text_area :note %><br />	
  		<div class="label_">
  			Upload Image 

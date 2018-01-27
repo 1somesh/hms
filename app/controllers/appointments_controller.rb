@@ -11,6 +11,8 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = current_user.patient_appointments.build
+    @slots = get_booked_slots
+    puts @slots.inspect
   end
 
   def create
@@ -74,6 +76,16 @@ class AppointmentsController < ApplicationController
     @appointments = current_user.past_appointment_list
   end
 
+  def book_appointment
+    slot = Slot.new(doctor_id: 3,start_time: "#{params[:value]}:00:00",finish_time: "#{params[:value]+1.hour}:00:00")
+    slot.save
+    render json: {value: params[:value]}  
+  end
+
+
+
+  end
+
   private
 
   def appointment_params
@@ -83,6 +95,32 @@ class AppointmentsController < ApplicationController
   def appointment_update_params
     params.require(:appointment).permit(:date)
   end
+
+  def get_booked_slots
+
+    doctor_id = 3
+    selected_date = "2018-01-03"
+    @slots = Slot.where(doctor_id: doctor_id)#, appointment_date: selected_date) 
+
+    @list = []
+
+    (5...11).each do |time|
+
+          bool = true
+          @slots.each do |app|
+                puts app.start_time.inspect
+                #puts app.split(':').first
+                if app.start_time.strftime('%H').to_i  == time
+                  bool = false
+                end
+          end
+
+          if bool
+            @list.push(time)
+          end 
+    end 
+  @list 
+    
 
 
 end

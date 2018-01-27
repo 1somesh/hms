@@ -4,10 +4,12 @@ class Appointment < ActiveRecord::Base
 	belongs_to :patient ,class_name: User
 	has_many :notes
 	has_many :images ,as: :imageable
+	has_one :slot
 
 	validates :date ,presence: true
 	validate :check_appointment_date
 	validates_associated :notes
+
 
 	enum status: [:pending,:completed,:cancelled]
 	attr_accessor :note

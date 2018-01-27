@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   resources :appointments do 
     resources :notes 
   end
+
+  get "abcd" => 'appointments#book_appointment'
  
+  post "abcd" => 'appointments#book_appointment'
   get  "home/profile"
   
   # The priority is based upon order of creation: first created -> highest priority.
