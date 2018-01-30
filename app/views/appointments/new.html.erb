@@ -1,21 +1,10 @@
 
- <% if @appointment.errors.any? %>
-	    <div id="error_explanation" >
-	      <h2>
-	        <%= pluralize(@appointment.errors.count, "error") %> prohibited
-	        this article from being saved:
-	      </h2>
-	      <ul>
-	        <% @appointment.errors.full_messages.each do |msg| %>
-	          <li><%= msg %></li>
-	        <% end %>
-	      </ul>
-	    </div>
- 	 <% end %>
+<%= render 'error' %>
 <div align="center">
-<div align="center"  class="booking_slot" >
+	<div align="center"  class="booking_slot" >
 	
-	<%= form_for  @appointment ,url: "/slots",remote: true do |f| %>
+	<%= form_for @appointment do |f| %>
+	<%#= form_for  @appointment ,url: "/slots",remote: true do |f| %>
 		<div >
 			<%= f.label :doctor_name %>	
 		</div>
@@ -23,12 +12,10 @@
 		<div ><br>
 			<%= f.label :date %>		
 		</div>
-		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 %><br><br>
-		<%= f.submit "Find Appointment" %>	
-	<% end %><br><br>
+		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,class: "doctor_id"%><br><br>
+		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
+	<%# end %><br><br>
  
-
-	<%= form_for @appointment do |f| %>
 	<div class="slot_list">
 		<div align="center" class="slot_item">
 			<% @slots.each do |slot| %>		
@@ -37,8 +24,8 @@
 			<% end %>
 		</div><br>
 	</div>	
-	<input type="hidden" name="appointment[date]" id="appointment_date" value=<%= Date.today%>>
-	<input type="hidden" name="appointment[doctor_id]" id="doctor_id" value=<%= User.where(role: "doctor").first.id%> >
+<!-- 	<input type="hidden" name="appointment[date]" id="appointment_date" value=<%= Date.today%>>
+	<input type="hidden" name="appointment[doctor_id]" id="doctor_id" value=<%= User.where(role: "doctor").first.id%>> -->
 		<div >
 			<%= f.label :cause %>
 		</div>

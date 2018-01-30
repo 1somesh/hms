@@ -8,12 +8,12 @@ class NotesController < ApplicationController
 
 	def create
 		@appointment = Appointment.find params[:appointment_id]
-		@appointment.create_note(current_user.id, params[:note][:description])
+		@appointment.initialize_note(current_user.id, params[:note][:description])
 
 		if @appointment.save
-			redirect_to @appointment
+			render json: {status: "success",description: params[:note][:description],by: params[:note][:by]}
 		else
-			render 'new'
+			render json: {status: "faliure"}
 		end	
 	end	
 

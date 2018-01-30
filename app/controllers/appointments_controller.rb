@@ -19,7 +19,7 @@ class AppointmentsController < ApplicationController
   def create
 
     @appointment = current_user.patient_appointments.new(appointment_params)
-    @appointment.create_note(current_user.id,@appointment.note)
+    @appointment.initialize_note(current_user.id,@appointment.note)
     duration = @appointment.doctor.doctorprofile.appointment_duration
     #@appointment.finish_time = params[:appointment][:start_time] + duration.strftime('%H').to_i*60*60
      if @appointment.save
@@ -88,18 +88,21 @@ class AppointmentsController < ApplicationController
 
 
   def get_available_slots
-    date = params.require(:appointment).permit(:date)
-    formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
+    formatted_date = params[:date]
+    #formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
+
     if formatted_date.to_date >= Date.today
-        slots = get_booked_slots(params[:appointment][:doctor_id],formatted_date)
-        render :json => {status: "success",slots:  slots,date: formatted_date,doctor_id: params[:appointment][:doctor_id]}
+        slots = get_booked_slots(params[:doctor_id],formatted_date)
+        render json: {status: "success",slots: slots}
     else
-        render :json => {status: "faliure"} 
+        render json: {status: "Date should be in future"} 
     end    
   end
 
 
 end
+
+
 
 
   private
@@ -113,12 +116,13 @@ end
   end
 
 
-  def get_booked_slots(doctor_id,selected_date)
+def get_booked_slots(doctor_id,selected_date)
   
     @appointments = Appointment.where(doctor_id: doctor_id,date: selected_date) 
     @list = []
 
-    (5...11).each do |time|
+    time = 5
+    loop do 
 
           bool = true
           @appointments.each do |app|
@@ -130,9 +134,16 @@ end
           if bool
             @list.push(time)
           end 
+
+      time += (Doctorprofile.where(doctor_id: doctor_id).first.appointment_duration.strftime("%H").to_i)
+
+     if time > 11
+        break
+     end       
     end
     @list
-  end  
+  end
+   
 
    
     

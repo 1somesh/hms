@@ -20,9 +20,10 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  def create_note(user_id,note)
+  def initialize_note(user_id,note)
   	self.notes.new(user_id: user_id, description: note)
   end	
 
+ 
     
 end
