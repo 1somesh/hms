@@ -8,7 +8,7 @@
 	        <div class="container" align="center" id="div<%=appointments.id%>" >
 			        <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
 			        <div style="padding-left:50px ">
-			            <%= appointments.date %><br />
+			            <%= appointments.date.strftime("%Y-%m-%d") %><br />
  					</div>			         	
  			        <%= link_to 'Show', [appointments]%>
  			        <%= link_to 'Delete', [appointments],:method => "delete" %><br>
@@ -29,12 +29,19 @@
     	<br />
 	        <div class="container" align="center">
 	          <div class="first_name" align="left"> <%= appointments.doctor.first_name %></div>
-		        <td><%= appointments.date %></td>
+		        <td><%= appointments.date.strftime("%Y-%m-%d") %></td>
 		        <br />
 		      	<%= link_to 'Show', appointments%>
 		        <td><%= link_to 'Edit', edit_appointment_path(appointments) %></td>
 		        <%= link_to 'Delete', [appointments],:method => "delete" %><br>
-		        <div align="left">Status: <%= appointments.status %></div>
+		        <div align="left">Status: <%= appointments.status %><br>
+		        	<% begin %>
+		        	From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
+		        	To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
+		        	<% rescue %>
+		        		<% puts "start time null for appointment id: #{appointments.id}" %>
+		        	<% end %>	
+		        </div>
 		     </tr>
 		 </div>
    <% end %>

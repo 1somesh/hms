@@ -4,9 +4,8 @@ class Appointment < ActiveRecord::Base
 	belongs_to :patient ,class_name: User
 	has_many :notes
 	has_many :images ,as: :imageable
-	has_one :slot
 
-	validates :date ,presence: true
+	validates :date ,:start_time,presence: true
 	validate :check_appointment_date
 	validates_associated :notes
 
@@ -16,7 +15,7 @@ class Appointment < ActiveRecord::Base
 
 
   def check_appointment_date
-    if  date < Date.today
+    if  date  < Date.today
       errors.add(:appointment_date, "can't be in the past")
     end
   end
@@ -25,4 +24,5 @@ class Appointment < ActiveRecord::Base
   	self.notes.new(user_id: user_id, description: note)
   end	
 
+    
 end

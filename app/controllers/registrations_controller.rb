@@ -3,7 +3,10 @@ class RegistrationsController < Devise::RegistrationsController
 
 	def create
 		@user = User.new(sign_up_params)
-		@user.create_image(params[:user][:image])	
+		@user.create_image(params[:user][:image])
+		if params[:user][:role]=="doctor"
+			@user.doctorprofile = Doctorprofile.new(experience: rand(5..8),appointment_duration: rand(1..3).hour)
+		end	
 
 		if @user.save
 			redirect_to "/appointments"

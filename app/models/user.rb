@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
 
   has_one :image ,as: :imageable
 
+  has_one :doctorprofile ,foreign_key: :doctor_id
   enum role: [:doctor,:patient]
-  #attr_accessor :image
 
   #Validations
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -23,16 +23,16 @@ class User < ActiveRecord::Base
 
   def future_appointment_list
       if self.doctor?
-        @list = self.doctor_appointments.where(["date >= ?" ,DateTime.now]).order(:date)
+        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
       else
-        @list = self.patient_appointments.where(["date >= ?" ,DateTime.now]).order(:date)
+        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
       end 
 
       @list
   end 
 
   def past_appointment_list
-      @list = self.doctor_appointments.where(["date < ?" ,DateTime.now]).order(:date)
+      @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date < ?" ,DateTime.now]).order(:date)
   end 
 
   def create_image(image)

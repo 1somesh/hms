@@ -1,6 +1,6 @@
 
  <% if @appointment.errors.any? %>
-	    <div id="error_explanation">
+	    <div id="error_explanation" >
 	      <h2>
 	        <%= pluralize(@appointment.errors.count, "error") %> prohibited
 	        this article from being saved:
@@ -12,34 +12,40 @@
 	      </ul>
 	    </div>
  	 <% end %>
-<div class="container" align="center">
-<div align="center" style="border: 2	px solid;width: 330px	">
+<div align="center">
+<div align="center"  class="booking_slot" >
 	
-	
- 
-	<%= form_for @appointment do |f| %>
-		<div class="label_">
+	<%= form_for  @appointment ,url: "/slots",remote: true do |f| %>
+		<div >
 			<%= f.label :doctor_name %>	
 		</div>
-		<%= f.collection_select :doctor_id, User.where({:role => "doctor"}), :id, :first_name %><br/>
-		<div class="label_">
+		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
+		<div ><br>
 			<%= f.label :date %>		
 		</div>
-			<%= f.date_select :date, start_year: 2018 %><br />
-		<div class="label_">
-			<%= f.label :cause %>
-		</div><br />
-		<%= hidden_field(current_user,:id) %><br>
+		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 %><br><br>
+		<%= f.submit "Find Appointment" %>	
+	<% end %><br><br>
+ 
 
-		<div align="center" >
-			<% @slots.each do |slot| %>
-				<%= link_to  slot ,{action: :book_appointment,params: {value: slot}},{remote: true, method: :post  ,class: "booking_slot"} %> <hr>
-			<% end %>	
+	<%= form_for @appointment do |f| %>
+	<div class="slot_list">
+		<div align="center" class="slot_item">
+			<% @slots.each do |slot| %>		
+				<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
+				<%= label_tag(slot, "#{slot}:00 PM") %><br>
+			<% end %>
+		</div><br>
+	</div>	
+	<input type="hidden" name="appointment[date]" id="appointment_date" value=<%= Date.today%>>
+	<input type="hidden" name="appointment[doctor_id]" id="doctor_id" value=<%= User.where(role: "doctor").first.id%> >
+		<div >
+			<%= f.label :cause %>
 		</div>
 		<%= f.text_area :note %><br />	
- 		<div class="label_">
+ 		<div ><br><br>
  			Upload Image 
- 		</div>
+ 		</div><br>
  		<div class="field">
 		    <%= f.file_field :image %>
 		 </div><br>

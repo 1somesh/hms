@@ -11,15 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180127114931) do
+ActiveRecord::Schema.define(version: 20180129062815) do
 
   create_table "appointments", force: :cascade do |t|
-    t.integer  "doctor_id",  limit: 4
-    t.integer  "patient_id", limit: 4
+    t.integer  "doctor_id",   limit: 4
+    t.integer  "patient_id",  limit: 4
     t.datetime "date"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.integer  "status",     limit: 4, default: 0
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "status",      limit: 4, default: 0
+    t.time     "start_time"
+    t.time     "finish_time"
+  end
+
+  create_table "doctor_profiles", force: :cascade do |t|
+    t.integer  "doctor_id",            limit: 4
+    t.time     "appointment_duration"
+    t.integer  "experience",           limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "doctorprofiles", force: :cascade do |t|
+    t.integer  "doctor_id",            limit: 4
+    t.time     "appointment_duration"
+    t.integer  "experience",           limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "images", force: :cascade do |t|
@@ -40,7 +58,7 @@ ActiveRecord::Schema.define(version: 20180127114931) do
 
   create_table "slots", force: :cascade do |t|
     t.integer  "appointment_id",   limit: 4
-    t.time     "start_time"
+    t.time     "start_time",       limit: 6
     t.time     "finish_time"
     t.date     "appointment_date"
     t.integer  "doctor_id",        limit: 4
