@@ -1,22 +1,9 @@
-<% if @appointment.errors.any? %>
-<div id="error_explanation">
-  <h2>
-    <%= pluralize(@appointment.errors.count, "error") %> prohibited
-    this article from being saved:
-  </h2>
-  <ul>
-    <% @appointment.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
- <% end %>
-
+<%= render 'error' %>
 <div align="center">
 	<div align="left" style="width: 500px">
 	<%= form_for @appointment do |f| %>
 		New Date: 
-			<%= f.datetime_select :date, start_year: 2018 %><br /><br>
+			<%= f.date_select :date, start_year: 2018 %><br /><br>
 		<div class="field">
 			Add Image:
 		    	<%= f.file_field :image  %><br>

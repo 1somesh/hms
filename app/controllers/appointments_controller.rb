@@ -12,8 +12,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = current_user.patient_appointments.build
     @doctors_list = User.where(role: "doctor")
-    @slots = get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
-
+    @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
   end
 
   def create
@@ -21,18 +20,21 @@ class AppointmentsController < ApplicationController
     @appointment = current_user.patient_appointments.new(appointment_params)
     @appointment.initialize_note(current_user.id,@appointment.note)
     duration = @appointment.doctor.doctorprofile.appointment_duration
-    #@appointment.finish_time = params[:appointment][:start_time] + duration.strftime('%H').to_i*60*60
+    #@appointment.finish_time = params[:appointment][:start_time].to_i + duration.strftime('%H').to_i*60*60
+
      if @appointment.save
 
+         ExpiredDateWorker.perform_at(@appointment.date + (duration.strftime("%H-%M-%S").to_i + params[:appointment][:start_time].to_i)*60*60,@appointment.id)
          image = params[:appointment][:image]
 
          if !image.blank?
              @appointment.images.create(image: image)
          end
              redirect_to '/appointments'
+    
 
     else
-      @slots = get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
+      @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
       @doctors_list = User.where(role: "doctor")
       render 'new'
     end  
@@ -55,7 +57,7 @@ class AppointmentsController < ApplicationController
       if @appointment.update_attributes(appointment_update_params)
          redirect_to "/appointments"
       else
-         redirect_to edit_appointment_path(@appointment)
+         render 'edit'
       end  
 
   end
@@ -80,19 +82,13 @@ class AppointmentsController < ApplicationController
     @appointments = current_user.past_appointment_list
   end
 
-  # def book_appointment
-  #   slot = Slot.new(doctor_id: 3,start_time: "#{params[:value]}:00:00",finish_time: "#{params[:value]+1.hour}:00:00")
-  #   slot.save
-  #   render json: {value: params[:value]}  
-  # end
-
 
   def get_available_slots
     formatted_date = params[:date]
     #formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
 
     if formatted_date.to_date >= Date.today
-        slots = get_booked_slots(params[:doctor_id],formatted_date)
+        slots = Appointment.get_booked_slots(params[:doctor_id],formatted_date)
         render json: {status: "success",slots: slots}
     else
         render json: {status: "Date should be in future"} 
@@ -116,33 +112,7 @@ end
   end
 
 
-def get_booked_slots(doctor_id,selected_date)
-  
-    @appointments = Appointment.where(doctor_id: doctor_id,date: selected_date) 
-    @list = []
-
-    time = 5
-    loop do 
-
-          bool = true
-          @appointments.each do |app|
-                if app.start_time!=nil && app.start_time.strftime('%H').to_i  == time
-                  bool = false
-                end
-          end
-
-          if bool
-            @list.push(time)
-          end 
-
-      time += (Doctorprofile.where(doctor_id: doctor_id).first.appointment_duration.strftime("%H").to_i)
-
-     if time > 11
-        break
-     end       
-    end
-    @list
-  end
+ 
    
 
    

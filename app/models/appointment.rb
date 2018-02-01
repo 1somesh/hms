@@ -22,8 +22,36 @@ class Appointment < ActiveRecord::Base
 
   def initialize_note(user_id,note)
   	self.notes.new(user_id: user_id, description: note)
-  end	
+  end
 
- 
-    
+
+  def self.get_booked_slots(doctor_id,selected_date)
+  
+    duration = Doctorprofile.where(doctor_id: doctor_id).first.appointment_duration.strftime("%H").to_i
+    appointments = Appointment.where(doctor_id: doctor_id,date: selected_date) 
+    list = []
+
+    time = 5
+    loop do 
+
+          bool = true
+          appointments.each do |app|
+                if app.start_time!=nil && app.start_time.strftime('%H').to_i  == time
+                  bool = false
+                end
+          end
+
+          if bool
+            list.push(time)
+          end 
+
+      time += duration
+
+     if time > 11
+        break
+     end       
+    end
+    list
+  end	
 end
+    

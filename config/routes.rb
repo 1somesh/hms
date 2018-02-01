@@ -18,8 +18,11 @@ Rails.application.routes.draw do
     resources :notes 
   end
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => "/sidekiq"
+
   get  "home/profile"
-  post "slots" => "appointments#get_available_slots"
+  post "appointments/slots" => "appointments#get_available_slots"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
