@@ -28,7 +28,7 @@ function get_appointment_slot(data,event){
 					alert("please select a future date");
 				}
 		},
-		faliure: function(response){
+		error: function(response){
 			alert(response);
 		}
 	}
@@ -36,11 +36,23 @@ function get_appointment_slot(data,event){
 	;}
 
 
+$(document).on("click",".add_note_btn",function(){
+			$(".add_note_btn").hide();
+			$(".note_form").show();
+});
+
 
 $(document).on("ajax:success",'.add_note',function(data,response,event){
 	console.log(response);
-	if(response.status =="success"){
-		$("#notes_list").append(response.description+" <div align='right' ><br>  By:   "+response.by+"</div><hr>");
+	if(response.status == "success"){
+		$("#notes_list").append("<div align='left' style='border: solid thin;width: 500px;padding-top: 10px;word-wrap: break-word;;' id='notes_list'>"+
+                   response.description + "</br>"+  
+                   " <div align='right' style='color: rgb(40,20,0);'>"+  
+                   "By:   "+response.by+ 
+                   "</div> </div><br>"
+                   );
+	$(".add_note_btn").show();
+	$(".note_form").hide();
 	}
 	else{
 		alert("Note can't be blank");

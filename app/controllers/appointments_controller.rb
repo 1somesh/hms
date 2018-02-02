@@ -11,7 +11,7 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = current_user.patient_appointments.build
-    @doctors_list = User.where(role: "doctor")
+    @doctors_list = User.get_doctors_list
     @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
   end
 
@@ -19,7 +19,7 @@ class AppointmentsController < ApplicationController
 
     @appointment = current_user.patient_appointments.new(appointment_params)
     @appointment.initialize_note(current_user.id,@appointment.note)
-    duration = @appointment.doctor.doctorprofile.appointment_duration
+    duration = @appointment.doctor.doctor_profile.appointment_duration
     #@appointment.finish_time = params[:appointment][:start_time].to_i + duration.strftime('%H').to_i*60*60
 
      if @appointment.save
@@ -35,7 +35,7 @@ class AppointmentsController < ApplicationController
 
     else
       @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
-      @doctors_list = User.where(role: "doctor")
+      @doctors_list = User.get_doctors_list
       render 'new'
     end  
   end
@@ -97,9 +97,6 @@ class AppointmentsController < ApplicationController
 
 
 end
-
-
-
 
   private
 

@@ -1,5 +1,6 @@
 
 <% if current_user.doctor? %>
+<div style="padding-left: 250px;padding-right: 250px">
 <h1 id="heading">Appointment List</h1>
 
   	<div class="list">
@@ -19,11 +20,11 @@
     </div> 
 
 <%= link_to 'Recent Appointments', "appointments/recent" %>
+</div>
 <% else %>
-
 <br />
 <div align="right"><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></div>
-
+<div style="padding-left: 250px;padding-right: 250px">
  	<div class="list">
     <% @appointment_list.each do |appointments| %>
     	<br />
@@ -43,8 +44,9 @@
 		        	<% end %>	
 		        </div>
 		     </tr>
-		 </div>
+		 	</div>
    <% end %>
 
 <% end %><br>
+</div>
 </div>

@@ -1,11 +1,11 @@
 
 <%= render 'error' %>
-<div align="center">
-	<div align="center"  class="booking_slot" >
+<div align="" class="">
+	<div  class="booking_slot" >
 	
 	<%= form_for @appointment do |f| %>
 	<%#= form_for  @appointment ,url: "/slots",remote: true do |f| %>
-		<div >
+		<div>
 			<%= f.label :doctor_name %>	
 		</div>
 		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
@@ -17,19 +17,18 @@
 	<%# end %><br><br>
  
 	<div class="slot_list">
-		<div align="center" class="slot_item">
+		<div  class="slot_item">
 			<% @slots.each do |slot| %>		
 				<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
 				<%= label_tag(slot, "#{slot}:00 PM") %><br>
 			<% end %>
 		</div><br>
 	</div>	
-<!-- 	<input type="hidden" name="appointment[date]" id="appointment_date" value=<%= Date.today%>>
-	<input type="hidden" name="appointment[doctor_id]" id="doctor_id" value=<%= User.where(role: "doctor").first.id%>> -->
+
 		<div >
 			<%= f.label :cause %>
 		</div>
-		<%= f.text_area :note %><br />	
+		<%= f.text_area :note ,cols: 25 ,rows: 8%><br />	
  		<div ><br><br>
  			Upload Image 
  		</div><br>

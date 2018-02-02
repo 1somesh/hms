@@ -1,20 +1,19 @@
 <br /><br/>
 <i>Appointment information</i>
 <br /><br />
-<div align="center">
-  <div style=" width: 700px;height: 300px " >
-         <div class="first_name" align="left"><%= @date %></div><br>
-         <div class="first_name" align="left">Notes:<br /></div><br>
-         <div align="left" style="background-color: #d4edfc;width: 500px" id="notes_list"> 
+<div align="left" >
+<div align="left">Notes:<br /></div><br>
+        <div style=" width: 700px;" id="notes_list">
             <% @notes.each_with_index do |note,index| %>
-               <div ><%= note.description %></div></br>  
-               <div align="right">
-                 By: <%= User.find(note.user_id).first_name %> 
-               </div>
-               <hr>
+              <div align="left" style="border: solid thin;width: 500px;padding-top: 10px;word-wrap: break-word;" >
+                     <%= note.description %></br>  
+                     <div align="right" style="color: rgb(40,20,0);">  
+                          By: <%= User.find(note.user_id).first_name %> 
+                     </div>
+              </div><br>
             <% end %>
-         </div>   
-  </div>
+           
+        </div>
   <br />
   	<div class="profile_pic">
         <% @appointment.images.each do |i| %>
@@ -25,7 +24,7 @@
 </div>
 
  
-<%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true %><br><br>
+<%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "add_note_btn" %><br><br>
 <div class="add_note">
 <%= form_for [@appointment,@appointment.notes.build] ,remote: true do |f| %>
 <%= hidden_field_tag 'note[user_id]' ,current_user.id %>

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_one :image ,as: :imageable
 
-  has_one :doctorprofile ,foreign_key: :doctor_id
+  has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile'
   enum role: [:doctor,:patient]
 
   #Validations
@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 
       @list
   end 
+ 
 
   def past_appointment_list
       @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date < ?" ,DateTime.now]).order(:date)
@@ -39,4 +40,7 @@ class User < ActiveRecord::Base
     self.image = Image.new(image: image)
   end  
 
+  def self.get_doctors_list
+    User.where(role: "doctor")
+  end
 end
