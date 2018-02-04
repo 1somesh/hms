@@ -45,7 +45,7 @@ $(document).on("click",".add_note_btn",function(){
 $(document).on("ajax:success",'.add_note',function(data,response,event){
 	console.log(response);
 	if(response.status == "success"){
-		$("#notes_list").append("<div align='left' style='border: solid thin;width: 500px;padding-top: 10px;word-wrap: break-word;;' id='notes_list'>"+
+		$("#notes_list").append("<div align='left' style='border: solid thin;width: 800px;padding-top: 10px;word-wrap: break-word;;' id='notes_list'>"+
                    response.description + "</br>"+  
                    " <div align='right' style='color: rgb(40,20,0);'>"+  
                    "By:   "+response.by+ 

@@ -49,20 +49,24 @@
 .profile_pic{
 
 }
-.qwe{
-    color: red;
-}
-.label_{
-    color="#005CB9";
-    face="courier";
-      size="3"
-}
+
 .booking_slot{
 
     position: absolute;
-    left: 300px;
-    border: 2px solid black;
-    border-radius: 10px;
+    left: 320px;
     padding: 10px;
     width: 300px;
+}
+
+.new_apppointment{
+    color: black;
+}
+
+   
+.fixed-header{
+        width: 100%;        
+        background: #293f84;
+        height: 50px;
+        padding: 0px 0;
+        color: #fff;
 }

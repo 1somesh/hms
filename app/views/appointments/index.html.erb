@@ -1,6 +1,6 @@
 
 <% if current_user.doctor? %>
-<div style="padding-left: 250px;padding-right: 250px">
+<div style="padding-left: 310px;padding-right: 230px">
 <h1 id="heading">Appointment List</h1>
 
   	<div class="list">
@@ -24,7 +24,7 @@
 <% else %>
 <br />
 <div align="right"><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></div>
-<div style="padding-left: 250px;padding-right: 250px">
+<div style="padding-left: 310px;padding-right: 230px">
  	<div class="list">
     <% @appointment_list.each do |appointments| %>
     	<br />
@@ -46,7 +46,6 @@
 		     </tr>
 		 	</div>
    <% end %>
-
 <% end %><br>
 </div>
 </div>

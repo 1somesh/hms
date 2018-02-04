@@ -1,16 +1,17 @@
 
 <%= render 'error' %>
-<div align="" class="">
-	<div  class="booking_slot" >
+
+	<div  class="booking_slot" align="left">
 	
 	<%= form_for @appointment do |f| %>
 	<%#= form_for  @appointment ,url: "/slots",remote: true do |f| %>
 		<div>
-			<%= f.label :doctor_name %>	
+			<h3 class="new_apppointment"><%= f.label :doctor_name %></h3>	
 		</div>
 		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
 		<div ><br>
-			<%= f.label :date %>		
+		
+		<h3 class="new_apppointment">	<%= f.label :date %>	</h3>	
 		</div>
 		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,class: "doctor_id"%><br><br>
 		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
@@ -26,7 +27,7 @@
 	</div>	
 
 		<div >
-			<%= f.label :cause %>
+			<h3 class="new_apppointment"><%= f.label :cause %></h3>
 		</div>
 		<%= f.text_area :note ,cols: 25 ,rows: 8%><br />	
  		<div ><br><br>
@@ -38,5 +39,5 @@
 	 	<%= f.submit 'Create Appointment' %>
 
 	<% end %>	
-</div>
+
 </div>
