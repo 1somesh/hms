@@ -1,15 +1,17 @@
-<br />
+<br>
 <p>
   <%= flash[:alert] unless flash[:alert].blank? %>
 </p>
-
-<div class="container" align="center" >
-<div align="left" style="border: 1px solid;width: 430px;height: 250px" >
-<%= label_tag "first name" %>:  <%= current_user.first_name %> <br />
-<%= label_tag "last name" %>:  	<%= current_user.last_name %> <br />
-<%= label_tag "role" %>: 		<%= current_user.role %><br />
-<%= link_to "Edit Profile" ,"edit" %>
-<% if current_user.image !=nil %>
-<% end %>
+<div style="padding-left: 320px;">
+<div align="left">
+	<h3 class="new_apppointment"><%= label_tag "first name" %>:</h3>
+		<%= current_user.first_name %>
+	<h3 class="new_apppointment"><%= label_tag "last name" %>:</h3>
+		<%= current_user.last_name %> 
+	<h3 class="new_apppointment"><%= label_tag "role" %>:</h3>
+		<%= current_user.role %><br><br>
+	<%= link_to "Edit Profile" ,"edit" %>
+	<% if current_user.image !=nil %>
+	<% end %>
 </div>
 </div>

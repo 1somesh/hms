@@ -9,7 +9,6 @@ class Appointment < ActiveRecord::Base
 	validate :check_appointment_date
 	validates_associated :notes
 
-
 	enum status: [:pending,:completed,:cancelled]
 	attr_accessor :note
 
@@ -36,7 +35,7 @@ class Appointment < ActiveRecord::Base
 
           bool = true
           appointments.each do |app|
-                if app.start_time!=nil && app.start_time.strftime('%H').to_i  == time
+                if app.start_time.strftime('%H').to_i  == time
                   bool = false
                 end
           end

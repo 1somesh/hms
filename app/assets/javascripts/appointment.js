@@ -1,11 +1,10 @@
-
+	
 function get_appointment_slot(data,event){
 
 	year = $("#appointment_date_1i").val();
 	month = $("#appointment_date_2i").val();
 	day = $("#appointment_date_3i").val();
 	date = year+"-"+month+"-"+day;
-
 	$.ajax({
 		url: "/appointments/slots",
 		type: "post",
@@ -20,7 +19,7 @@ function get_appointment_slot(data,event){
 							$(".slot_item").html(create_list(response));
 						}
 						else{
-							$(".slot_item").remove();
+							//$(".slot_item").remove();
 							alert("no slots avilable for today");
 						}
 				}
@@ -61,8 +60,8 @@ $(document).on("ajax:success",'.add_note',function(data,response,event){
 
 
 function create_list(response){
-	list = response.slots.map(slot => "<div class=slot_item ><input type=radio value="+slot+":00:00 name=appointment[start_time]>"+ 
-								slot+":00 PM"
+	list = response.slots.map(slot => "<div class=slot_item ><input type=radio value="+slot+":00:00 name=appointment[start_time]> "+ 
+								slot+":00 AM"
 								+"<br></div>");
 	return list;
 }

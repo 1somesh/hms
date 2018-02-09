@@ -1,15 +1,16 @@
 
 <% if current_user.doctor? %>
-<div style="padding-left: 310px;padding-right: 230px">
+<div class="center_div">
+	<font color="#005CB9" face="courier" size="3" >
 <h1 id="heading">Appointment List</h1>
 
   	<div class="list">
     <% @appointment_list.each do |appointments| %>
-  	<br />
+
 	        <div class="container" align="center" id="div<%=appointments.id%>" >
 			        <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
 			        <div style="padding-left:50px ">
-			            <%= appointments.date.strftime("%Y-%m-%d") %><br />
+			            <%= appointments.date.strftime("%A,%d-%B'%Y") %><br />
  					</div>			         	
  			        <%= link_to 'Show', [appointments]%>
  			        <%= link_to 'Delete', [appointments],:method => "delete" %><br>
@@ -20,21 +21,27 @@
     </div> 
 
 <%= link_to 'Recent Appointments', "appointments/recent" %>
+</font>
 </div>
 <% else %>
-<br />
 <div align="right"><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></div>
-<div style="padding-left: 310px;padding-right: 230px">
+<div class="center_div">
+ 		<font color="#005CB9" face="courier" size="3" >
+
+<h1 id="heading">Appointment List</h1>	
  	<div class="list">
     <% @appointment_list.each do |appointments| %>
     	<br />
-	        <div class="container" align="center">
+ 	        <div class="container" align="center">
 	          <div class="first_name" align="left"> <%= appointments.doctor.first_name %></div>
-		        <td><%= appointments.date.strftime("%Y-%m-%d") %></td>
+		        <td><%= appointments.date.strftime("%A,%d-%B'%Y") %></td>
 		        <br />
 		      	<%= link_to 'Show', appointments%>
-		        <td><%= link_to 'Edit', edit_appointment_path(appointments) %></td>
-		        <%= link_to 'Delete', [appointments],:method => "delete" %><br>
+		      	<% if !appointments.cancelled? %>
+		        	<td><%= link_to 'Edit', edit_appointment_path(appointments) %></td>
+		     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"}%><br>
+
+		        <% end %>	
 		        <div align="left">Status: <%= appointments.status %><br>
 		        	<% begin %>
 		        	From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
@@ -45,7 +52,11 @@
 		        </div>
 		     </tr>
 		 	</div>
+		 
    <% end %>
 <% end %><br>
+
+</font>
 </div>
+<%= link_to 'Recent Appointments', "appointments/recent" %>
 </div>

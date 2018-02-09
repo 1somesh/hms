@@ -2,9 +2,12 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
+    adapter: mysql2
+    encoding: utf8
+    database: hms
+    pool: 5
+    username: root
+    password: root
 
 development:
     adapter: mysql2
@@ -23,4 +26,4 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: hms

@@ -24,8 +24,8 @@
 
 .list{
 	background-color: #d0d3db;
-	padding-left:  400px;
-	padding-right: 400px;
+	padding-left:  200px;
+	padding-right: 200px;
 }
 .first_name{
 	color: #00bfff;
@@ -47,11 +47,11 @@
     height: 45px;   
 }
 .profile_pic{
-
+    height: 50px;
+    width: 50px;
 }
 
 .booking_slot{
-
     position: absolute;
     left: 320px;
     padding: 10px;
@@ -69,4 +69,8 @@
         height: 50px;
         padding: 0px 0;
         color: #fff;
+}
+.center_div{
+    padding-left: 310px;
+    padding-right: 230px;
 }

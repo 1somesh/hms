@@ -3,8 +3,8 @@ class ExpiredDateWorker
   #sidekiq_options retry: false
 
   def perform(*args)
-     appointment = Appointment.find args[0]
-     appointment.update(status: 2)
+     appointment = Appointment.find args[0]  
+    	 appointment.update(status: 1)
   end
 
 end

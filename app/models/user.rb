@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_one :image ,as: :imageable
 
-  has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile'
+  has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile' ,dependent: :destroy
   enum role: [:doctor,:patient]
 
   #Validations
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
       if self.doctor?
         @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
       else
-        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
+        @list = Appointment.joins(:doctor).where(patient_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
       end 
 
       @list
@@ -33,8 +33,13 @@ class User < ActiveRecord::Base
  
 
   def past_appointment_list
-      @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date < ?" ,DateTime.now]).order(:date)
+      if self.doctor?
+        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date < ?" ,DateTime.now-1.day]).order(:date)
+      else
+        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date < ?" ,DateTime.now-1.day]).order(:date)
+      end  
   end 
+
 
   def create_image(image)
     self.image = Image.new(image: image)

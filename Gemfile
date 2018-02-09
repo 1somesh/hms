@@ -10,6 +10,11 @@ gem 'sidekiq'
 gem 'sinatra'
 gem 'sass-rails', '~> 5.0'
 gem 'carrierwave', '~> 1.0'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'bullet', group: :development
+gem 'rack-mini-profiler'
+gem 'whenever', :require => false
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

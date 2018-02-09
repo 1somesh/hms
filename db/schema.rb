@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129062815) do
+ActiveRecord::Schema.define(version: 20180207134508) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer  "doctor_id",   limit: 4
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20180129062815) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["id"], name: "index_users_on_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

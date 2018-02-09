@@ -1,14 +1,14 @@
  
  <% if @appointment.errors.any? %>
-	    <div id="error_explanation" >
+	    <div id="error_explanation" style="padding-left: 700px;" >
 	      <h2>
 	        <%= pluralize(@appointment.errors.count, "error") %> prohibited
 	        this article from being saved:
 	      </h2>
-	      <ul>
+	  
 	        <% @appointment.errors.full_messages.each do |msg| %>
-	          <li><%= msg %></li>
+	        	<%= msg %><br>
 	        <% end %>
-	      </ul>
+	     
 	    </div>
  <% end %>

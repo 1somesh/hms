@@ -4,24 +4,22 @@
 	<div  class="booking_slot" align="left">
 	
 	<%= form_for @appointment do |f| %>
-	<%#= form_for  @appointment ,url: "/slots",remote: true do |f| %>
 		<div>
 			<h3 class="new_apppointment"><%= f.label :doctor_name %></h3>	
 		</div>
 		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
 		<div ><br>
-		
-		<h3 class="new_apppointment">	<%= f.label :date %>	</h3>	
+			<%= f.label :date %>	</h3>	
 		</div>
 		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,class: "doctor_id"%><br><br>
 		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
-	<%# end %><br><br>
+	<br><br>
  
 	<div class="slot_list">
 		<div  class="slot_item">
 			<% @slots.each do |slot| %>		
 				<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
-				<%= label_tag(slot, "#{slot}:00 PM") %><br>
+				<%= label_tag(slot, "#{slot}:00 AM") %><br>
 			<% end %>
 		</div><br>
 	</div>	

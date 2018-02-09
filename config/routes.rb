@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
- 
-
   root 'home#index'
   get 'appointments/recent'
 
@@ -23,6 +21,14 @@ Rails.application.routes.draw do
 
   get  "home/profile"
   post "appointments/slots" => "appointments#get_available_slots"
+
+  #match '404', to: redirect('/') 
+  get  "home/profile"
+  get  "home/edit"
+  patch "home/:id" => "home#update"
+  get 'error404' => "home#error404"
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

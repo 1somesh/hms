@@ -1,9 +1,8 @@
-
-
+<div class="center_div">
+<font color="#005CB9" face="courier" size="3" >
   <div class="list">
     <% @appointments.each do |appointments| %>
     <br />
-
           <div class="container" align="center">
         
               <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
@@ -13,7 +12,8 @@
               <%= link_to 'Show', appointments%>
               <div align="left">Status: <%= appointments.status %></div>
 
-          </div><br />
-     
+          </div>
     <% end %>  
     </div> 
+  </font>
+</div>    

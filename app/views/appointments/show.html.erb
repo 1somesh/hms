@@ -1,6 +1,11 @@
 <div align="left" style="padding-left: 350px;">
 <h2 class="new_apppointment" >Appointment information</h2>
-
+<div>
+  Doctor: <i><%= @appointment.doctor.first_name %></i><br>
+  Date: <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
+  From: <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
+  To: <%= @appointment.finish_time.strftime("%H:%M") %> AM<br>
+</div>
 
 <h3 class="new_apppointment" >Notes:</h3><br>
         <div style=" width: 700px;" id="notes_list">
@@ -15,7 +20,7 @@
            
         </div>
   <br />
-  	<div class="profile_pic">
+  	<div align="right">
         <% @appointment.images.each do |i| %>
            <%= image_tag(i.image_url.to_s) %>
         <% end %>
