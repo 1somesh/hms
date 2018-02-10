@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   #Validations
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  validates_format_of :email, :with => EMAIL_REGEX , message: "Please enter a valid email id" 
+  #validates_format_of :email, :with => EMAIL_REGEX , message: "Please enter a valid email id" 
   validates :first_name ,presence: true
 
   def future_appointment_list

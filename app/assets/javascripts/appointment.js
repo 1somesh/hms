@@ -1,3 +1,7 @@
+jQuery(function() {
+  $("a.fancybox").fancybox();
+});
+
 	
 function get_appointment_slot(data,event){
 

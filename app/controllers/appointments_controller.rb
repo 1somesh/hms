@@ -2,6 +2,7 @@ class AppointmentsController < ApplicationController
   
   before_action :should_be_patient?, only: [:new,:create,:edit,:update]
   before_action :check_authorization, only: [:show,:edit,:update,:delete]
+  before_action :check_status?, only: [:edit,:update,:delete]
   #caches_page :index  
 
   def index
@@ -15,7 +16,7 @@ class AppointmentsController < ApplicationController
     @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
   end
 
-  def create
+  def createedi
     @appointment = current_user.patient_appointments.new(appointment_params)
     @appointment.initialize_note(current_user.id,@appointment.note)
     duration = @appointment.doctor.doctor_profile.appointment_duration
@@ -32,6 +33,7 @@ class AppointmentsController < ApplicationController
          if !image.blank?
              @appointment.images.create(image: image)
          end
+          flash[:success] = "Appointment created!"
              redirect_to '/appointments'
   
     else
@@ -64,6 +66,7 @@ class AppointmentsController < ApplicationController
             @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
             render "edit"
          else
+          flash[:success] = "Appointment updated!"
           redirect_to "/appointments"            
          end   
   
@@ -78,6 +81,7 @@ class AppointmentsController < ApplicationController
             end  
         end 
          #expire_page '/appointments'
+         flash[:success] = "Appointment updated!"
          redirect_to "/appointments"
       end
   end
@@ -96,6 +100,8 @@ class AppointmentsController < ApplicationController
 
   def edit
     @appointment = Appointment.find params[:id]
+ 
+
     @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
 
   end
@@ -134,5 +140,11 @@ end
      appointment = Appointment.find params[:id]  
     if current_user != appointment.doctor && current_user!= appointment.patient
       redirect_to "/error404"
+    end  
+  end
+
+  def check_status?
+    if !Appointment.find(params[:id]).pending? 
+        redirect_to "/appointments"
     end  
   end

@@ -40,10 +40,11 @@
         <% end %>
         <% @appointment.images.each do |i| %>
            <div style="display: inline-block; height:200px;width: 200px;">
-              <%= image_tag(i.image_url(:thumb).to_s) %>
+              <%= link_to image_tag(i.image_url(:thumb).to_s) ,"#{i.image_url.to_s}" , class: "fancybox" %>  
            </div>   
         <% end %>
     </div>
   </div>
 
 </div>
+<%= link_to "Back", "/appointments" %>

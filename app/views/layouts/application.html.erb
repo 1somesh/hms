@@ -7,12 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+   <% flash.each do |key, value| %>
+    <div align="center" style="color: green;font-size: 40px ;"><%= content_tag(:div, value, :class => "flash #{key}") %></div>
+  <% end %>
+
 <% if user_signed_in? %>
-<!-- 
-        <div class="fixed-header">
-        </div>    -->
       <div>
-         <div  style="width: 300px;float: left;"><h2>Hello, <i><%= current_user.first_name %></i></h2>  </div>
+         <div  style="width: 300px;float: left;"><h2>Hello, <i><%= current_user.first_name %></i> || <%= link_to "Profile" ,"/home/profile" %></h2>  
+
+         </div>
         <div  style="width: 100px;float: right;"><h2><%= link_to "Sign Out", destroy_user_session_path, :method => 'delete' %></h2>
         </div>
       </div> 
@@ -20,19 +23,9 @@
   <div align="left">  
        <%= image_tag(current_user.image.image_url.to_s,:height => '160px',class: "qq") %>
  </div> 
- <div>
- <!-- <ul>
-  <li><a class="active" href="/appointments">Appointments</a></li>
-  <li><a href="/home/profile">Profile</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
-</ul> -->
-
 <% end %>
-</div>
 
-  <%= yield %>
-
+<%= yield %>
 
 </body>
 </html>

@@ -15,7 +15,7 @@
  			        <%= link_to 'Delete', [appointments],:method => "delete" %><br>
  			        <div align="left">Status: <%= appointments.status %></div>
 			       </tr>
-	    	</div><br />
+	    	</div>
     <% end %>  
     </div> 
 
@@ -24,7 +24,8 @@
 
 
 <% else %>
-<div align="right"><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></div>
+<div align="right">
+	<h2><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></h2></div>
 <div >
 
 <h1 id="heading">Appointment List</h1>	
@@ -59,5 +60,5 @@
 
 </font>
 </div>
-<%= link_to 'Recent Appointments', "appointments/recent" %>
+<h2> <%= link_to 'Recent Appointments', "/appointments/recent" %></h2>
 </div>
