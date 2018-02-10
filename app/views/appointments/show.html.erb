@@ -1,4 +1,4 @@
-<div align="left" style="padding-left: 350px;">
+<div align="left" style="padding-left: 5px;">
 <h2 class="new_apppointment" >Appointment information</h2>
 <div>
   Doctor: <i><%= @appointment.doctor.first_name %></i><br>
@@ -19,16 +19,8 @@
             <% end %>
            
         </div>
-  <br />
-  	<div align="right">
-        <% @appointment.images.each do |i| %>
-           <%= image_tag(i.image_url.to_s) %>
-        <% end %>
-    </div>
-  </div>
-
-
-<div align="left" style="padding-left: 350px;"> 
+  
+<div align="left" style="padding-left: 5px;"> 
 <%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "add_note_btn" %><br><br>
 
 <div class="add_note">
@@ -40,5 +32,18 @@
     <% end %>
 </div>
 </div>
-</div>
+<br>
+&nbsp<strong>Images:</strong><br><br>
+    <div style="padding: 2px;">
+        <% if @appointment.images.size==0 %>
+          <span>There are no images</span>
+        <% end %>
+        <% @appointment.images.each do |i| %>
+           <div style="display: inline-block; height:200px;width: 200px;">
+              <%= image_tag(i.image_url(:thumb).to_s) %>
+           </div>   
+        <% end %>
+    </div>
+  </div>
 
+</div>

@@ -1,3 +1,4 @@
+
 .container{
 	height:150px;
 	background:#fcfdff;
@@ -26,6 +27,7 @@
 	background-color: #d0d3db;
 	padding-left:  200px;
 	padding-right: 200px;
+    
 }
 .first_name{
 	color: #00bfff;
@@ -65,7 +67,7 @@
    
 .fixed-header{
         width: 100%;        
-        background: #293f84;
+        background: black;
         height: 50px;
         padding: 0px 0;
         color: #fff;
@@ -73,4 +75,16 @@
 .center_div{
     padding-left: 310px;
     padding-right: 230px;
+}
+
+.qq{
+    border-radius: 50%;
+}
+/*.wrapper{
+    width: 1000px; 
+    overflow-x:scroll;     
+    white-space: nowrap;
+}*/
+.doctor_id{
+    color: red;
 }

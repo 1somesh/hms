@@ -1,9 +1,8 @@
 
 <% if current_user.doctor? %>
-<div class="center_div">
-	<font color="#005CB9" face="courier" size="3" >
+<div >
 <h1 id="heading">Appointment List</h1>
-
+<font color="#005CB9" face="courier" size="3" >
   	<div class="list">
     <% @appointment_list.each do |appointments| %>
 
@@ -20,15 +19,17 @@
     <% end %>  
     </div> 
 
-<%= link_to 'Recent Appointments', "appointments/recent" %>
 </font>
 </div>
+
+
 <% else %>
 <div align="right"><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></div>
-<div class="center_div">
- 		<font color="#005CB9" face="courier" size="3" >
+<div >
 
 <h1 id="heading">Appointment List</h1>	
+ 		<font color="#005CB9" face="courier" size="3" >
+
  	<div class="list">
     <% @appointment_list.each do |appointments| %>
     	<br />

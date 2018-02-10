@@ -23,20 +23,19 @@ class User < ActiveRecord::Base
 
   def future_appointment_list
       if self.doctor?
-        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
+        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
       else
-        @list = Appointment.joins(:doctor).where(patient_id: self.id).where(["date >= ?" ,Time.now.strftime("%Y-%m-%d")]).order(:date)
+        @list = Appointment.joins(:doctor).where(patient_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
       end 
-
       @list
   end 
  
 
   def past_appointment_list
       if self.doctor?
-        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date < ?" ,DateTime.now-1.day]).order(:date)
+        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,Date.today ,"pending"]).order(:date)
       else
-        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date < ?" ,DateTime.now-1.day]).order(:date)
+        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,Date.today, "pending"]).order(:date)
       end  
   end 
 

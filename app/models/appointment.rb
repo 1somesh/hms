@@ -5,13 +5,19 @@ class Appointment < ActiveRecord::Base
 	has_many :notes
 	has_many :images ,as: :imageable
 
-	validates :date ,:start_time,presence: true
+	validate :start_time_present?
 	validate :check_appointment_date
-	validates_associated :notes
+  #validate :date_changed?,on: :update
+	#validates_associated :notes
 
 	enum status: [:pending,:completed,:cancelled]
 	attr_accessor :note
 
+  def start_time_present?
+    if start_time.blank?
+      errors.add('start_time',"Please select appointment time")
+    end
+  end  
 
   def check_appointment_date
     if  date  < Date.today
@@ -41,7 +47,7 @@ class Appointment < ActiveRecord::Base
           end
 
           if bool
-            list.push(time)
+              list.push(time)
           end 
 
        time += duration

@@ -1,4 +1,4 @@
-<div class="center_div">
+<div >
 <font color="#005CB9" face="courier" size="3" >
   <div class="list">
     <% @appointments.each do |appointments| %>
@@ -7,7 +7,7 @@
         
               <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
               <div style="padding-left:50px ">
-                  <%= appointments.date %><br />
+                  <%= appointments.date.strftime("%A,%d-%B'%Y")  %><br />
           </div>
               <%= link_to 'Show', appointments%>
               <div align="left">Status: <%= appointments.status %></div>

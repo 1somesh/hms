@@ -23,10 +23,10 @@ class AppointmentsController < ApplicationController
     if params[:appointment][:start_time]!= nil
       @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S")
     end
-    byebug
+
      if @appointment.save
          #expire_page '/appointments'
-         ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H-%M-%S").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
+         ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
          image = params[:appointment][:image]
 
          if !image.blank?
@@ -48,36 +48,43 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find params[:id]  
       duration = @appointment.doctor.doctor_profile.appointment_duration
       image = params[:appointment][:image]
+      duration = @appointment.doctor.doctor_profile.appointment_duration
 
-      if image!= nil
-         @appointment.images.create(image: image)
-      end
+      @appointment.images.create(image: image) if image.present?
+      @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S") if params[:appointment][:start_time].present?
+      
+      old_date =  @appointment.date.strftime("%Y-%m-%d").to_date
+      date = params.require(:appointment).permit(:date)
+      formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
 
-      if params[:appointment][:start_time]!= nil
-        @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S")
-      end
+      if params[:appointment][:start_time] == nil
 
-
-      if @appointment.update_attributes(appointment_update_params)
+         if old_date != formatted_date.to_date
+            @appointment.errors.add('appointment','Appointment time should be selected')
+            @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
+            render "edit"
+         else
+          redirect_to "/appointments"            
+         end   
+  
+      else
+        @appointment.update_attributes(appointment_update_params)
         queue = Sidekiq::ScheduledSet.new
+      
         queue.each do |job| 
-
-          if job.args[0].to_i == @appointment.id
-            current_job = Sidekiq::ScheduledSet.new.find_job(job.jid)
-            current_job.reschedule(Time.now + 20.seconds)
-          end  
+            if job.args[0].to_i == @appointment.id
+              current_job = Sidekiq::ScheduledSet.new.find_job(job.jid)
+              current_job.reschedule (@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600)
+            end  
         end 
          #expire_page '/appointments'
          redirect_to "/appointments"
-      else
-         render 'edit'
-      end  
-
+      end
   end
 
   def destroy
     @appointment = Appointment.find params[:id]
-    @appointment.update(status: 2)
+    @appointment.update(status: 2,start_time: "00:00")
     redirect_to "/appointments"
   end
 
@@ -102,7 +109,7 @@ class AppointmentsController < ApplicationController
     formatted_date = params[:date]
     #formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
 
-    if formatted_date.to_date >= Date.today
+    if formatted_date.to_date > Date.today
         slots = Appointment.get_booked_slots(params[:doctor_id],formatted_date)
         render json: {status: "success",slots: slots}
     else
@@ -125,7 +132,6 @@ end
 
   def check_authorization
      appointment = Appointment.find params[:id]  
-
     if current_user != appointment.doctor && current_user!= appointment.patient
       redirect_to "/error404"
     end  

@@ -16,14 +16,17 @@ function get_appointment_slot(data,event){
 		success: function(response){
 				if(response.status=="success"){
 						if(response.slots.length!=0){
+
 							$(".slot_item").html(create_list(response));
+							$('.slot_item').show();
 						}
 						else{
-							//$(".slot_item").remove();
+							$(".slot_item").hide();
 							alert("no slots avilable for today");
 						}
 				}
 				else{
+					$('.slot_item').hide();
 					alert("please select a future date");
 				}
 		},
@@ -65,3 +68,23 @@ function create_list(response){
 								+"<br></div>");
 	return list;
 }
+
+$(document).on('change','.remove_slot_list',function () {
+
+	$('.slot_item').hide();
+})
+
+$(document).on('change','#appointment_date_3i',function () {
+
+ get_appointment_slot();
+
+})
+$(document).on('change','#appointment_date_2i',function () {
+
+ get_appointment_slot();
+	
+})
+$(document).on('change','#appointment_date_1i',function () {
+ get_appointment_slot();
+
+})

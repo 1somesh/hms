@@ -8,25 +8,31 @@
 </head>
 <body>
 <% if user_signed_in? %>
-
-    <div class="fixed-header"> <h2 >Hello, <%= current_user.first_name %></h2>  
-    </div>   
-        <div align="right"><%= link_to "Sign Out", destroy_user_session_path, :method => 'delete' %>
+<!-- 
+        <div class="fixed-header">
+        </div>    -->
+      <div>
+         <div  style="width: 300px;float: left;"><h2>Hello, <i><%= current_user.first_name %></i></h2>  </div>
+        <div  style="width: 100px;float: right;"><h2><%= link_to "Sign Out", destroy_user_session_path, :method => 'delete' %></h2>
         </div>
-      
- <div  align="right"><%= image_tag(current_user.image.image_url.to_s,:height => '80px') %></div>
+      </div> 
+      <br><br><br><br>
+  <div align="left">  
+       <%= image_tag(current_user.image.image_url.to_s,:height => '160px',class: "qq") %>
+ </div> 
  <div>
- <ul>
+ <!-- <ul>
   <li><a class="active" href="/appointments">Appointments</a></li>
   <li><a href="/home/profile">Profile</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
-</ul>
+</ul> -->
 
 <% end %>
-<div style="padding-top: 10px;">
-<%= yield %>
 </div>
-</div>
+
+  <%= yield %>
+
+
 </body>
 </html>

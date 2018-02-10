@@ -15,6 +15,7 @@ gem 'actionpack-action_caching'
 gem 'bullet', group: :development
 gem 'rack-mini-profiler'
 gem 'whenever', :require => false
+gem 'mini_magick', '4.8.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
