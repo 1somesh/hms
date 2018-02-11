@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   #match '404', to: redirect('/') 
   get  "home/profile"
   get  "home/edit"
+  post "home/profile" => "home#change_profile_pciture"
   patch "home/:id" => "home#update"
   get 'error404' => "home#error404"
 

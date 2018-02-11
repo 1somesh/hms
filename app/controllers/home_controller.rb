@@ -30,6 +30,16 @@ class HomeController < ApplicationController
 	    current_user.update(params.require(:user).permit(:first_name,:last_name,:role))
 	          redirect_to "/home/profile"
 	end  
+
+	def change_profile_pciture
+		image = params[:user][:image]
+		current_user.create_image(params[:user][:image])
+		if current_user.save
+			redirect_to "/"
+		else
+			render 'profile'
+		end	
+	end
 	
 
 	def error404

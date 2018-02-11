@@ -92,3 +92,7 @@ $(document).on('change','#appointment_date_1i',function () {
  get_appointment_slot();
 
 })
+
+$(document).on('change','#user_image',function(){
+	$(".profile_image_upload").append("<input type = 'submit' value='Change Picture'>")
+})

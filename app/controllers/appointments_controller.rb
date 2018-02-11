@@ -6,8 +6,7 @@ class AppointmentsController < ApplicationController
   #caches_page :index  
 
   def index
-      @appointment_list = current_user.future_appointment_list
-      
+      @appointment_list = current_user.future_appointment_list    
   end
 
   def new
@@ -16,7 +15,7 @@ class AppointmentsController < ApplicationController
     @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
   end
 
-  def createedi
+  def create
     @appointment = current_user.patient_appointments.new(appointment_params)
     @appointment.initialize_note(current_user.id,@appointment.note)
     duration = @appointment.doctor.doctor_profile.appointment_duration
@@ -88,7 +87,7 @@ class AppointmentsController < ApplicationController
 
   def destroy
     @appointment = Appointment.find params[:id]
-    @appointment.update(status: 2,start_time: "00:00")
+    @appointment.update(status: 2)
     redirect_to "/appointments"
   end
 

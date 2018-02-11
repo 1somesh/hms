@@ -3,9 +3,10 @@
 <div >
 <h1 id="heading">Appointment List</h1>
 <font color="#005CB9" face="courier" size="3" >
-  	<div class="list">
+  
+  	<% if @appointment_list.size !=0 %>	
+  		<div class="list">
     <% @appointment_list.each do |appointments| %>
-
 	        <div class="container" align="center" id="div<%=appointments.id%>" >
 			        <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
 			        <div style="padding-left:50px ">
@@ -16,7 +17,10 @@
  			        <div align="left">Status: <%= appointments.status %></div>
 			       </tr>
 	    	</div>
-    <% end %>  
+    <% end %> 
+    <% else %>
+       <i >	There are no appointments.</i>
+    <% end %> 
     </div> 
 
 </font>
@@ -26,13 +30,15 @@
 <% else %>
 <div align="right">
 	<h2><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></h2></div>
-<div >
+
 
 <h1 id="heading">Appointment List</h1>	
  		<font color="#005CB9" face="courier" size="3" >
 
+ 	
+ 	<% if @appointment_list.size !=0 %>	
  	<div class="list">
-    <% @appointment_list.each do |appointments| %>
+ 	    <% @appointment_list.each do |appointments| %>
     	<br />
  	        <div class="container" align="center">
 	          <div class="first_name" align="left"> <%= appointments.doctor.first_name %></div>
@@ -56,9 +62,12 @@
 		 	</div>
 		 
    <% end %>
+   <% else %>
+       <i >	There are no appointments.</i>
+   <% end %>
 <% end %><br>
 
 </font>
 </div>
 <h2> <%= link_to 'Recent Appointments', "/appointments/recent" %></h2>
-</div>
+

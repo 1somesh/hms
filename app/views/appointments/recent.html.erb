@@ -1,20 +1,32 @@
+<h1 id="heading">Appointment List</h1>
+
 <h3><%= link_to "Back" ,"/appointments" %></h3>
-<div >
+
 <font color="#005CB9" face="courier" size="3" >
+
+  <% if @appointments.size !=0 %>
   <div class="list">
     <% @appointments.each do |appointments| %>
+      
     <br />
           <div class="container" align="center">
-        
-              <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
-              <div style="padding-left:50px ">
-                  <%= appointments.date.strftime("%A,%d-%B'%Y")  %><br />
-          </div>
-              <%= link_to 'Show', appointments%>
-              <div align="left">Status: <%= appointments.status %></div>
-
+                  <div class="first_name" align="left">
+                      <%= appointments.patient.first_name %>
+                  </div>
+                  <div style="padding-left:50px">
+                      <%= appointments.date.strftime("%A,%d-%B'%Y")  %>
+                  </div>
+                  <%= link_to 'Show', appointments%>
+                  <div align="left">
+                      Status: <%= appointments.status %>
+                  </div>
           </div>
     <% end %>  
+
+    <% else %>
+       <i > There are no passed appointments.</i>
+    <% end %>
+
     </div> 
   </font>
-</div>    
+   
