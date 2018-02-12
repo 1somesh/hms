@@ -14,7 +14,7 @@ class NotesController < ApplicationController
 		else
 			render json: {status: "faliure"}
 		end	
-	end	
+	end			
 
 
 	private 

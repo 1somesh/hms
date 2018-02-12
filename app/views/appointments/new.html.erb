@@ -1,17 +1,18 @@
 
-	<div  align="left">
+	<div  align="left" style="padding-left: 10px;">
 	
 	<%= form_for @appointment do |f| %>
 		<div>
 			<h3 class="new_apppointment"><%= f.label :doctor_name %></h3>	
 		</div>
-		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name ,{},{class: "remove_slot_list"} %><br/>
+
+<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
 		<div ><br>
 			<%= f.label :date %>	</h3>	
 		</div>
 		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,selected: Date.today+1,
 		:class => "remove_slot_list" %><br><br>
-		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
+		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()" class= "btn btn-primary">	
 	<br><br>
  	<% if @appointment.errors.messages[:start_time].present? %>
 		<span class="error_span"> <%= @appointment.errors.messages[:start_time][0] %> </span>
@@ -23,13 +24,12 @@
 			<% end %>
 		</div><br>
 	</div>	
-
 		<div >
 			<h3 class="new_apppointment"><%= f.label :cause %></h3>
 		</div>
 		<%= f.text_area :note ,cols: 25 ,rows: 8%>
 		<%if @appointment.errors.messages[:notes].present? %>
-		<span class="error_span"> <%= @appointment.errors.messages[:notes][0] %> </span>
+		<span class="error_span"> Enter the cause<%#= @appointment.errors.messages[:notes][0] %> </span>
 		<% end %>
 		<br />	
  		<div ><br><br>
@@ -38,8 +38,12 @@
  		<div class="field">
 		    <%= f.file_field :image %>
 		 </div><br>
-	 	<%= f.submit 'Create Appointment' %>
+	 	<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
 
 	<% end %>	
 </div><br>
-<%= link_to "Back", "/appointments" %>
+  <div style="padding-left: 10px;">
+        <a href="/appointments" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-step-backward"></span>Back
+        </a>
+  </div> 

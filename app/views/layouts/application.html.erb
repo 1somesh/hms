@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Doctor patient</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-   <% flash.each do |key, value| %>
+<% flash.each do |key, value| %>
     <div align="center" class="flash_messages"><%= content_tag(:div, value, :class => "flash #{key}") %></div>
-  <% end %>
-
-<% if user_signed_in? %>
-      <div>
-         <div  class="hello_text"><h2>Hello, <i><%= current_user.first_name %></i> || <%= link_to "Profile" ,"/home/profile" %></h2>  
-
-         </div>
-        <div  class="signout_link"><h2><%= link_to "Sign Out", destroy_user_session_path, :method => 'delete' %></h2>
-        </div>
-      </div> 
-      <br><br><br><br>
-  <div align="left">  
-       <%= image_tag(current_user.image.image_url.to_s,:height => '160px') %>
- </div> 
 <% end %>
 
+
+<% if user_signed_in? %>
+<br><br><br> 
+
+  <br>
+  <div class="header">
+  <ul class="nav nav-pills">
+    <li class="active"><a href="/">Home</a></li>
+    <li><a href="/home/profile">Profile</a></li>
+    <li><a href="/appointments/recent">Archived</a></li>
+  </ul>
+  <div>
+
+
+  <div align="right">
+        <a href="/users/sign_out" class="btn btn-info btn-lg" data-method="delete">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+  </div>
+      </div>
+  <div class="card" style="width:250px;border-style:solid; ;border-width: thin;">
+    <img class="card-img-top" src=<%= current_user.image.image_url.to_s %> alt="Card image" style="width:100%">
+    <div class="card-body">
+      <h4 class="card-title"><%= current_user.first_name %></h4>
+      <p class="card-text"><%= current_user.first_name %> is an architect and engineer</p>
+    </div>
+  </div>
+  <br>
+  </div>      
+<% end %>
+
+
+
+ 
 <%= yield %>
 
 </body>

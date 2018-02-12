@@ -8,20 +8,19 @@
 </div>
 
 <h3 class="new_apppointment" >Notes:</h3><br>
-        <div id="notes_list">
+        <div id="notes_list" class="panel-group">
             <% @notes.each_with_index do |note,index| %>
-              <div align="left" class="discription_area" >
-                     <%= note.description %></br>  
-                     <div align="right" class="note_owner">  
-                          By: <%= User.find(note.user_id).first_name %> 
-                     </div>
+              <div align="left" class="panel panel-info" >
+                <div class="panel-heading"> By: <%= User.find(note.user_id).first_name %> </div>
+                    <div class="panel-body"> <%= note.description %></div> </br>  
+                  
               </div><br>
             <% end %>
            
         </div>
   
 <div align="left" class="div_spaceing"> 
-<%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "add_note_btn" %><br><br>
+<%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "btn btn-primary add_note_btn" %><br><br>
 
 <div class="add_note">
     <%= form_for [@appointment,@appointment.notes.build] ,remote: true do |f| %>
@@ -47,4 +46,8 @@
   </div>
 
 </div><br>
-<%= link_to "Back", "/appointments" %>
+  <div style="padding-left: 10px;">
+        <a href="/appointments" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-step-backward"></span>Back
+        </a>
+  </div>    

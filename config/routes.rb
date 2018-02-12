@@ -21,9 +21,6 @@ Rails.application.routes.draw do
 
   get  "home/profile"
   post "appointments/slots" => "appointments#get_available_slots"
-
-  #match '404', to: redirect('/') 
-  get  "home/profile"
   get  "home/edit"
   post "home/profile" => "home#change_profile_pciture"
   patch "home/:id" => "home#update"

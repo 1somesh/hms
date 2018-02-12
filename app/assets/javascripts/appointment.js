@@ -54,10 +54,12 @@ $(document).on("click",".add_note_btn",function(){
 $(document).on("ajax:success",'.add_note',function(data,response,event){
 	console.log(response);
 	if(response.status == "success"){
-		$("#notes_list").append("<div align='left' style='border: solid thin;width: 800px;padding-top: 10px;word-wrap: break-word;;' id='notes_list'>"+
-                   response.description + "</br>"+  
-                   " <div align='right' style='color: rgb(40,20,0);'>"+  
-                   "By:   "+response.by+ 
+		$("#notes_list").append(
+			"<div align='left' class='panel panel-info'>"+
+			   " <div class='panel-heading'>"+  
+                   "By:   "+response.by+ "</div>"+
+			"<div class='panel-body'>"+
+                   response.description + "</br>"+   
                    "</div> </div><br>"
                    );
 	$(".add_note_btn").show();
@@ -100,3 +102,16 @@ $(document).on('change','#appointment_date_1i',function () {
 $(document).on('change','#user_image',function(){
 	$(".profile_image_upload").append("<input type = 'submit' value='Change Picture'>")
 })
+$(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+    	alert("hi");
+        $(this).tab('show');
+    });
+    $('.nav-tabs a').on('shown.bs.tab', function(event){
+    	alert("hi");
+        var x = $(event.target).text();         // active tab
+        var y = $(event.relatedTarget).text();  // previous tab
+        $(".act span").text(x);
+        $(".prev span").text(y);
+    });
+});
