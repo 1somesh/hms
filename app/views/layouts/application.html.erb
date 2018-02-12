@@ -14,11 +14,13 @@
 
 
 <% if user_signed_in? %>
-<br><br><br> 
+<br>
 
   <br>
-  <div class="header">
-  <ul class="nav nav-pills">
+  <div>
+
+  <div class="header" >
+  <ul class="nav nav-pills" style="float: left;">
     <li class="active"><a href="/">Home</a></li>
     <li><a href="/home/profile">Profile</a></li>
     <li><a href="/appointments/recent">Archived</a></li>
@@ -26,27 +28,29 @@
   <div>
 
 
-  <div align="right">
+  <div style="float: right;">
+  <span style="font-size: 23px;">Hello, </span><span style="font-size: 20px;"> <%= current_user.first_name %></span> &emsp;
         <a href="/users/sign_out" class="btn btn-info btn-lg" data-method="delete">
           <span class="glyphicon glyphicon-log-out"></span> Log out
         </a>
   </div>
       </div>
-  <div class="card" style="width:250px;border-style:solid; ;border-width: thin;">
+
+<!--   <div class="card" style="width:250px;border-style:solid; ;border-width: thin;">
     <img class="card-img-top" src=<%= current_user.image.image_url.to_s %> alt="Card image" style="width:100%">
     <div class="card-body">
       <h4 class="card-title"><%= current_user.first_name %></h4>
       <p class="card-text"><%= current_user.first_name %> is an architect and engineer</p>
     </div>
-  </div>
+  </div> -->
   <br>
   </div>      
 <% end %>
 
 
 
- 
-<%= yield %>
+<br>
+<br><%= yield %>
 
 </body>
 </html>

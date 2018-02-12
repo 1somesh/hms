@@ -1,4 +1,4 @@
-  <%#=<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -30,12 +30,12 @@
       <span class="glyphicon glyphicon-chevron-right"></span>
       <span class="sr-only">Next</span>
     </a>
-  </div>%>
+  </div><br>
 <% if current_user.doctor? %>
 <div >
-<h1 id="heading">Appointment List</h1>
-<font color="#005CB9" face="courier" size="3" >
-  
+
+<div class="heading" >Appointment List</div>
+<font color="#005CB9" face="courier" size="3">  
   	<% if @appointment_list.size !=0 %>	
   		<div class="list">
     <% @appointment_list.each do |appointments| %>
@@ -53,48 +53,50 @@
     <% else %>
        <i >	There are no Appointments.</i>
     <% end %> 
-    </div> 
-
+    </div>
 </font>
 </div>
 
 
 <% else %>
-<div align="right">
+
+<div>
+	<div align="right">
 	<%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
+	</div>
+<div   >
+<div class="heading" align="center">Appointment List</div>
 </div>
-
-
-
-
-
-<h1 id="heading">Appointment List</h1>	
- 		<font color="#005CB9" face="courier" size="3" >
+</div> 		<font color="#005CB9" face="courier" size="3" >
 
  	
  	<% if @appointment_list.size !=0 %>	
- 	<div class="list">
+ 	<div class="panel-group">
  	    <% @appointment_list.each do |appointments| %>
     	<br />
  	        <div class="container" align="center">
-	          <div class="first_name" align="left"> <%= appointments.doctor.first_name %></div>
-		        <%= appointments.date.strftime("%A,%d-%B'%Y") %>
-		        <br />
-		      	<%= link_to 'Show', appointments%>
-		      	<% if !appointments.cancelled? %>
-		        	<%= link_to 'Edit', edit_appointment_path(appointments) %>
-		     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"}%><br>
 
-		        <% end %>	
-		        <div align="left">Status: <%= appointments.status %><br>
-		        	<% begin %>
-		        	From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
-		        	To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
-		        	<% rescue %>
-		        		<% puts "start time null for appointment id: #{appointments.id}" %>
-		        	<% end %>	
+	          <div class="panel panel-info" align="left">
+		          	<div class="panel-heading"> 
+				          	<%= appointments.doctor.first_name %>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					        <%= appointments.date.strftime("%A,%d-%B'%Y") %> 
+			        </div>
+		        	<div class="panel-body">
+					    <div align="center">
+					      	<%= link_to 'Show', appointments%>&nbsp;
+					      	<% if !appointments.cancelled? %>
+					        	<%= link_to 'Edit', edit_appointment_path(appointments) %>&nbsp;
+					     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"}%><br>
+					        <% end %>	
+					     </div>   
+					        <div align="left">Status: <%= appointments.status %><br>
+					        	From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
+					        	To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
+					   
+					        </div> 
+					</div>
 		        </div>
-		     </tr>
+		    
 		 	</div>
 		 
    <% end %>
@@ -105,5 +107,4 @@
 
 </font>
 </div>
-<h2> <%= link_to 'Recent Appointments', "/appointments/recent" %></h2>
 

@@ -6,7 +6,7 @@
 			<h3 class="new_apppointment"><%= f.label :doctor_name %></h3>	
 		</div>
 
-<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
+	<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
 		<div ><br>
 			<%= f.label :date %>	</h3>	
 		</div>
@@ -19,8 +19,7 @@
 	<% end %>	
 	<div class="slot_list">
 		<div  class="slot_item">
-			<% @slots.each do |slot| %>		
-			
+			<% @slots.each do |slot| %>			
 			<% end %>
 		</div><br>
 	</div>	
@@ -29,7 +28,7 @@
 		</div>
 		<%= f.text_area :note ,cols: 25 ,rows: 8%>
 		<%if @appointment.errors.messages[:notes].present? %>
-		<span class="error_span"> Enter the cause<%#= @appointment.errors.messages[:notes][0] %> </span>
+		<span class="error_span">Enter the cause<%#= @appointment.errors.messages[:notes][0] %> </span>
 		<% end %>
 		<br />	
  		<div ><br><br>
@@ -37,9 +36,8 @@
  		</div><br>
  		<div class="field">
 		    <%= f.file_field :image %>
-		 </div><br>
+		</div><br>
 	 	<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
-
 	<% end %>	
 </div><br>
   <div style="padding-left: 10px;">
