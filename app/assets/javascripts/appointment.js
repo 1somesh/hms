@@ -25,13 +25,15 @@ function get_appointment_slot(data,event){
 							$('.slot_item').show();
 						}
 						else{
-							$(".slot_item").hide();
+							if( $(".slot_item").length !=0 )
+								$(".slot_item").hide();
 							alert("no slots avilable for today");
 						}
 				}
 				else{
-					$('.slot_item').hide();
-					alert("please select a future date");
+				    if( $(".slot_item").length !=0 )
+						$('.slot_item').hide();
+						alert("please select a future date");
 				}
 		},
 		error: function(response){
@@ -43,6 +45,7 @@ function get_appointment_slot(data,event){
 
 
 $(document).on("click",".add_note_btn",function(){
+	if( $(".add_note_btn").length !=0 )
 			$(".add_note_btn").hide();
 			$(".note_form").show();
 });
@@ -58,7 +61,8 @@ $(document).on("ajax:success",'.add_note',function(data,response,event){
                    "</div> </div><br>"
                    );
 	$(".add_note_btn").show();
-	$(".note_form").hide();
+	if( $(".note_form").length !=0 )
+		$(".note_form").hide();
 	}
 	else{
 		alert("Note can't be blank");
@@ -74,6 +78,7 @@ function create_list(response){
 }
 
 $(document).on('change','.remove_slot_list',function () {
+		if( $(".slot_item").length !=0 )
 
 	$('.slot_item').hide();
 })
@@ -84,7 +89,6 @@ $(document).on('change','#appointment_date_3i',function () {
 
 })
 $(document).on('change','#appointment_date_2i',function () {
-
  get_appointment_slot();
 	
 })

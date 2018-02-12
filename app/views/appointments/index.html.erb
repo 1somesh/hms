@@ -9,7 +9,7 @@
     <% @appointment_list.each do |appointments| %>
 	        <div class="container" align="center" id="div<%=appointments.id%>" >
 			        <div class="first_name" align="left"><%= appointments.patient.first_name %></div>
-			        <div style="padding-left:50px ">
+			        <div class="appointment_div">
 			            <%= appointments.date.strftime("%A,%d-%B'%Y") %><br />
  					</div>			         	
  			        <%= link_to 'Show', [appointments]%>
@@ -19,7 +19,7 @@
 	    	</div>
     <% end %> 
     <% else %>
-       <i >	There are no appointments.</i>
+       <i >	There are no Appointments.</i>
     <% end %> 
     </div> 
 
@@ -29,7 +29,9 @@
 
 <% else %>
 <div align="right">
-	<h2><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %></h2></div>
+	<h2><%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build) %>
+	</h2>
+</div>
 
 
 <h1 id="heading">Appointment List</h1>	
@@ -42,11 +44,11 @@
     	<br />
  	        <div class="container" align="center">
 	          <div class="first_name" align="left"> <%= appointments.doctor.first_name %></div>
-		        <td><%= appointments.date.strftime("%A,%d-%B'%Y") %></td>
+		        <%= appointments.date.strftime("%A,%d-%B'%Y") %>
 		        <br />
 		      	<%= link_to 'Show', appointments%>
 		      	<% if !appointments.cancelled? %>
-		        	<td><%= link_to 'Edit', edit_appointment_path(appointments) %></td>
+		        	<%= link_to 'Edit', edit_appointment_path(appointments) %>
 		     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"}%><br>
 
 		        <% end %>	
@@ -63,7 +65,7 @@
 		 
    <% end %>
    <% else %>
-       <i >	There are no appointments.</i>
+       <i >	There are no Appointments.</i>
    <% end %>
 <% end %><br>
 

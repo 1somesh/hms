@@ -3,8 +3,6 @@ class NotesController < ApplicationController
 	before_action :check_authorization, only: [:create]
 
 	def new
-		@note = Note.new
-		@appointment = Appointment.find params[:appointment_id]
 	end
 
 	def create

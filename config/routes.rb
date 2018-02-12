@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   post "home/profile" => "home#change_profile_pciture"
   patch "home/:id" => "home#update"
   get 'error404' => "home#error404"
-
+  get '*path'   => 'home#error404'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

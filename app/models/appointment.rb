@@ -7,7 +7,6 @@ class Appointment < ActiveRecord::Base
 
 	validate :start_time_present?
 	validate :check_appointment_date
-  #validate :date_changed?,on: :update
 	#validates_associated :notes
 
 	enum status: [:pending,:completed,:cancelled]
@@ -29,6 +28,16 @@ class Appointment < ActiveRecord::Base
   	self.notes.new(user_id: user_id, description: note)
   end
 
+
+  def self.update_worker(appointment,start_time,duration)
+      queue = Sidekiq::ScheduledSet.new
+      queue.each do |job| 
+          if job.args[0].to_i == appointment.id
+            current_job = Sidekiq::ScheduledSet.new.find_job(job.jid)
+            current_job.reschedule (appointment.date + (duration.strftime("%H").to_i + start_time.to_i)*60*60+7*3600)
+          end  
+      end    
+  end
 
   def self.get_booked_slots(doctor_id,selected_date)
 

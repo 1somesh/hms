@@ -1,5 +1,5 @@
 <div>
-<div  style="padding-left: 5px;">
+<div >
 	<%= form_for @appointment do |f| %>
 	<input type="hidden" id="appointment_doctor_id" value=<%= @appointment.doctor.id%> >
 		<h3 class="new_apppointment"> New Date: </h3>
@@ -7,7 +7,7 @@
 <!-- 		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
  -->	
  <% if @appointment.errors.any? %>
- <span style="color: red"><%= @appointment.errors.messages[:appointment][0] %> </span>
+ <span class="error_span"><%= @appointment.errors.messages[:appointment][0] %> </span>
  <% end %>
  <br><br>
 	<div class="slot_list">

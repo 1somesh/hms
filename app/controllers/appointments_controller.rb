@@ -28,12 +28,9 @@ class AppointmentsController < ApplicationController
          #expire_page '/appointments'
          ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
          image = params[:appointment][:image]
-
-         if !image.blank?
-             @appointment.images.create(image: image)
-         end
-          flash[:success] = "Appointment created!"
-             redirect_to '/appointments'
+         @appointment.images.create(image: image) if !image.blank?
+         flash[:success] = "Appointment created!"
+         redirect_to '/appointments'
   
     else
       @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
@@ -49,7 +46,6 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find params[:id]  
       duration = @appointment.doctor.doctor_profile.appointment_duration
       image = params[:appointment][:image]
-      duration = @appointment.doctor.doctor_profile.appointment_duration
 
       @appointment.images.create(image: image) if image.present?
       @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S") if params[:appointment][:start_time].present?
@@ -61,7 +57,7 @@ class AppointmentsController < ApplicationController
       if params[:appointment][:start_time] == nil
 
          if old_date != formatted_date.to_date
-            @appointment.errors.add('appointment','Appointment time should be selected')
+            @appointment.errors.add('appointment','Select a Appointment time')
             @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
             render "edit"
          else
@@ -70,15 +66,8 @@ class AppointmentsController < ApplicationController
          end   
   
       else
-        @appointment.update_attributes(appointment_update_params)
-        queue = Sidekiq::ScheduledSet.new
-      
-        queue.each do |job| 
-            if job.args[0].to_i == @appointment.id
-              current_job = Sidekiq::ScheduledSet.new.find_job(job.jid)
-              current_job.reschedule (@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600)
-            end  
-        end 
+         @appointment.update_attributes(appointment_update_params)
+         Appointment.update_worker(@appointment,params[:appointment][:start_time],duration)
          #expire_page '/appointments'
          flash[:success] = "Appointment updated!"
          redirect_to "/appointments"
@@ -87,7 +76,8 @@ class AppointmentsController < ApplicationController
 
   def destroy
     @appointment = Appointment.find params[:id]
-    @appointment.update(status: 2)
+    @appointment.update(status: "cancelled")
+    #expire_page '/appointments'
     redirect_to "/appointments"
   end
 
@@ -99,8 +89,6 @@ class AppointmentsController < ApplicationController
 
   def edit
     @appointment = Appointment.find params[:id]
- 
-
     @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
 
   end
@@ -112,13 +100,11 @@ class AppointmentsController < ApplicationController
 
   def get_available_slots
     formatted_date = params[:date]
-    #formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
-
     if formatted_date.to_date > Date.today
         slots = Appointment.get_booked_slots(params[:doctor_id],formatted_date)
         render json: {status: "success",slots: slots}
     else
-        render json: {status: "Date should be in future"} 
+        render json: {status: "Select a future date"} 
     end    
   end
 

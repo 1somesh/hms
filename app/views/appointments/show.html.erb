@@ -1,4 +1,4 @@
-<div align="left" style="padding-left: 5px;">
+<div align="left" class="div_spaceing">
 <h2 class="new_apppointment" >Appointment information</h2>
 <div>
   Doctor: <i><%= @appointment.doctor.first_name %></i><br>
@@ -8,11 +8,11 @@
 </div>
 
 <h3 class="new_apppointment" >Notes:</h3><br>
-        <div style=" width: 700px;" id="notes_list">
+        <div id="notes_list">
             <% @notes.each_with_index do |note,index| %>
-              <div align="left" style="border: solid thin;width: 800px;padding-top: 10px;word-wrap: break-word;" >
+              <div align="left" class="discription_area" >
                      <%= note.description %></br>  
-                     <div align="right" style="color: rgb(40,20,0);">  
+                     <div align="right" class="note_owner">  
                           By: <%= User.find(note.user_id).first_name %> 
                      </div>
               </div><br>
@@ -20,7 +20,7 @@
            
         </div>
   
-<div align="left" style="padding-left: 5px;"> 
+<div align="left" class="div_spaceing"> 
 <%= link_to "Add note" , new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "add_note_btn" %><br><br>
 
 <div class="add_note">
@@ -34,12 +34,12 @@
 </div>
 <br>
 &nbsp<strong>Images:</strong><br><br>
-    <div style="padding: 2px;">
+    <div class="div_spaceing">
         <% if @appointment.images.size==0 %>
           <span>There are no images</span>
         <% end %>
         <% @appointment.images.each do |i| %>
-           <div style="display: inline-block; height:200px;width: 200px;">
+           <div class="images">
               <%= link_to image_tag(i.image_url(:thumb).to_s) ,"#{i.image_url.to_s}" , class: "fancybox" %>  
            </div>   
         <% end %>

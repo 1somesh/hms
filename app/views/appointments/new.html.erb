@@ -14,7 +14,7 @@
 		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
 	<br><br>
  	<% if @appointment.errors.messages[:start_time].present? %>
-		<span style="color: red"> <%= @appointment.errors.messages[:start_time][0] %> </span>
+		<span class="error_span"> <%= @appointment.errors.messages[:start_time][0] %> </span>
 	<% end %>	
 	<div class="slot_list">
 		<div  class="slot_item">
@@ -29,7 +29,7 @@
 		</div>
 		<%= f.text_area :note ,cols: 25 ,rows: 8%>
 		<%if @appointment.errors.messages[:notes].present? %>
-		<span style="color: red"> <%= @appointment.errors.messages[:notes][0] %> </span>
+		<span class="error_span"> <%= @appointment.errors.messages[:notes][0] %> </span>
 		<% end %>
 		<br />	
  		<div ><br><br>

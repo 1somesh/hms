@@ -1,21 +1,21 @@
 <p>
   <%= flash[:alert] unless flash[:alert].blank? %>
 </p>
-	<font style="font-size: 24px"><b><%= label_tag "first name" %></b>:
+	<font class="profile_label"><b><%= label_tag "first name" %></b>:
 			<%= current_user.first_name %><br>
 	
 
-	<font style="font-size: 24px"><b><%= label_tag "last name" %></b>:
+	<font class="profile_label"><b><%= label_tag "last name" %></b>:
 	<%= current_user.last_name %> <br>
-	<font style="font-size: 24px"><b><%= label_tag "Email" %></b>:
+	<font class="profile_label"><b><%= label_tag "Email" %></b>:
 	<%= current_user.email %><br>	
-	<font style="font-size: 24px"><b><%= label_tag "role" %></b>:
+	<font class="profile_label"><b><%= label_tag "role" %></b>:
 		<%= current_user.role %><br>
-	<font style="font-size: 24px"><b><%= label_tag "Date of Birth" %></b>:
+	<font class="profile_label"><b><%= label_tag "Date of Birth" %></b>:
 		<%= current_user.date_of_birth.strftime("%d-%B'%Y") %><br>
-	<font style="font-size: 24px"><b><%= label_tag "Gender" %></b>:
+	<font class="profile_label"><b><%= label_tag "Gender" %></b>:
 		<%= current_user.gender %><br>
-	<font style="font-size: 24px"><b>
+	<font class="profile_label"><b>
 	<%= form_for :user ,url: "/home/profile" do |f| %>	
     <%= label_tag "Profile Pic:" %></b><br />
     <%= f.file_field :image %>
