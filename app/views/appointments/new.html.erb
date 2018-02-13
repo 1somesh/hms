@@ -1,14 +1,19 @@
+<div align="center">
+	<div class="heading" >New Appointment</div>
+	<div   align="left" style="padding-left: 10px;padding-right: 10px;padding-top: 2px;width: 700px;border-width: thin;border-style: solid;border-radius: 15px;">
+		
+		<%= form_for @appointment do |f| %>
+			<div>
+				<%= f.label :doctor_name %>	
+			</div>
+	<%#= f.select :doctor_id, options_for_select(@doctors_list), { :include_blank => "Please select category"}, {:class => "form-control"} %>
+		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name  %><br/>
+			
+	<%#= f.collection_select :doctor_id, @doctors_list, :id, :first_name, {:include_blank => @doctors_list.first.first_name}, {class: "form-control"} %>
 
-	<div  align="left" style="padding-left: 10px;">
-	
-	<%= form_for @appointment do |f| %>
-		<div>
-			<h3 class="new_apppointment"><%= f.label :doctor_name %></h3>	
-		</div>
 
-	<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name %><br/>
 		<div ><br>
-			<%= f.label :date %>	</h3>	
+			<%= f.label :date %>	
 		</div>
 		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,selected: Date.today+1,
 		:class => "remove_slot_list" %><br><br>
@@ -23,25 +28,30 @@
 			<% end %>
 		</div><br>
 	</div>	
+
+	
+ 			Upload Image 
+ 		<br>
+ 		<div class="field">
+		    <%= f.file_field :image %>
+		</div><br>
 		<div >
-			<h3 class="new_apppointment"><%= f.label :cause %></h3>
+			<%= f.label :cause %>
 		</div>
-		<%= f.text_area :note ,cols: 25 ,rows: 8%>
+		<%= f.text_area :note  ,rows: 6,class: "form-control" %>
 		<%if @appointment.errors.messages[:notes].present? %>
 		<span class="error_span">Enter the cause<%#= @appointment.errors.messages[:notes][0] %> </span>
 		<% end %>
 		<br />	
- 		<div ><br><br>
- 			Upload Image 
- 		</div><br>
- 		<div class="field">
-		    <%= f.file_field :image %>
-		</div><br>
-	 	<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
+ 		<div align="right">
+	 		<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
+	 	</div>	
 	<% end %>	
-</div><br>
-  <div style="padding-left: 10px;">
+<br>
+</div></div>
+  <div >
         <a href="/appointments" class="btn btn-info btn-lg">
           <span class="glyphicon glyphicon-step-backward"></span>Back
         </a>
   </div> 
+ 
