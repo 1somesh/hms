@@ -100,18 +100,33 @@ $(document).on('change','#appointment_date_1i',function () {
 })
 
 $(document).on('change','#user_image',function(){
-	$(".profile_image_upload").append("<input type = 'submit' value='Change Picture'>")
+	$(".profile_image_upload").append("<input type = 'submit' value='Change Picture'>");
 })
+
+$(document).on('change',"#user_role",function(){
+	if($("#user_role").val()=="doctor"){
+		$("#doctor_duration").show();
+	}
+	else{
+		$("#doctor_duration").hide();
+	}
+})
+
 $(document).ready(function(){
-    $(".nav-tabs a").click(function(){
-    	alert("hi");
-        $(this).tab('show');
-    });
-    $('.nav-tabs a').on('shown.bs.tab', function(event){
-    	alert("hi");
-        var x = $(event.target).text();         // active tab
-        var y = $(event.relatedTarget).text();  // previous tab
-        $(".act span").text(x);
-        $(".prev span").text(y);
-    });
-});
+		if($("#user_role").val()=="patient")
+		$("#doctor_duration").hide();
+})
+
+// $(document).ready(function(){
+//     $(".nav-tabs a").click(function(){
+//     	alert("hi");
+//         $(this).tab('show');
+//     });
+//     $('.nav-tabs a').on('shown.bs.tab', function(event){
+//     	alert("hi");
+//         var x = $(event.target).text();         // active tab
+//         var y = $(event.relatedTarget).text();  // previous tab
+//         $(".act span").text(x);
+//         $(".prev span").text(y);
+//     });
+// });

@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 
   has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile' ,dependent: :destroy
   enum role: [:doctor,:patient]
+  attr_accessor :duration
 
   #Validations
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
