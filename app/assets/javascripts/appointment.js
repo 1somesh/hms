@@ -53,7 +53,7 @@ $(document).on('change','.appointment_dates',function () {
 
 
 $(document).on('change','#user_image',function(){
-	$(".profile_image_upload").append("<input type = 'submit' value='Change Picture'>");
+	$(".profile_image_upload").html("<input type = 'submit' value='Change Picture'>");
 })
 
 $(document).on('change',"#user_role",function(){

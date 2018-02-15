@@ -21,7 +21,7 @@
 				<div  class="slot_item">
 					<% @slots.each do |slot| %>	
 						<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
-						<%= label_tag(slot, "#{slot}:00 AM") %><br>
+						<%= label_tag(slot, "#{slot}:00 AM") %><br><br>
 					<% end %>
 				</div>
 			</div><br>
@@ -37,5 +37,5 @@
 <div >
     <a href="/appointments" class="btn btn-info btn-lg">
       <span class="glyphicon glyphicon-step-backward"></span>Back
-    </a>
+    </a><br><br>
 </div> 

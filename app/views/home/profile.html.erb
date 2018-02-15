@@ -1,39 +1,31 @@
-<p>
-  <%= flash[:alert] unless flash[:alert].blank? %>
-</p>
 <div class="heading" align="center">Profile</div>
 <div align="center">
-<div class="center_div_form" style="height: 330px; padding-top: 10	px;">
-	<div  style="height: 250px;width: 250px;float: left">
-		<%= render 'profile_card' %>
-	</div>
-	<div style="padding-left: 280px;" align="left">
- 		<b><%= label_tag "first name" %></b>:
+	<div class="center_div_form" id="profile_form">
+		<div class="profile_image">
+			<%= render 'profile_card' %>
+		</div>
+		<div id="profile_info" align="left">
+	 		<%= label_tag "first name" %>:
 			<%= current_user.first_name %><br>
-		<b><%= label_tag "last name" %></b>:
+			<%= label_tag "last name" %>:
 			<%= current_user.last_name %> <br>
-		<b><%= label_tag "Email" %></b>:
+			<%= label_tag "Email" %>:
 			<%= current_user.email %><br>	
-		<b><%= label_tag "role" %></b>:
+			<%= label_tag "role" %>:
 			<%= current_user.role %><br>
-		<b><%= label_tag "Date of Birth" %></b>:
+			<%= label_tag "Date of Birth" %>:
 			<%= current_user.date_of_birth.strftime("%d-%B'%Y") %><br>
-		<b><%= label_tag "Gender" %></b>:
+			<%= label_tag "Gender" %>:
 			<%= current_user.gender %><br>
-		<%= form_for :user ,url: "/home/profile" do |f| %>	
-	    <%= label_tag "Profile Pic:" %></b><br />
-	    <%= f.file_field :image %><br>
-	    <div class="profile_image_upload">
-	    </div><br>
-	    <% end %>
-	    <%= link_to "Edit Profile", edit_user_registration_path(current_user),class: "btn btn-primary" %><br><br>
+			<%= form_for :user ,url: "/home/profile" do |f| %>	
+		    <%= label_tag "Profile Pic:" %><br />
+		    <%= f.file_field :image %><br>
+		    <div class="profile_image_upload">
+		    </div><br>
+		    <% end %>
+		    <%= link_to "Edit Profile", edit_user_registration_path(current_user),class: "btn btn-primary" %><br><br>
+		</div>
 	</div>
-  	
-	</font>
-
-	<% if current_user.image !=nil %>
-	<% end %>
-</div>
 </div>
 <div >
     <a href="/appointments" class="btn btn-info btn-lg">
