@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
   <title>Doctor patient</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -12,14 +11,13 @@
     <div align="center" class="flash_messages"><%= content_tag(:div, value, :class => "flash #{key}") %></div>
 <% end %>
 
-
 <% if user_signed_in? %>
 <br>
 
   <br>
   <div>
 
-  <div class="header" >
+  <div class="header">
   <ul class="nav nav-pills" style="float: left;">
     <li class="active"><a href="/">Home</a></li>
     <li><a href="/home/profile">Profile</a></li>
@@ -36,13 +34,6 @@
   </div>
       </div>
 
-<!--   <div class="card" style="width:250px;border-style:solid; ;border-width: thin;">
-    <img class="card-img-top" src=<%= current_user.image.image_url.to_s %> alt="Card image" style="width:100%">
-    <div class="card-body">
-      <h4 class="card-title"><%= current_user.first_name %></h4>
-      <p class="card-text"><%= current_user.first_name %> is an architect and engineer</p>
-    </div>
-  </div> -->
   <br>
   </div>      
 <% end %>

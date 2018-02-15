@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'appointments/recent'
 
   resources :appointments
-  devise_for :users , controllers: {registrations: "registrations"} 
+  devise_for :users , controllers: {registrations: "registrations", sessions: "sessions"} 
 
   get "appointments" => "appointments#index"
   

@@ -1,34 +1,41 @@
-<div>
-<div >
-	<%= form_for @appointment do |f| %>
-	<input type="hidden" id="appointment_doctor_id" value=<%= @appointment.doctor.id%> >
-		<h3 class="new_apppointment"> New Date: </h3>
-		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5  %><br><br>
-<!-- 		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()">	
- -->	
- <% if @appointment.errors.any? %>
- <span class="error_span"><%= @appointment.errors.messages[:appointment][0] %> </span>
- <% end %>
- <br><br>
-	<div class="slot_list">
-		<div  class="slot_item">
-			<% @slots.each do |slot| %>	
-			<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
-				<%= label_tag(slot, "#{slot}:00 AM") %><br>
-			<% end %>
-		</div><br>
-	</div>	
-		<div class="field">
-		<h3 class="new_apppointment"> Add Image: </h3>
-	    	<%= f.file_field :image  %><br>
-		</div><br>
-		<%= f.submit "Change"%>
-	<% end %>
-</div>
+<div align="center">
+	<div class="heading" >Edit Appointment</div>
+	<div align="left">
+		<h3>Current Booking Status </h3><hr>
+		 <%= label_tag :Doctor %>: <i><%= @appointment.doctor.first_name %></i><br>
+		 <%= label_tag :Date %>: <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
+		 <%= label_tag :From %>: <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
+		 <%= label_tag :To %>: <%= @appointment.finish_time.strftime("%H:%M") %> AM<br>
+	</div>
+	<div   align="left" class="center_div_form">
+		<%= form_for @appointment do |f| %>
+			<input type="hidden" id="appointment_doctor_id" value=<%= @appointment.doctor.id%> ><br>
+			 <%= f.label "New date" %> 
+			<div class="appointment_dates">
+				<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5  %><br>
+			</div>
+			<% if @appointment.errors.any? %>
+				<span class="error_span"><%= @appointment.errors.messages[:appointment][0] %> </span>
+			<% end %><br><br>
+			<div class="slot_list">
+				<div  class="slot_item">
+					<% @slots.each do |slot| %>	
+						<%= f.radio_button(:start_time,"#{slot}:00:00") %>					
+						<%= label_tag(slot, "#{slot}:00 AM") %><br>
+					<% end %>
+				</div>
+			</div><br>
+			<div class="field">
+				<%= f.label "Add Image:" %>
+		    	<%= f.file_field :image  %><br>
+			</div>
+			<%= f.submit "Change" ,class: "btn btn-primary" %>
+		<% end %><br>
+	</div>
 </div>
 <br>
-  <div style="padding-left: 6px;">
-        <a href="/appointments" class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-step-backward"></span>Back
-        </a>
-  </div> 
+<div >
+    <a href="/appointments" class="btn btn-info btn-lg">
+      <span class="glyphicon glyphicon-step-backward"></span>Back
+    </a>
+</div> 

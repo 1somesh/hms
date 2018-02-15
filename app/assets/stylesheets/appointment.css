@@ -1,27 +1,13 @@
-
 .container{
 	height:150px;
 	background:#fcfdff;
 	font: italic small-caps bold 18px Georgia, sans-serif;
 }
-.button {
-	box-sizing: border-box;
-    background: rgba(153,50,204,.95);
-    color: whitesmoke;
-    font: inherit;
-    border: 1px solid transparent;
-    text-align: left;
-    position: relative;
-    padding: .5rem 3rem .5rem .5rem;
-    overflow: hidden;
-    border-radius: 3px;
-} 
 .button_destroy{
 	background-color: #ff4d4d; 
 	height: 40px;
 	width: 70px;
 }
-
 .list{
 	background-color: #d0d3db;
 	padding-left:  200px;
@@ -105,4 +91,13 @@
         inset 0 0 5px rgba(53,86,129, 0.5),
         inset -285px 0 35px white;
     border-radius: 0 10px 0 10px;
+}
+.center_div_form{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    width: 700px;
+    border-width: thin;
+    border-style: solid;
+    border-radius: 15px;
 }

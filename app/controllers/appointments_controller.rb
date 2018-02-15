@@ -1,84 +1,69 @@
 class AppointmentsController < ApplicationController
   
   before_action :should_be_patient?, only: [:new,:create,:edit,:update]
-  before_action :check_authorization, only: [:show,:edit,:update,:delete]
-  before_action :check_status?, only: [:edit,:update,:delete]
-  #caches_page :index  
+  before_action :check_authorization, only: [:show,:edit,:update,:destroy]
+  before_action :check_status?, only: [:edit,:update,:destroy]
+  caches_page :index  
 
   def index
-      @appointment_list = current_user.future_appointment_list    
+    @appointment_list = current_user.future_appointment_list    
   end
 
   def new
     @appointment = current_user.patient_appointments.build
     @doctors_list = User.get_doctors_list
-    @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
+    @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
   end
 
   def create
     @appointment = current_user.patient_appointments.new(appointment_params)
     @appointment.initialize_note(current_user.id,@appointment.note)
-    duration = @appointment.doctor.doctor_profile.appointment_duration
-
-    if params[:appointment][:start_time]!= nil
-      @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S")
-    end
-
-     if @appointment.save
-         #expire_page '/appointments'
-         ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
-         image = params[:appointment][:image]
-         @appointment.images.create(image: image) if !image.blank?
-         flash[:success] = "Appointment created!"
-         redirect_to '/appointments'
-  
+    duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
+    
+    if @appointment.save
+       ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
+       @appointment.create_image(params[:appointment][:image])
+       expire_page '/appointments'
+       flash[:success] = "Appointment created!"
+       redirect_to '/appointments' and return
     else
-      @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,Time.now.strftime("%Y-%m-%d"))
+      time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
+      @slots = Appointment.get_booked_slots(@appointment.doctor.id,time.strftime("%Y-%m-%d"))
       @doctors_list = User.get_doctors_list
-      render 'new'
+      render 'new' and return
     end  
-  
-  end
 
+  end
 
   def update
-
       @appointment = Appointment.find params[:id]  
-      duration = @appointment.doctor.doctor_profile.appointment_duration
-      image = params[:appointment][:image]
-
-      @appointment.images.create(image: image) if image.present?
-      @appointment.finish_time = (params[:appointment][:start_time].to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S") if params[:appointment][:start_time].present?
-      
+      duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
+      @appointment.create_image(params[:appointment][:image])
       old_date =  @appointment.date.strftime("%Y-%m-%d").to_date
-      date = params.require(:appointment).permit(:date)
-      formatted_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
-
+      new_date = Appointment.get_new_date(params.require(:appointment).permit(:date))
+    
       if params[:appointment][:start_time] == nil
-
-         if old_date != formatted_date.to_date
+         if old_date != new_date
             @appointment.errors.add('appointment','Select a Appointment time')
             @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
-            render "edit"
-         else
-          flash[:success] = "Appointment updated!"
-          redirect_to "/appointments"            
+            render "edit" and return            
          end   
-  
       else
          @appointment.update_attributes(appointment_update_params)
-         Appointment.update_worker(@appointment,params[:appointment][:start_time],duration)
-         #expire_page '/appointments'
-         flash[:success] = "Appointment updated!"
-         redirect_to "/appointments"
+         @appointment.update_worker(params[:appointment][:start_time],duration)
       end
+      expire_page '/appointments'      
+      flash[:success] = "Appointment updated!"
+      redirect_to "/appointments" 
   end
+
 
   def destroy
     @appointment = Appointment.find params[:id]
-    @appointment.update(status: "cancelled")
-    #expire_page '/appointments'
-    redirect_to "/appointments"
+    @appointment.cancelled!
+    render json: {status: "cancelled"}
+    flash[:success] = "Appointment cancelled!"
+    expire_page '/appointments'
   end
 
   def show
@@ -133,3 +118,4 @@ end
         redirect_to "/appointments"
     end  
   end
+

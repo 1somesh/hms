@@ -1,40 +1,31 @@
-<h1 class="heading" align="center">Appointment List</h1>
-
+<h1 class="heading" align="center">Recent Appointments</h1>
 <h3><%= link_to "Back" ,"/appointments" %></h3>
-
 <font color="#005CB9" face="courier" size="3" >
-
-  <% if @appointments.size !=0 %>
- <div class="panel-group">
-       <% @appointments.each do |appointments| %>
-      <br />
+<% if @appointments.size !=0 %>
+    <div class="panel-group">
+      <% @appointments.each do |appointments| %><br />
           <div class="container" align="center">
-
-            <div class="panel panel-info" align="left">
-                <div class="panel-heading"> 
-                    <%= appointments.doctor.first_name %>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                  <%= appointments.date.strftime("%A,%d-%B'%Y") %> 
+              <div class="panel panel-info" align="left">
+                  <div class="panel-heading"> 
+                      <%= appointments.doctor.first_name %>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                      <%= appointments.date.strftime("%A,%d-%B'%Y") %> 
+                  </div>
+                  <div class="panel-body">
+                      <div align="center">
+                          <%= link_to 'Show', appointments%>&nbsp;
+                      </div>   
+                      <div align="left">Status: <%= appointments.status %><br>
+                        From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
+                        To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
+                 
+                      </div> 
+                  </div>
               </div>
-              <div class="panel-body">
-              <div align="center">
-                  <%= link_to 'Show', appointments%>&nbsp;
-               </div>   
-                  <div align="left">Status: <%= appointments.status %><br>
-                    From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
-                    To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
-             
-                  </div> 
           </div>
-            </div>
-        
-      </div>
-     
-   <% end %>
-
-    <% else %>
-       <i > There are no passed appointments.</i>
-    <% end %>
-
-    </div> 
-  </font>
+      <% end %>
+    </div>  
+<% else %>
+    <i > There are no passed appointments.</i>
+<% end %> 
+</font>
    

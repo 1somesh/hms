@@ -4,7 +4,8 @@ class ExpiredDateWorker
   def perform(*args)
      appointment = Appointment.find args[0]  
      	if !appointment.cancelled?
-    		appointment.update(status: "completed")
+    		appointment.completed!
+   		    expire_page '/appointments'
     	end	 
   end
 

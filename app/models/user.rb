@@ -11,41 +11,36 @@ class User < ActiveRecord::Base
   has_many :doctors,  through: :patient_appointments
 
   has_one :image ,as: :imageable
-
+  
   has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile' ,dependent: :destroy
   enum role: [:doctor,:patient]
   attr_accessor :duration
 
-  #Validations
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-
-  #validates_format_of :email, :with => EMAIL_REGEX , message: "Please enter a valid email id" 
   validates :first_name ,presence: true
 
   def future_appointment_list
       if self.doctor?
         @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
       else
-        @list = Appointment.joins(:doctor).where(patient_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
+        @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
       end 
       @list
   end 
  
-
   def past_appointment_list
       if self.doctor?
-        @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,Date.today ,"pending"]).order(:date)
+        @list = Appointment.includes  (:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,Date.today ,"pending"]).order(:date)
       else
         @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,Date.today, "pending"]).order(:date)
       end  
   end 
-
 
   def create_image(image)
     self.image = Image.new(image: image)
   end  
 
   def self.get_doctors_list
-    User.where(role: "doctor")
+    User.all.doctor
   end
+
 end

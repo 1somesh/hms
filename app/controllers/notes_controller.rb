@@ -3,6 +3,7 @@ class NotesController < ApplicationController
 	before_action :check_authorization, only: [:create]
 
 	def new
+		
 	end
 
 	def create
@@ -24,11 +25,10 @@ class NotesController < ApplicationController
 	end
 
 	 def check_authorization
-     appointment = Appointment.find params[:appointment_id]  
-
-    if current_user != appointment.doctor && current_user!= appointment.patient
-      redirect_to "/error404"
-    end  
+	    appointment = Appointment.find params[:appointment_id]  
+	    if current_user != appointment.doctor && current_user!= appointment.patient
+	      redirect_to "/error404"
+	    end  
   end
 
 end

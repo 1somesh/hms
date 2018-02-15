@@ -1,57 +1,52 @@
 <div align="center">
 	<div class="heading" >New Appointment</div>
-	<div   align="left" style="padding-left: 10px;padding-right: 10px;padding-top: 2px;width: 700px;border-width: thin;border-style: solid;border-radius: 15px;">
-		
-		<%= form_for @appointment do |f| %>
-			<div>
-				<%= f.label :doctor_name %>	
-			</div>
-	<%#= f.select :doctor_id, options_for_select(@doctors_list), { :include_blank => "Please select category"}, {:class => "form-control"} %>
-		<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name  %><br/>
+	<div   align="left" class="center_div_form">
+		<%= form_for @appointment  do |f| %>
 			
-	<%#= f.collection_select :doctor_id, @doctors_list, :id, :first_name, {:include_blank => @doctors_list.first.first_name}, {class: "form-control"} %>
+			<%= f.label :doctor_name %>	<br>
+			<%= f.collection_select :doctor_id, @doctors_list, :id, :first_name  %><br/><br>
+			<%= f.label :date %>
+			<div class="appointment_dates">
+				<%= f.date_select :date, :order => [:year,:month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,default: Date.today+1,
+					:class => "remove_slot_list" %>
+			</div><br><br>
+			<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()" class= "btn btn-primary"><br><br>	
 
-
-		<div ><br>
-			<%= f.label :date %>	
-		</div>
-		<%= f.date_select :date, :order => [:year, :month, :day], :start_year => 2018, :end_year => Time.now.year + 5 ,selected: Date.today+1,
-		:class => "remove_slot_list" %><br><br>
-		<input type= "button" value = "Find Appointment" onclick="get_appointment_slot()" class= "btn btn-primary">	
-	<br><br>
- 	<% if @appointment.errors.messages[:start_time].present? %>
-		<span class="error_span"> <%= @appointment.errors.messages[:start_time][0] %> </span>
-	<% end %>	
-	<div class="slot_list">
-		<div  class="slot_item">
-			<% @slots.each do |slot| %>			
-			<% end %>
-		</div><br>
-	</div>	
-
-	
- 			Upload Image 
- 		<br>
- 		<div class="field">
-		    <%= f.file_field :image %>
-		</div><br>
-		<div >
-			<%= f.label :cause %>
-		</div>
-		<%= f.text_area :note  ,rows: 6,class: "form-control" %>
-		<%if @appointment.errors.messages[:notes].present? %>
-		<span class="error_span">Enter the cause<%#= @appointment.errors.messages[:notes][0] %> </span>
+		 	<% if @appointment.errors.messages[:start_time].present? %>
+				<span class="error_span"> <%= @appointment.errors.messages[:start_time][0] %> </span>
+			<% end %>	
+			<div class="slot_list">
+				<div  class="slot_item">
+					<% @slots.each do |slot| %>	
+						<div class=slot_item >
+						  	<% if @appointment.start_time!=nil && @appointment.start_time.strftime("%H").to_i==slot  %>
+								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]"  checked="checked">  
+								<%= slot %>:00 AM
+							<% else %>
+								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]" >  
+								<%= slot %>:00 AM
+							<% end %>	
+						</div><br>	
+					<% end %>
+				</div><br>
+			</div>
+	 		<%= f.label "Upload Image" %>	<br>	 		
+			<%= f.file_field :image %><br>
+			<%= f.label :cause %><br>
+			<%= f.text_area :note,rows: 6,class: "form-control" %>
+			<%if @appointment.errors.messages[:notes].present? %>
+				<span class="error_span">Enter the cause </span>
+			<% end %><br>	
+	 		<div align="right">
+		 		<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
+		 	</div><br>	
 		<% end %>
-		<br />	
- 		<div align="right">
-	 		<%= f.submit 'Create Appointment', class: 'btn btn-primary' %>
-	 	</div>	
-	<% end %>	
-<br>
-</div></div>
-  <div >
-        <a href="/appointments" class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-step-backward"></span>Back
-        </a>
-  </div> 
- 
+	</div>
+</div>
+<div >
+    <a href="/appointments" class="btn btn-info btn-lg">
+      <span class="glyphicon glyphicon-step-backward"></span>Back
+    </a>
+</div> 
+ <%#= @appointment.errors.messages[:notes][0] %>
+
