@@ -1,0 +1,18 @@
+#profile_form{
+    height: 340px;
+    padding-top: 5px;
+}
+
+.profile_image{
+    height: 250px;
+    width: 250px;
+    float: left;
+}
+
+#profile_info{
+    padding-left: 280px;
+}
+
+.profile_label{
+    font-size: 20px;
+}

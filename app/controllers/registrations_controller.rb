@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
 		@user = User.new(sign_up_params)
 		@user.create_image(params[:user][:image])
 		if params[:user][:role]=="doctor"
-			@user.doctor_profile = Doctorprofile.new(experience: rand(5..8),appointment_duration: @user.duration.to_i)
+			@user.doctor_profile = Doctorprofile.new(appointment_duration:  @user.duration)
 		end	
 
 		if @user.save

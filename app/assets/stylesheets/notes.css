@@ -1,0 +1,10 @@
+.discription_area{
+    border: solid thin;
+    width: 800px;
+    padding-top: 10px;
+    word-wrap: break-word;
+}
+
+.note_owner{
+    color: rgb(40,20,0);
+}

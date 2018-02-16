@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   validates :first_name ,presence: true
 
+  #returns the list of future appointments of user
   def future_appointment_list
       if self.doctor?
         @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date > ?" ,Time.now.strftime("%Y-%m-%d")]).where(status: "pending").order(:date)
@@ -27,6 +28,7 @@ class User < ActiveRecord::Base
       @list
   end 
  
+  #returns the list of archived appointments of user both (completed and cancelled)
   def past_appointment_list
       if self.doctor?
         @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,Date.today ,"pending"]).order(:date)

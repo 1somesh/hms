@@ -51,7 +51,6 @@ class Appointment < ActiveRecord::Base
     self.images.create(image: image) if !image.blank?
   end
 
-  ############
 
   def self.get_new_date(date)
     new_date = "#{date["date(1i)"]}-#{date["date(2i)"]}-#{date["date(3i)"]}"
