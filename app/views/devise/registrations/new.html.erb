@@ -1,37 +1,38 @@
 <h2>Sign up</h2>
 <% puts @user.errors.inspect %>
+<div class="login_fields">
+  <div align="left" class="div_spaceing">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%#= devise_error_messages! %>
   <div class="field">
-
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
     <% if @user.errors.messages[:email].present? %>
     <span class="error_span">Email <%= @user.errors.messages[:email][0] %> </span><br>
   <% end %>
   </div><br>
 
-    <div class="field">
+  <div class="field">
     add an image....
     <%= f.file_field :image %>
   </div><br>
   <%= f.label :first_name %><br />
-  <%= f.text_field :first_name %>
+  <%= f.text_field :first_name ,class: "form-control" %>
   <% if @user.errors.messages[:first_name].present? %>
     <span class="error_span">First Name <%= @user.errors.messages[:first_name][0] %> </span><br>
   <% end %><br>
   
   <%= f.label :last_name %><br />
-  <%= f.text_field :last_name %><br />
+  <%= f.text_field :last_name,class: "form-control" %><br />
 
   <%= f.label :date_of_birth %><br />
-  <%= f.date_select :date_of_birth ,:start_year=>1970%><br /><br />
+  <%= f.date_select :date_of_birth ,:start_year=>1970 %><br /><br />
 
    <%= f.label :role %><br />
   <%= f.select :role, ['patient','doctor'] %><br />
 <br>
 <div class="field" id="doctor_duration">
- Appointment Duration: <%= f.select :duration, ['1','2','3','4','5'] %><br />
+ <%= f.label "Appointment Duration" %>(<i>in hours</i>): <%= f.select :duration, ['1','2','3','4','5'] %><br />
 </div>  
 
 <br>
@@ -40,7 +41,7 @@
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.password_field :password, autocomplete: "off" ,class: "form-control"%>
     <% if @user.errors.messages[:password].present? %>
     <span class="error_span">Password <%= @user.errors.messages[:password][0] %> </span><br><br>
   <% end %>
@@ -48,12 +49,14 @@
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control"%>
+  </div><br>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+    <%= f.submit "Sign up",class: "btn btn-primary" %>
+  </div><br>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>
