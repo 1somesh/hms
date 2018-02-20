@@ -1,6 +1,6 @@
 <%= render 'carousel' %>
 <div>
-	<% if current_user.patient? %>
+	<% if can? :create, Appointment %>
 		<div align="right">
 		   <%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
 		</div>
@@ -23,12 +23,12 @@
 				        	<div class="panel-body">
 							    <div align="center">
 							      	<%= link_to 'Show', appointments%>&nbsp;
-							      	<% if !appointments.cancelled? %>
-										<% if current_user.patient? %>
+										<% if can? :update, appointments %>
 								        	<%= link_to 'Edit', edit_appointment_path(appointments) %>&nbsp;
-								        <% end %>	
-							     		<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
-						       		<% end %>	 		 
+								        <% end %>
+								        <% if can? :destroy, appointments %>	
+							     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
+							     		<% end %>	
 							    </div>   
 						        <div align="left">
 						        	Status: <%= appointments.status %><br>

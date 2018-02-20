@@ -1,9 +1,9 @@
 class AppointmentsController < ApplicationController
   
-  before_action :should_be_patient?, only: [:new,:create,:edit,:update]
-  before_action :check_authorization, only: [:show,:edit,:update,:destroy]
-  before_action :check_status?, only: [:edit,:update,:destroy]
-  caches_page :index  
+  #before_action :should_be_patient?, only: [:new,:create,:edit,:update]
+  #before_action :check_authorization, only: [:show,:edit,:update,:destroy]
+  #before_action :check_status?, only: [:edit,:update,:destroy]
+  #caches_page :index  
 
   def index
     #getting all the future appointments.
@@ -15,11 +15,14 @@ class AppointmentsController < ApplicationController
     @appointment = current_user.patient_appointments.build
     @doctors_list = User.get_doctors_list
     @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
+    authorize! :new, @appointment
+    
   end
 
   #creates appointment and sets the sidekiq background worker
   def create
     @appointment = current_user.patient_appointments.new(appointment_params)
+    authorize! :create, @appointment
     @appointment.initialize_note(current_user.id,@appointment.note)
     duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
     
@@ -42,13 +45,13 @@ class AppointmentsController < ApplicationController
   #update the appointment and the sidekiq worker
   def update
       @appointment = Appointment.find params[:id]  
+      authorize! :update, @appointment
       duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
-      @appointment.create_image(params[:appointment][:image])
-      old_date =  @appointment.date.strftime("%Y-%m-%d").to_date
+      @appointment.create_image(params[:appointment][:image]) 
       new_date = Appointment.get_new_date(params.require(:appointment).permit(:date))
-    
+
       if params[:appointment][:start_time] == nil
-         if old_date != new_date
+         if @appointment.date.strftime("%Y-%m-%d").to_date != new_date
             @appointment.errors.add('appointment','Select a Appointment time')
             @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
             render "edit" and return            
@@ -65,20 +68,25 @@ class AppointmentsController < ApplicationController
   #changes the status of appointment from pending to cancelled
   def destroy
     @appointment = Appointment.find params[:id]
+    authorize! :destroy, @appointment
     @appointment.cancelled!
     render json: {status: "cancelled"}
     flash[:success] = "Appointment cancelled!"
     expire_page '/appointments'
+
   end
 
   def show
     @appointment = Appointment.find(params[:id])
+    authorize! :show, @appointment
     @patient = @appointment.patient
     @notes = @appointment.notes
+
   end
 
   def edit
     @appointment = Appointment.find params[:id]
+    authorize! :edit, @appointment    
     @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
 
   end
@@ -121,9 +129,9 @@ end
   end
 
   #only pendind appointments can be cancelled or edited
-  def check_status?
-    if !Appointment.find(params[:id]).pending? 
-        redirect_to "/appointments"
-    end  
-  end
+  # def check_status?
+  #   if !Appointment.find(params[:id]).pending? 
+  #       redirect_to "/appointments"
+  #   end  
+  # end
 
