@@ -4,21 +4,21 @@
       <div align="left" class="div_spaceing">
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
               <div class="field">
-                <%= f.label :email %><br />
-                <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
-                <% if @user.errors.messages[:email].present? %>
-                <span class="error_span">Email <%= @user.errors.messages[:email][0] %> </span><br>
+                  <%= f.label :email %><br />
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
+                  <% if @user.errors.messages[:email].present? %>
+                  <span class="error_span">Email <%= @user.errors.messages[:email][0] %> </span><br>
               <% end %>
               </div><br>
 
               <div class="field">
-                add an image....
-                <%= f.file_field :image %>
+                  add an image....
+                  <%= f.file_field :image %>
               </div><br>
               <%= f.label :first_name %><br />
               <%= f.text_field :first_name ,class: "form-control" %>
               <% if @user.errors.messages[:first_name].present? %>
-                <span class="error_span">First Name <%= @user.errors.messages[:first_name][0] %> </span><br>
+                  <span class="error_span">First Name <%= @user.errors.messages[:first_name][0] %> </span><br>
               <% end %><br>
               
               <%= f.label :last_name %><br />
@@ -27,11 +27,11 @@
               <%= f.label :date_of_birth %><br />
               <%= f.date_select :date_of_birth ,:start_year=>1970 %><br /><br />
 
-               <%= f.label :role %><br />
+              <%= f.label :role %><br />
               <%= f.select :role, ['patient','doctor'] %><br />
               <br>
               <div class="field" id="doctor_duration">
-               <%= f.label "Appointment Duration" %>(<i>in hours</i>): <%= f.select :duration, ['1','2','3','4','5'] %><br />
+                  <%= f.label "Appointment Duration" %>(<i>in hours</i>): <%= f.select :duration, ['1','2','3','4','5'] %><br />
               </div>  
 
               <br>
@@ -42,17 +42,17 @@
                       <% end %><br />
                       <%= f.password_field :password, autocomplete: "off" ,class: "form-control"%>
                       <% if @user.errors.messages[:password].present? %>
-                      <span class="error_span">Password <%= @user.errors.messages[:password][0] %> </span><br><br>
-                <% end %>
+                        <span class="error_span">Password <%= @user.errors.messages[:password][0] %></span><br><br>
+                      <% end %>
               </div>
 
               <div class="field">
-                <%= f.label :password_confirmation %><br />
-                <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control"%>
+                  <%= f.label :password_confirmation %><br />
+                  <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control"%>
               </div><br>
 
               <div class="actions">
-                <%= f.submit "Sign up",class: "btn btn-primary" %>
+                  <%= f.submit "Sign up",class: "btn btn-primary" %>
               </div><br>
           <% end %>
 

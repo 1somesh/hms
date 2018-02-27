@@ -71,7 +71,7 @@
 }
 
 .login_fields{
-    width: 270px;
+    width: 310px;
 }
 
 .signout_link{
@@ -80,7 +80,7 @@
 }
 
 .flash_messages{
-    color: green;
+    color: rgb(12,12,75);
     font-size: 36px ;
 }
 

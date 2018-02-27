@@ -60,7 +60,7 @@ class Appointment < ActiveRecord::Base
 
   def self.get_booked_slots(doctor_id,selected_date)
 
-    duration = Doctorprofile.where(doctor_id: doctor_id).first.appointment_duration.strftime("%H").to_i
+    duration = Doctorprofile.find_by(doctor_id: doctor_id).appointment_duration.strftime("%H").to_i
     appointments = Appointment.where(doctor_id: doctor_id,date: selected_date).where("status != ?",2) 
     list = []
 

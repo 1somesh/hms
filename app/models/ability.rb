@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
+    
     if user.patient?
         can :create, Appointment
         can [:update,:destroy], Appointment do |appointment|

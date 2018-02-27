@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found 
-  rescue_from CanCan::AccessDenied do |error| redirect_to "/" end
+  rescue_from CanCan::AccessDenied do |error| 
+  	 flash[:notice] = "Access Denied"
+  	 redirect_to "/" 
+  end
   #rescue_from ActionController::RoutingError, :with => :record_not_found	
 
 

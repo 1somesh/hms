@@ -21,6 +21,9 @@ gem 'mini_magick', '4.8.0'
 gem 'fancybox-rails'
 gem 'client_side_validations'
 gem 'cancancan', '~> 2.0'
+gem 'awesome_print'
+gem 'pry-rails', :group => :development
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
