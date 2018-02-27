@@ -20,4 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  appointment_list: "Appointment List"
+  show: "show"
+  delete: "delete"
+  edit: "edit" 
+  home: "home"
+  profile: "profile"
+  archived: "archived"
+  pending: "pending"
+  cancelled: "cancelled"
+  completed: "completed"
+  hello: "hello"
+  new_Appointment: "Create a new Appointment"
+  appointment_info: "Appopintment Information"

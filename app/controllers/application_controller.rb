@@ -3,10 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  before_action :set_user_lang
   
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found 
   rescue_from CanCan::AccessDenied do |error| redirect_to "/" end
   #rescue_from ActionController::RoutingError, :with => :record_not_found	
+
 
 
     protected
@@ -26,6 +28,10 @@ class ApplicationController < ActionController::Base
 	  	redirect_to '/error404'	
   	  end
 
-   
+   private
+
+   def set_user_lang
+   		I18n.locale = 'fr'
+   end
  
 end

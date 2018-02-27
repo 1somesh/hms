@@ -16,9 +16,9 @@
                   </div>
                   <div class="panel-body">
                       <div align="center">
-                          <%= link_to 'Show', appointments%>&nbsp;
+                          <%= link_to t('show'), appointments%>&nbsp;
                       </div>   
-                      <div align="left">Status: <%= appointments.status %><br>
+                      <div align="left">Status: <%= t appointments.status %><br>
                         From: <%= appointments.start_time.strftime("%I:%M%p") %><br>
                         To:   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
                  

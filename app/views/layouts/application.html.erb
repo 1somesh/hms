@@ -19,15 +19,15 @@
 
   <div class="header">
   <ul class="nav nav-pills" style="float: left;">
-    <li class="active"><a href="/">Home</a></li>
-    <li><a href="/home/profile">Profile</a></li>
-    <li><a href="/appointments/recent">Archived</a></li>
+    <li class="active"><a href="/"><%= t 'home' %> </a></li>
+    <li><a href="/home/profile"><%= t 'Profile' %></a></li>
+    <li><a href="/appointments/recent"><%= t 'archived' %> </a></li>
   </ul>
   <div>
 
 
   <div style="float: right;">
-  <span style="font-size: 23px;">Hello, </span><span style="font-size: 20px;"> <%= current_user.first_name %></span> &emsp;
+  <span style="font-size: 23px;"><%= t 'hello' %>, </span><span style="font-size: 20px;"> <%= current_user.first_name %></span> &emsp;
         <a href="/users/sign_out" class="btn btn-info btn-lg" data-method="delete">
           <span class="glyphicon glyphicon-log-out"></span> Log out
         </a>

@@ -2,12 +2,12 @@
 <div>
 	<% if can? :create, Appointment %>
 		<div align="right">
-		   <%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
+		   <%= link_to t('new_Appointment'), new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
 		</div>
 	<% end %>
 <div>
 
-<div class="heading" align="center">Appointment List</div>
+<div class="heading" align="center"><%= t 'appointment_list' %></div>
 </div>
 	<font color="#005CB9" face="courier" size="3">
  	<% if @appointment_list.size !=0 %>	
@@ -22,16 +22,16 @@
 
 				        	<div class="panel-body">
 							    <div align="center">
-							      	<%= link_to 'Show', appointments%>&nbsp;
+							      	<%= link_to  t('show')  , appointments%>&nbsp;
 										<% if can? :update, appointments %>
-								        	<%= link_to 'Edit', edit_appointment_path(appointments) %>&nbsp;
+								        	<%= link_to t('edit'), edit_appointment_path(appointments) %>&nbsp;
 								        <% end %>
 								        <% if can? :destroy, appointments %>	
-							     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
+							     			<%= link_to t('delete'), [appointments],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
 							     		<% end %>	
 							    </div>   
 						        <div align="left">
-						        	Status: <%= appointments.status %><br>
+						        	Status: <%= t appointments.status %><br>
 						        	From: 	<%= appointments.start_time.strftime("%I:%M%p") %><br>
 						        	To:   	<%= appointments.finish_time.strftime("%I:%M%p") %> <br>
 						        </div> 

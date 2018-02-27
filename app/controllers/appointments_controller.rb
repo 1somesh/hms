@@ -5,8 +5,9 @@ class AppointmentsController < ApplicationController
   #before_action :check_status?, only: [:edit,:update,:destroy]
   #caches_page :index  
 
+
+  #getting all the future appointments.
   def index
-    #getting all the future appointments.
     @appointment_list = current_user.future_appointment_list    
   end
 
@@ -15,8 +16,7 @@ class AppointmentsController < ApplicationController
     @appointment = current_user.patient_appointments.build
     @doctors_list = User.get_doctors_list
     @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
-    authorize! :new, @appointment
-    
+    authorize! :new, @appointment 
   end
 
   #creates appointment and sets the sidekiq background worker
@@ -27,7 +27,7 @@ class AppointmentsController < ApplicationController
     duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
     
     if @appointment.save
-       #setting the sidekiq worker
+       #creating the sidekiq worker
        ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
        @appointment.create_image(params[:appointment][:image])
        expire_page '/appointments'
@@ -70,7 +70,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.find params[:id]
     authorize! :destroy, @appointment
     @appointment.cancelled!
-    render json: {status: "cancelled"}
+    render json: {check_statuss: "cancelled"}
     flash[:success] = "Appointment cancelled!"
     expire_page '/appointments'
 
