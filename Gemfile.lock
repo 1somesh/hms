@@ -92,6 +92,11 @@ GEM
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    gmail (0.6.0)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
     hashie (3.5.7)
     i18n (0.9.3)
       concurrent-ruby (~> 1.0)
@@ -125,6 +130,7 @@ GEM
     mysql2 (0.3.21)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
+    oauth (0.5.4)
     oauth2 (1.4.0)
       faraday (>= 0.8, < 0.13)
       jwt (~> 1.0)
@@ -265,6 +271,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   fancybox-rails
+  gmail
   jbuilder (~> 2.0)
   jquery-rails
   mini_magick (= 4.8.0)

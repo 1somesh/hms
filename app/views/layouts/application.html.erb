@@ -38,16 +38,14 @@
   </div>      
 <% end %>
 
-
-
 <br>
 <br><%= yield %>
 
 <% if current_user %>
-      Signed in as <strong><%= current_user.name %></strong>!
-      <%= link_to "Sign out", signout_path, id: "sign_out" %>
+      Signed in as <strong><%= current_user.first_name %></strong>!
+      <%= link_to "Sign out","/users/sign_out", id: "sign_out" %>
 <% else %>
-      &nbsp;&nbsp;<%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+      &nbsp;&nbsp;<%= link_to "Sign in with Google", "/users/auth/google_oauth2" %>
 <% end %>
 </body>
 </html>

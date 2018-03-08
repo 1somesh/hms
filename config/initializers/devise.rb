@@ -17,6 +17,9 @@ Devise.setup do |config|
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
   require "omniauth-facebook"
   config.omniauth :facebook, "465165247233809", "d3ce08d04358c575d240899a6c5af8da"
+  config.omniauth :google_oauth2, '504981975584-lo761bhm66hcri25br4mg9hcdjn6h153.apps.googleusercontent.com',
+   'GgszwI6Xd66KuYYCIoKGefB6', {}
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 

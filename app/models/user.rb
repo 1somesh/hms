@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, omniauth_providers: %i[facebook]
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
 
   has_many :doctor_appointments  , foreign_key: :doctor_id ,  class_name: Appointment       
   has_many :patient_appointments , foreign_key: :patient_id , class_name: Appointment
