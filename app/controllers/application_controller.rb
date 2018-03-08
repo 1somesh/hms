@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user!
-  
+
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found 
   rescue_from CanCan::AccessDenied do |error| 
   	 flash[:notice] = "Access Denied"
@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
   end
   #rescue_from ActionController::RoutingError, :with => :record_not_found	
 
+    # private
+  
+    # def current_user
+    #   @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    #   puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" 
+    #   puts session[:user_id]
+    #   puts @current_user.inspect 
+    #   @current_user
+    # end
+    # helper_method :current_user 
 
     protected
 	
@@ -29,6 +39,7 @@ class ApplicationController < ActionController::Base
 	  	redirect_to '/error404'	
   	  end
 
+ 
    
  
 end

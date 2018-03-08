@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
   #before_action :should_be_patient?, only: [:new,:create,:edit,:update]
   #before_action :check_authorization, only: [:show,:edit,:update,:destroy]
   #before_action :check_status?, only: [:edit,:update,:destroy]
-  caches_page :index  
+  #caches_page :index  
 
 
   #getting all the future appointments.

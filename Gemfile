@@ -23,7 +23,8 @@ gem 'client_side_validations'
 gem 'cancancan', '~> 2.0'
 gem 'awesome_print'
 gem 'pry-rails', :group => :development
-
+gem 'omniauth-facebook', '~> 4.0'
+gem "omniauth-google-oauth2", "~> 0.2.1"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

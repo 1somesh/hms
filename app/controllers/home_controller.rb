@@ -1,10 +1,11 @@
 class HomeController < ApplicationController
 
 	def index
+
 	  	if user_signed_in?
 	  		redirect_to "/appointments"
 	  	else
-	  		redirect_to new_user_session_path 
+	  		#redirect_to new_user_session_path 
 	  	end	
 	end
 
@@ -16,7 +17,7 @@ class HomeController < ApplicationController
 	    if params[:user][:image]!= nil
 	        current_user.image.update(image: params[:user][:image])
 	    end 
-	    redirect_to "/home/profile"
+	    	redirect_to "/home/profile"
 	end  
 
 	def change_profile_pciture

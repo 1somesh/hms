@@ -1,0 +1,15 @@
+
+fr:
+  appointment_list: "Rendez-vous"
+  show: "montrer"
+  delete: "effacer"
+  home: "maison"
+  profile: "profil"
+  archived: "archivé"
+  pending: "en attendant"
+  cancelled: "annulé"
+  completed: "terminé"
+  hello: "Bonjour"
+  edit: "modifier"
+  new_Appointment: "créer un nouveau rendez-vous"
+  appointment_info: "Informations de rendez-vous"

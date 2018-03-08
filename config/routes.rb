@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   get 'appointments/recent'
 
   resources :appointments
-  devise_for :users , controllers: {registrations: "registrations", sessions: "sessions"} 
+  
+  # match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+  # match 'auth/failure', to: redirect('/'), via: [:get, :post]
+  # match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
+
+  devise_for :users , controllers: {registrations: "registrations", omniauth_callbacks: "omniauth_callbacks"} 
 
   get "appointments" => "appointments#index"
   
