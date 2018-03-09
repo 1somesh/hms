@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
         user.provider = auth.provider
         user.uid = auth.uid
         user.first_name = auth.info.name
+        user.email = auth.extra.raw_info.email
         user.oauth_token = auth.credentials.token
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
         user.skip_confirmation! 
@@ -62,6 +63,7 @@ class User < ActiveRecord::Base
           user.provider = auth["provider"]
           user.uid = auth["uid"]
           user.first_name = auth["info"]["name"]
+          user.email = auth["uid"]+"@a.com"
           user.skip_confirmation! 
       end
   end
