@@ -10,17 +10,7 @@ class ApplicationController < ActionController::Base
   	 redirect_to "/" 
   end
   #rescue_from ActionController::RoutingError, :with => :record_not_found	
-
-    # private
-  
-    # def current_user
-    #   @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    #   puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" 
-    #   puts session[:user_id]
-    #   puts @current_user.inspect 
-    #   @current_user
-    # end
-    # helper_method :current_user 
+ 
 
     protected
 	
