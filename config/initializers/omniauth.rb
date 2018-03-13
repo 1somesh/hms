@@ -1,9 +1,9 @@
 OmniAuth.config.logger = Rails.logger
+# OmniAuth.config.full_host = Rails.env.production? ? 'https://gmail.com' : 'http://localhost:3000'	
 
 # Rails.application.config.middleware.use OmniAuth::Builder do
 #   provider :facebook, '465165247233809', 'd3ce08d04358c575d240899a6c5af8da'
 # 
-
 # Rails.application.config.middleware.use OmniAuth::Builder do
 #   provider :google_oauth2, '504981975584-lo761bhm66hcri25br4mg9hcdjn6h153.apps.googleusercontent.com
 # ', 'GgszwI6Xd66KuYYCIoKGefB6',

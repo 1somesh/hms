@@ -16,7 +16,11 @@
 	 	        <div class="container" align="center">
 			          <div class="panel panel-info" align="left">
 				          	<div class="panel-heading"> 
-					          	<%= appointments.doctor.first_name %> ---
+				          		<% if current_user.patient? %>
+					          		<%= appointments.doctor.first_name %> ---
+					          	<% else %>
+					          		<%= appointments.patient.first_name %> ---
+					          	<% end %>	
 						        <%= appointments.date.strftime("%A,%d-%B'%Y") %> 
 					        </div>
 

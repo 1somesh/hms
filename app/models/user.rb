@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :twitter]
 
   has_many :doctor_appointments  , foreign_key: :doctor_id ,  class_name: Appointment       
   has_many :patient_appointments , foreign_key: :patient_id , class_name: Appointment
@@ -79,6 +79,7 @@ class User < ActiveRecord::Base
   end
 
   def self.new_with_session(params, session)
+
   if session["devise.user_attributes"]
       new(session["devise.user_attributes"], without_protection: true) do |user|
         user.attributes = params
