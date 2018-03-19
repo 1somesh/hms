@@ -1,14 +1,15 @@
 class HomeController < ApplicationController
 
+	#mapped with root route
 	def index
-
 	  	if user_signed_in?
 	  		redirect_to "/appointments"
 	  	else
-	  		#redirect_to new_user_session_path 
+	  		redirect_to new_user_session_path 
 	  	end	
 	end
 
+	#renders a form to edit user
 	def edit
 		@user = User.find(current_user.id)
 	end
@@ -29,13 +30,5 @@ class HomeController < ApplicationController
 			render 'profile'
 		end	
 	end
-	
-	def profile
-		
-	end
-
-	def error404
-		
-	end	
 
 end

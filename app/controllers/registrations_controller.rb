@@ -1,7 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
-	
-
+	#overriding default devise create action
 	def create
 		@user = User.new(sign_up_params)
 		@user.create_image(params[:user][:image])

@@ -28,7 +28,7 @@ class Appointment < ActiveRecord::Base
       queue.each do |job| 
           if job.args[0].to_i == self.id
             current_job = Sidekiq::ScheduledSet.new.find_job(job.jid)
-            current_job.reschedule (self.date + (duration.strftime("%H").to_i + start_time.to_i)*60*60+7*3600)
+            current_job.reschedule (self.date + (duration.strftime("%H").to_i + start_time.to_i)*60*60)
           end  
       end    
   end

@@ -2,17 +2,11 @@ jQuery(function() {
   $("a.fancybox").fancybox();
 });
 
+
 $(document).on('change','.appointment_dates',function () {
  	get_appointment_slot();
 });
 
-
-function create_list(response){
-	list = response.slots.map(slot => "<div class=slot_item ><input type=radio value="+slot+":00:00 name=appointment[start_time]> "+ 
-								slot+":00 AM"
-								+"<br></div><br>");
-	return list;
-}
 
 function get_appointment_slot(data,event){
 	year = $("#appointment_date_1i").val();
@@ -39,7 +33,7 @@ function get_appointment_slot(data,event){
 						}
 				}
 				else{
-				    hide_slot_item()
+				    hide_slot_item();
 					alert("please select a future date");
 				}
 		},
@@ -50,9 +44,18 @@ function get_appointment_slot(data,event){
 );}
 
 
+
 $(document).on("ajax:success",'.container',function(){
 		$(this).remove();
 });
+
+
+function create_list(response){
+	list = response.slots.map(slot => "<div class=slot_item ><input type=radio value="+slot+":00:00 name=appointment[start_time]> "+ 
+								slot+":00 AM"
+								+"<br></div><br>");
+	return list;
+}
 
 
 $(document).on('change',"#user_role",function(){

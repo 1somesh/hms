@@ -51,11 +51,6 @@
     color: black;
 }
 
-.profile_pic{
-    height: 50px;
-    width: 50px;
-}
-
 .center_div{
     padding-left: 310px;
     padding-right: 230px;
@@ -63,6 +58,17 @@
 
 .appointment_div{
     padding-left:50px;
+}
+
+.flash_messages{
+    color: rgb(12,12,75);
+    font-size: 36px ;
+}
+
+.images{
+    display: inline-block;
+    height:200px;
+    width: 200px;
 }
 
 
@@ -79,16 +85,7 @@
     float: right;
 }
 
-.flash_messages{
-    color: rgb(12,12,75);
-    font-size: 36px ;
-}
 
-.images{
-    display: inline-block;
-    height:200px;
-    width: 200px;
-}
 
 
 

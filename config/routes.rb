@@ -4,13 +4,7 @@ Rails.application.routes.draw do
   get 'appointments/recent'
 
   resources :appointments
-  
-  # match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
-  # match 'auth/failure', to: redirect('/'), via: [:get, :post]
-  # match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
-  # scope :user do
-  #  get "/auth/twitter/callback" => "omniauth_callbacks#twitter"
-  # end 
+
   devise_for :users , controllers: {registrations: "registrations", omniauth_callbacks: "omniauth_callbacks"} 
 
   get "appointments" => "appointments#index"
@@ -31,7 +25,6 @@ Rails.application.routes.draw do
   get  "home/edit"
   post "home/profile" => "home#change_profile_pciture"
   patch "home/:id" => "home#update"
-  get 'error404' => "home#error404"
   get '*path'   => 'home#error404'
 
   
