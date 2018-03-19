@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :twitter]
+
+  scope :get_doctors_list, -> {all.doctor}      
 
   has_many :doctor_appointments  , foreign_key: :doctor_id ,  class_name: Appointment       
   has_many :patient_appointments , foreign_key: :patient_id , class_name: Appointment
@@ -10,13 +12,14 @@ class User < ActiveRecord::Base
   has_many :patients, through: :doctor_appointments
   has_many :doctors,  through: :patient_appointments
 
-  has_one :image ,as: :imageable
+  has_one :image, as: :imageable
   
   has_one :doctor_profile ,foreign_key: :doctor_id, class_name: 'Doctorprofile' ,dependent: :destroy
   enum role: [:doctor,:patient]
   attr_accessor :duration
 
-  validates :first_name ,presence: true
+  validates :first_name, presence: true
+  # validates :email, uniqueness: true, if: 'provider.blank?'   
 
   #returns the list of future appointments of user
   def future_appointment_list
@@ -41,11 +44,8 @@ class User < ActiveRecord::Base
     self.image = Image.new(image: image)
   end  
 
-  def self.get_doctors_list
-    User.all.doctor
-  end
 
-   def self.from_omniauth(auth)
+  def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
         user.provider = auth.provider
         user.uid = auth.uid
@@ -62,33 +62,19 @@ class User < ActiveRecord::Base
       create! do |user|
           user.provider = auth["provider"]
           user.uid = auth["uid"]
+          #user.email = auth["uid"]+"@a.com"
           user.first_name = auth["info"]["name"]
-          user.email = auth["uid"]+"@a.com"
           user.skip_confirmation! 
       end
   end
 
-
   def password_required?
-    super && provider.blank?
+      super && provider.blank?
   end
 
 
   def email_required?
-    super && provider.blank?
+      super && provider.blank?
   end
-
-  def self.new_with_session(params, session)
-
-  if session["devise.user_attributes"]
-      new(session["devise.user_attributes"], without_protection: true) do |user|
-        user.attributes = params
-        user.valid?
-      end
-      else
-        super
-      end
-  end
-
 
 end

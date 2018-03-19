@@ -34,7 +34,6 @@ class Appointment < ActiveRecord::Base
   end
 
 
-
   def initialize_note(user_id,note)
   	self.notes.new(user_id: user_id, description: note)
   end

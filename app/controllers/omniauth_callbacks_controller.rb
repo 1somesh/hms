@@ -16,6 +16,11 @@
    	    check_persistance(user)
 	end
 
+
+  	def failure
+    	redirect_to root_path
+  	end
+
 	private
 
 	def check_persistance (user)

@@ -22,17 +22,17 @@ class AppointmentsController < ApplicationController
       @appointment.initialize_note(current_user.id,@appointment.note)
       duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
     
-    if @appointment.save
-        ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60,@appointment.id)
-        @appointment.create_image(params[:appointment][:image])
-        flash[:success] = "Appointment Created!"
-        redirect_to '/appointments'
-    else
-        time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
-        @slots = Appointment.get_booked_slots(@appointment.doctor.id,time.strftime("%Y-%m-%d"))
-        @doctors_list = User.get_doctors_list
-        render 'new'
-    end  
+      if @appointment.save
+          ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60,@appointment.id)
+          @appointment.create_image(params[:appointment][:image])
+          flash[:success] = "Appointment Created!"
+          redirect_to '/appointments'
+      else
+          time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
+          @slots = Appointment.get_booked_slots(@appointment.doctor.id,time.strftime("%Y-%m-%d"))
+          @doctors_list = User.get_doctors_list
+          render 'new'
+      end  
 
   end
 
@@ -117,11 +117,4 @@ end
          redirect_to "/error404"
       end  
   end
-
-  #only pendind appointments can be cancelled or edited
-  # def check_status?
-  #   if !Appointment.find(params[:id]).pending? 
-  #       redirect_to "/appointments"
-  #   end  
-  # end
-
+  
