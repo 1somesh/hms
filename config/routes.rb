@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get 'error404' => "home#error404"
   get '*path'   => 'home#error404'
 
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

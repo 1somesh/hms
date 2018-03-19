@@ -1,11 +1,7 @@
 class AppointmentsController < ApplicationController
   
-  #before_action :should_be_patient?, only: [:new,:create,:edit,:update]
-  #before_action :check_authorization, only: [:show,:edit,:update,:destroy]
-  #before_action :check_status?, only: [:edit,:update,:destroy]
 
-
-  #getting all the future appointments.
+  #returns  the list of future appointments.
   def index
     @appointment_list = current_user.future_appointment_list    
   end
@@ -29,7 +25,6 @@ class AppointmentsController < ApplicationController
        #creating the sidekiq worker
        ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60+7*3600,@appointment.id)
        @appointment.create_image(params[:appointment][:image])
-       expire_page '/appointments'
        flash[:success] = "Appointment created!"
        redirect_to '/appointments'
     else
@@ -59,7 +54,6 @@ class AppointmentsController < ApplicationController
          @appointment.update_attributes(appointment_update_params)
          @appointment.update_worker(params[:appointment][:start_time],duration)
       end
-      expire_page '/appointments'      
       flash[:success] = "Appointment updated!"
       redirect_to "/appointments" 
   end
@@ -71,7 +65,6 @@ class AppointmentsController < ApplicationController
     @appointment.cancelled!
     render json: {status: "cancelled"}
     flash[:success] = "Appointment cancelled!"
-    expire_page '/appointments'
 
   end
 
