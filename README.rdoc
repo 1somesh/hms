@@ -3,11 +3,19 @@
 This is a Hospital Management Demo Application.The App have two types of users 'Doctor' and  'Patient'.The patient can book an appointment with any of the avilable doctors, modify the currently booked appointment and can even delete the current booked ppointment.Both the 'doctor' and 'Patient' can add 'notes' of an appointment and can also upload the image.
 Features:
 
-Sidekiq for background task handeling, 
+'Sidekiq' for background task handeling, 
+
 Login with facebook,gmail,twitter, 
+
 'cancancan' gem for authorisation, 
+
 'devise' gem for the user model, 
+
 'actionpack-action_caching' gem for cacheing, 
+
 'will_paginate' gem for pagination, 
+
+'facncy-box' for displaying images, 
+
 'carrierwave' gem for image ulpoading
 
