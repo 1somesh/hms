@@ -6,7 +6,8 @@ Features:
 Sidekiq for background task handeling, 
 Login with facebook,gmail,twitter, 
 'cancancan' gem for authorisation, 
-devise for the user model, 
+'devise' gem for the user model, 
+'actionpack-action_caching' gem for cacheing, 
 'will_paginate' gem for pagination, 
 'carrierwave' gem for image ulpoading
 
