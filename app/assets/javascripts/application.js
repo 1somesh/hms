@@ -16,6 +16,5 @@
 //= require bootstrap
 //= require turbolinks
 //= require fancybox
-//= require rails.validations
 //= require_tree
 
