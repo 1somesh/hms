@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   
   before_action :authenticate_user!
+  caches_page :index
 
   #returns  the list of future appointments.
   def index
@@ -26,6 +27,7 @@ class AppointmentsController < ApplicationController
           ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60,@appointment.id)
           @appointment.create_image(params[:appointment][:image])
           flash[:success] = "Appointment Created!"
+          expire_page '/appointments'
           redirect_to '/appointments'
       else
           time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
@@ -38,7 +40,7 @@ class AppointmentsController < ApplicationController
 
   #update the appointment and the sidekiq worker
   def update
-      @appointment = Appointment.find params[:id]  
+      @appointment = Appointment.find_by_id params[:id]  
       authorize! :update, @appointment
       duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
       @appointment.create_image(params[:appointment][:image]) 
@@ -54,22 +56,24 @@ class AppointmentsController < ApplicationController
          @appointment.update_attributes(appointment_update_params)
          @appointment.update_worker(params[:appointment][:start_time],duration)
       end
+      expire_page '/appointments'
       flash[:success] = "Appointment Updated!"
       redirect_to "/appointments" 
   end
 
   #changes the status of appointment from pending to cancelled
   def destroy
-      @appointment = Appointment.find params[:id]
+      @appointment = Appointment.find_by_id params[:id]
       authorize! :destroy, @appointment
       @appointment.cancelled!
       render json: {status: "cancelled"}
+      expire_page '/appointments'
       flash[:success] = "Appointment Cancelled!"
   end
 
   #display the appointments notes and related informations
   def show
-      @appointment = Appointment.find(params[:id])
+      @appointment = Appointment.find_by_id params[:id]
       authorize! :show, @appointment
       @patient = @appointment.patient
       @notes = @appointment.notes
@@ -77,7 +81,7 @@ class AppointmentsController < ApplicationController
 
   #renders a edit page to modify curent booked appointment
   def edit
-      @appointment = Appointment.find params[:id]
+      @appointment = Appointment.find_by_id params[:id]
       authorize! :edit, @appointment    
       @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
   end
@@ -110,11 +114,5 @@ end
       params.require(:appointment).permit(:date,:start_time)
   end
 
-  #only the doctor or patient of a appointment can change the appointment details
-  def check_authorization
-      appointment = Appointment.find params[:id]  
-      if current_user != appointment.doctor && current_user!= appointment.patient
-         redirect_to "/error404"
-      end  
-  end
+
   
