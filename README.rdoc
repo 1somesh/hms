@@ -1,28 +1,11 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Hospital Management Demo Application.The App have two types of users 'Doctor' and  'Patient'.The patient can book an appointment with any of the avilable doctors, modify the currently booked appointment and can even delete the current booked ppointment.Both the 'doctor' and 'Patient' can add 'notes' of an appointment and can also upload the image.
+Features:
 
-Things you may want to cover:
+Sidekiq for background task handeling
+Login with facebook,gmail,twitter
+'cancancan' gem for authorisation
+devise for the user model
+'carrierwave' gem for image ulpoading
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
