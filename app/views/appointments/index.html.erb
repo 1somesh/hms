@@ -6,7 +6,6 @@
 		</div>
 	<% end %>
 <div>
-
 <div class="heading" align="center">Appointment List</div>
 </div>
 	<font color="#005CB9" face="courier" size="3">
@@ -48,6 +47,7 @@
        <i>	There are no Appointments.</i>
    	<% end %>
   	</font>	  	
+  	<div> <%= will_paginate @appointment_list %> </div>
 </div>
 
 							       

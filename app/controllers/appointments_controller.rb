@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
 
   #returns  the list of future appointments.
   def index
-      @appointment_list = current_user.future_appointment_list    
+      @appointment_list = current_user.future_appointment_list.paginate(:page => params[:page], :per_page => 15)
   end
 
   #renders the new apointment form 
@@ -88,7 +88,7 @@ class AppointmentsController < ApplicationController
 
   #gives list of all archived, both completed and cancelled appointments
   def recent
-      @appointments = current_user.past_appointment_list
+      @appointments = current_user.past_appointment_list.paginate(:page => params[:page], :per_page => 15)
   end
 
   #returns available slots for a doctor on the specified day
