@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
+require 'sidekiq/web'
 
+  #root_url
   root 'home#index'
-  get 'appointments/recent'
+  
+  #sidekiq GUI dashboard
+  mount Sidekiq::Web => "/sidekiq"
 
   resources :appointments
 
+  #Overwridden devise default user controllers
   devise_for :users , controllers: {registrations: "registrations", omniauth_callbacks: "omniauth_callbacks", sessions: "sessions"} 
 
-  get "appointments" => "appointments#index"
-  
   resources :users do 
       resources :notes
   end  
@@ -17,14 +20,26 @@ Rails.application.routes.draw do
     resources :notes 
   end
 
-  require 'sidekiq/web'
-  mount Sidekiq::Web => "/sidekiq"
 
+  get "appointments" => "appointments#index"
+
+  #show all recebt Appointments of user
+  get 'appointments/recent'
+  
+
+  #show user profile
   get  "home/profile"
+
+  #shows the available slots of a doctor on a give date
   post "appointments/slots" => "appointments#get_available_slots"
+
+  #edit user profile
   get  "home/edit"
+
+  #change profile picture
   post "home/profile" => "home#change_profile_pciture"
-  patch "home/:id" => "home#update"
+
+  #handling other urls
   get '*path'   => 'home#error404'
 
   

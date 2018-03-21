@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :twitter]
 
+  #fetch list of all doctors
   scope :get_doctors_list, -> {all.doctor}      
 
   has_many :doctor_appointments, foreign_key: :doctor_id ,  class_name: :Appointment       
@@ -24,26 +25,31 @@ class User < ActiveRecord::Base
   #returns the list of future appointments of user
   def future_appointment_list      
       if self.doctor?
-          @list = Appointment.includes(:patient).where(["date > ? AND doctor_id = ? AND status = ?" ,Time.now.strftime("%Y-%m-%d"),self.id,"pending"]).order(:date)
+          @list = Appointment.includes(:patient).where(["date > ? AND doctor_id = ?" ,Time.now.strftime("%Y-%m-%d"),
+          self.id]).order(:date).pending
       else
-          @list = Appointment.includes(:doctor).where(["date > ? AND doctor_id = ? AND status = ?" ,Time.now.strftime("%Y-%m-%d"),self.id,"pending"]).order(:date)
+          @list = Appointment.includes(:doctor).where(["date > ? AND doctor_id = ?" ,Time.now.strftime("%Y-%m-%d"),
+          self.id]).order(:date).pending
       end
   end 
  
   #returns the list of archived appointments of user both (completed and cancelled)
   def past_appointment_list
       if self.doctor?
-          @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,Date.today ,"pending"]).order(:date)
+          @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,
+          Date.today, "pending"]).order(:date)
       else
-          @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,Date.today, "pending"]).order(:date)
+          @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,
+          Date.today, "pending"]).order(:date)
       end  
   end 
 
+  #creates a new imgae object for user
   def create_image(image)
       self.image = Image.new(image: image)
   end  
 
-
+  #Method to return or create new user for facebook and gmail providers
   def self.from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
           user.provider = auth.provider
@@ -57,6 +63,7 @@ class User < ActiveRecord::Base
       end
   end
 
+  #Method to return or create new user for Twitter as provider
   def self.create_with_omniauth(auth)
       create! do |user|
           user.provider = auth.provider
@@ -66,13 +73,17 @@ class User < ActiveRecord::Base
       end
   end
 
+  #override
   def password_required?
       super && provider.blank?
   end
 
-
+  #override
   def email_required?
       super && provider.blank?
   end
 
 end
+
+
+      

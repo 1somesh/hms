@@ -12,15 +12,9 @@ class HomeController < ApplicationController
 	#renders a form to edit user
 	def edit
 		@user = User.find(current_user.id)
-	end
+	end 
 
-	def update
-	    if params[:user][:image]!= nil
-	        current_user.image.update(image: params[:user][:image])
-	    end 
-	    	redirect_to "/home/profile"
-	end  
-
+	#changes the profile picture of the user
 	def change_profile_pciture
 		image = params[:user][:image]
 		current_user.create_image(params[:user][:image])

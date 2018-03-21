@@ -5,6 +5,7 @@ class NotesController < ApplicationController
 		
 	end
 
+	#create a new Note for An Appointment
 	def create
 		@appointment = Appointment.find params[:appointment_id]
 		@appointment.initialize_note(current_user.id, params[:note][:description])

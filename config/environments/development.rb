@@ -39,11 +39,11 @@
   config.assets.raise_runtime_errors = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    user_name:      'mindfire06@gmail.com',
-    password:       'mindfiresolutions',
+    user_name:      Rails.application.secrets.COMPANY_EMAIL,
+    password:       Rails.application.secrets.COMPANY_PASSWORD,
     domain:         'localhost:3000',
-    address:       'smtp.gmail.com',
-    port:          '587',
+    address:        'smtp.gmail.com',
+    port:           '587',
     authentication: :plain,
     enable_starttls_auto: true
   }
