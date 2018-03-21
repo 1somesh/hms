@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
 
   #returns the list of future appointments of user
-  def future_appointment_list
+  def future_appointment_list      
       if self.doctor?
           @list = Appointment.includes(:patient).where(["date > ? AND doctor_id = ? AND status = ?" ,Time.now.strftime("%Y-%m-%d"),self.id,"pending"]).order(:date)
       else

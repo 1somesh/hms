@@ -66,12 +66,12 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find_by_id params[:id]
       authorize! :destroy, @appointment
       @appointment.cancelled!
-      render json: {status: "cancelled"}
       expire_page '/appointments'
       flash[:success] = "Appointment Cancelled!"
+      render json: {status: "cancelled"}
   end
 
-  #display the appointments notes and related informations
+  #display ths appointment's notes and related informations
   def show
       @appointment = Appointment.find_by_id params[:id]
       authorize! :show, @appointment

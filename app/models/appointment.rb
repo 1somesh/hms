@@ -1,9 +1,9 @@
 class Appointment < ActiveRecord::Base
 
-	belongs_to :doctor  ,class_name: :User
-	belongs_to :patient ,class_name: :User
+	belongs_to :doctor , class_name: :User
+	belongs_to :patient, class_name: :User
 	has_many :notes
-	has_many :images ,as: :imageable
+	has_many :images, as: :imageable
 
 	validate :start_time_present?
 	validate :check_appointment_date
@@ -47,7 +47,7 @@ class Appointment < ActiveRecord::Base
 
 
   def create_image(image)
-    self.images.create(image: image) if !image.blank?
+    self.images.create(image: image) if image.present?
   end
 
 
@@ -65,14 +65,14 @@ class Appointment < ActiveRecord::Base
 
     time = 5
     loop do 
-          bool = true
+          unbooked_slot = true
           appointments.each do |app|
                 if app.start_time.strftime('%H').to_i  == time
-                  bool = false
+                  unbooked_slot = false
                 end
           end
 
-          if bool
+          if unbooked_slot
               list.push(time)
           end 
 

@@ -1,9 +1,10 @@
 # require 'rake'
-namespace :qwerty do
-	desc "gives a list of first names of all the users"
-	task :mytask => :environment do
-		User.all.each do |a|
-			puts a.first_name
-		end	
+namespace :hms do
+	desc "Sends an email to all users with given subjet and description."
+	task :notify_all, [:subject,:description] => :environment do |t,args|
+		 User.all.each do |u|
+	 		HospitalManagementMailer.notify(u,args.subject,args.description).deliver
+		 end	
 	end
+
 end	

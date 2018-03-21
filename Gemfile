@@ -16,10 +16,8 @@ gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'bullet', group: :development
 gem 'rack-mini-profiler'
-gem 'whenever', :require => false
 gem 'mini_magick', '4.8.0'
 gem 'fancybox-rails'
-gem 'client_side_validations'
 gem 'cancancan', '~> 2.0'
 gem 'awesome_print'
 gem 'pry-rails', :group => :development
