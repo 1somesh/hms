@@ -13,7 +13,7 @@
 
 /config/secrets.yml
 /config/database.yml
-
+/public/*
 
 # Ignore all logfiles and tempfiles.
 /log/*

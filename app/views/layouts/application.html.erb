@@ -2,29 +2,31 @@
 <html>
 <head>
     <title>Doctor patient</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
 </head>
 <body>
 <% flash.each do |key, value| %>
-    <div align="center" class="flash_messages"><%= content_tag(:div, value, :class => "flash #{key}") %></div>
+    <div align="center" class="flash_messages">
+        <%= content_tag(:div, value, :class => "flash #{key}") %>      
+    </div>
 <% end %>
 
 <% if user_signed_in? %><br><br>
     <div class="header">
-        <ul class="nav nav-pills" style="float: left;">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/home/profile">Profile</a></li>
-          <li><a href="/appointments/recent">Archived</a></li>
+        <ul class="nav_bar nav nav-pills">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/home/profile">Profile</a></li>
+            <li><a href="/appointments/recent">Archived</a></li>
         </ul>
         <div>
-            <div style="float: right;">
-                <span style="font-size: 23px;">Hello, </span><span style="font-size: 20px;"> 
+            <div class="welcome_greeting">
+                <span class="hello_greeting">Hello, </span><span class="user_name"> 
                      <%= current_user.first_name %>
                 </span> &emsp;
                 <a href="/users/sign_out" class="btn btn-info btn-lg" data-method="delete">
-                  <span class="glyphicon glyphicon-log-out"></span> Log out
+                    <span class="glyphicon glyphicon-log-out"></span> Log out
                 </a>
             </div>
         </div><br><br><br>

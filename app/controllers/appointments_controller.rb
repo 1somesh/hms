@@ -46,7 +46,7 @@ class AppointmentsController < ApplicationController
       @appointment.create_image(params[:appointment][:image]) 
       new_date = Appointment.get_new_date(params.require(:appointment).permit(:date))
 
-      if params[:appointment][:start_time] == nil
+      if params[:appointment][:start_time].nil?
          if @appointment.date.strftime("%Y-%m-%d").to_date != new_date
             @appointment.errors.add('appointment','Select a Appointment Time')
             @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)

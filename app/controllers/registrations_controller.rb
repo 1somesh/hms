@@ -4,7 +4,7 @@ class RegistrationsController < Devise::RegistrationsController
 	def create
 		@user = User.new(sign_up_params)
 		@user.create_image(params[:user][:image])
-		if params[:user][:role]=="doctor"
+		if @user.doctor?
 			@user.doctor_profile = Doctorprofile.new(appointment_duration:  @user.duration)
 		end	
 
