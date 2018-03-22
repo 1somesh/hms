@@ -6,6 +6,9 @@ class AppointmentsController < ApplicationController
   #returns  the list of future appointments.
   def index
       @appointment_list = current_user.future_appointment_list.paginate(:page => params[:page], :per_page => 15)
+      respond_to do |format|
+          format.html 
+      end  
   end
 
   #renders the new apointment form 
@@ -14,6 +17,9 @@ class AppointmentsController < ApplicationController
       @doctors_list = User.get_doctors_list
       @slots = Appointment.get_booked_slots(User.doctor.first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
       authorize! :new, @appointment 
+      respond_to do |format|
+          format.html 
+      end 
   end
 
   #creates appointment and sets the sidekiq background worker
@@ -77,6 +83,9 @@ class AppointmentsController < ApplicationController
       authorize! :show, @appointment
       @patient = @appointment.patient
       @notes = @appointment.notes
+      respond_to do |format|
+          format.html 
+      end 
   end
 
   #renders a edit page to modify curent booked appointment
@@ -84,6 +93,9 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find_by_id params[:id]
       authorize! :edit, @appointment    
       @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
+      respond_to do |format|
+          format.html 
+      end 
   end
 
   #gives list of all archived, both completed and cancelled appointments

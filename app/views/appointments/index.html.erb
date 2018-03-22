@@ -11,32 +11,32 @@
 	<font  color="#005CB9" face="courier" size="3">
  	<% if @appointment_list.size !=0 %>	
  		<div class="panel-group">
- 	    	<% @appointment_list.each do |appointments| %><br />
-	 	        <div class="container" align="center">
+ 	    	<% @appointment_list.each do |appointment| %><br />
+ 	 	        <div class="container" align="center">
 			          <div class="panel panel-info" align="left">
 				          	<div class="panel-heading"> 
 				          		<% if current_user.patient? %>
-					          		<%= appointments.doctor.first_name %> ---
+					          		<%= appointment.doctor.first_name %> ---
 					          	<% else %>
-					          		<%= appointments.patient.first_name %> ---
+					          		<%= appointment.patient.first_name %> ---
 					          	<% end %>	
-						        <%= appointments.date.strftime("%A,%d-%B'%Y") %> 
+						        <%= appointment.date.strftime("%A,%d-%B'%Y") %> 
 					        </div>
 
 				        	<div class="panel-body">
 							    <div align="center">
-							      	<%= link_to 'Show', appointments%>&nbsp;
-										<% if can? :update, appointments %>
-								        	<%= link_to 'Edit', edit_appointment_path(appointments) %>&nbsp;
+							      	<%= link_to 'Show', appointment%>&nbsp;
+										<% if can? :update, appointment %>
+								        	<%= link_to 'Edit', edit_appointment_path(appointment) %>&nbsp;
 								        <% end %>
-								        <% if can? :destroy, appointments %>	
-							     			<%= link_to 'Delete', [appointments],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
+								        <% if can? :destroy, appointment %>	
+							     			<%= link_to 'Delete', [appointment],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
 							     		<% end %>	
 							    </div>   
 						        <div align="left">
-						        	Status: <%= appointments.status %><br>
-						        	From: 	<%= appointments.start_time.strftime("%I:%M%p") %><br>
-						        	To:   	<%= appointments.finish_time.strftime("%I:%M%p") %> <br>
+						        	Status: <%= appointment.status %><br>
+						        	From: 	<%= appointment.start_time.strftime("%I:%M%p") %><br>
+						        	To:   	<%= appointment.finish_time.strftime("%I:%M%p") %> <br>
 						        </div> 
 							</div>
 			        	</div>

@@ -12,6 +12,9 @@ class HomeController < ApplicationController
 	#renders a form to edit user
 	def edit
 		@user = User.find(current_user.id)
+		respond_to do |format|
+        	 format.html 
+      	end 
 	end 
 
 	#changes the profile picture of the user

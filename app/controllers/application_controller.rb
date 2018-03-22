@@ -8,18 +8,11 @@ class ApplicationController < ActionController::Base
   	 flash[:notice] = "Access Denied"
   	 redirect_to "/" 
   end
-  
-    protected
-	
-	  def should_be_patient?
-	    redirect_to '/' and return if current_user.blank?
-	    redirect_to '/', notice: 'Invalid authorization' and return unless current_user.patient?
-	    return if current_user.patient?
-	  end
 
-	  def should_be_doctor?
-	    redirect_to '/' and return if current_user.blank?
-	    redirect_to '/' and return if current_user.patient?
-	  end  
+  rescue_from ActionController::UnknownFormat, with: :format_not_supported
+
+  def format_not_supported
+    	render(text: 'This format is not supported by the Application', status: 404)
+  end
  
 end

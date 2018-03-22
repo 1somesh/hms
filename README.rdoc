@@ -19,3 +19,7 @@ Login with facebook,gmail,twitter,
 
 'carrierwave' gem for image ulpoading
 
+rake tasks are added as utility
+
+corn jobs are added for notifing 'doctors'
+

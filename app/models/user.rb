@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
           @list = Appointment.includes(:patient).where(["date > ? AND doctor_id = ?" ,Time.now.strftime("%Y-%m-%d"),
           self.id]).order(:date).pending
       else
-          @list = Appointment.includes(:doctor).where(["date > ? AND doctor_id = ?" ,Time.now.strftime("%Y-%m-%d"),
+          @list = Appointment.includes(:doctor).where(["date > ? AND patient_id = ?" ,Time.now.strftime("%Y-%m-%d"),
           self.id]).order(:date).pending
       end
   end 
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
           @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,
           Date.today, "pending"]).order(:date)
       else
-          @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,
+          @list = Appointment.includes(:doctor).where(patitent_id: self.id).where(["date <= ? OR status!= ?" ,
           Date.today, "pending"]).order(:date)
       end  
   end 
