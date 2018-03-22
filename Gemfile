@@ -20,6 +20,7 @@ gem 'mini_magick', '4.8.0'
 gem 'fancybox-rails'
 gem 'cancancan', '~> 2.0'
 gem 'awesome_print'
+gem 'will_paginate-bootstrap4'
 gem 'pry-rails', :group => :development
 gem 'omniauth-facebook', '~> 4.0'
 gem "gmail"

@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
           @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,
           Date.today, "pending"]).order(:date)
       else
-          @list = Appointment.includes(:doctor).where(patitent_id: self.id).where(["date <= ? OR status!= ?" ,
+          @list = Appointment.includes(:doctor).where(patient_id: self.id).where(["date <= ? OR status!= ?" ,
           Date.today, "pending"]).order(:date)
       end  
   end 

@@ -21,5 +21,5 @@ Login with facebook,gmail,twitter,
 
 rake tasks are added as utility
 
-corn jobs are added for notifing 'doctors'
+'whenever' gem to create corn jobs are added for notifing 'doctors'
 

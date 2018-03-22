@@ -7,6 +7,8 @@ require 'sidekiq/web'
   #sidekiq GUI dashboard
   mount Sidekiq::Web => "/sidekiq"
 
+  get 'appointments/recent'
+
   resources :appointments
 
   #Overwridden devise default user controllers
@@ -24,7 +26,6 @@ require 'sidekiq/web'
   get "appointments" => "appointments#index"
 
   #show all recebt Appointments of user
-  get 'appointments/recent'
   
 
   #show user profile
