@@ -1,6 +1,6 @@
 <div class="heading" align="center">Profile</div>
-<div align="center">
-	<div class="center_div_form" id="profile_form">
+<div align="center" >
+	<div class="container well" id="profile_form">
 		<div class="profile_image">
 			<%= render 'profile_card' %>
 		</div>
@@ -23,12 +23,11 @@
 		    <div class="profile_image_upload">
 		    </div><br>
 		    <% end %>
-		    <%= link_to "Edit Profile", edit_user_registration_path(current_user),class: "btn btn-primary" %><br><br>
+		    <%= link_to "Edit Profile", edit_user_registration_path(current_user),class: "btn btn-primary" %>
+		    <a href="/appointments" class="btn btn-info btn-lg">
+      			<span class="glyphicon glyphicon-step-backward"></span>Back
+    		</a>
 		</div>
 	</div>
 </div>
-<div >
-    <a href="/appointments" class="btn btn-info btn-lg">
-      	<span class="glyphicon glyphicon-step-backward"></span>Back
-    </a>
-</div> 
+ 

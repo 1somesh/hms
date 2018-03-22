@@ -49,6 +49,21 @@ $(document).on("ajax:success",'.container',function(){
 		$(this).remove();
 });
 
+$(document).on('change',"#user_role",function(){
+	if($("#user_role").val()=="doctor")
+		$("#doctor_duration").show();
+	
+	else{
+		if($("#doctor_duration").length !=0)
+			$("#doctor_duration").hide();
+	}
+});
+
+$(document).ready(function(){
+		if($("#user_role").val()=="patient" && $("#doctor_duration").length !=0)
+				$("#doctor_duration").hide();
+			
+});
 
 function create_list(response){
 	list = response.slots.map(slot => "<div class=slot_item ><input type=radio value="+slot+":00:00 name=appointment[start_time]> "+ 
@@ -58,20 +73,6 @@ function create_list(response){
 }
 
 
-$(document).on('change',"#user_role",function(){
-	if($("#user_role").val()=="doctor"){
-		$("#doctor_duration").show();
-	}
-	else{
-		if($("#doctor_duration").length !=0)
-			$("#doctor_duration").hide();
-	}
-});
 
-$(document).ready(function(){
-		if($("#user_role").val()=="patient" && $("#doctor_duration").length !=0)
-			$("#doctor_duration").hide();
-		
-});
 
 
