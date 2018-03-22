@@ -6,5 +6,4 @@ namespace :hms do
 	 		HospitalManagementMailer.notify(u,args.subject,args.description).deliver
 		 end	
 	end
-
 end	

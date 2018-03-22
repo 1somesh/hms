@@ -7,9 +7,10 @@
 #
 # set :output, "/path/to/my/cron_log.log"
 #
+
 set :output, 'log/whenever.log'
-every 1.minutes do
-  rake "mytask"
+every :sunday, at: '12pm' do # Use any day of the week or :weekend, :weekday
+  	rake "hms:profile_updater"
 end
 
 # every 4.days do

@@ -12,7 +12,7 @@ class AppointmentsController < ApplicationController
   def new
       @appointment = current_user.patient_appointments.build
       @doctors_list = User.get_doctors_list
-      @slots = Appointment.get_booked_slots(User.where(role: "doctor").first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
+      @slots = Appointment.get_booked_slots(User.doctor.first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
       authorize! :new, @appointment 
   end
 

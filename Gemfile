@@ -27,6 +27,7 @@ gem "omniauth-google-oauth2"
 gem 'omniauth-twitter'
 gem 'will_paginate', '~> 3.1', '>= 3.1.6'# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+gem 'whenever', require: false
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
