@@ -16,14 +16,10 @@
       </div><br>
     <% end %> 
 </div>
-<!-- new_appointment_note_path(@appointment,@appointment.notes.build) -->
-<%= link_to "Add note",new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "btn btn-primary add_note_btn" %><br><br>
-<%#= link_to "abcd", appointment_notes_path(@appointment,@appointment.notes.build,description: ""), method: "post" %> 
+<%= link_to "Add note",new_appointment_note_path(@appointment,@appointment.notes.build), remote: true,class: "btn btn-primary add_note_btn" %><br><br> 
 
 <div class="add_note">
-    <%= form_for [@appointment,@appointment.notes.build] ,remote: true do |f| %>
-        <%= hidden_field_tag 'note[user_id]' ,current_user.id %>
-        <%= hidden_field_tag 'note[by]', current_user.first_name %>
+    <%= form_for [@appointment,@note] ,remote: true do |f| %>
         <div class="note_form">
         </div>
     <% end %>
@@ -41,8 +37,8 @@
     <% end %>
 </div>
  
-<div>
-    <a href="/appointments" class="btn btn-info btn-lg">
-       <span class="glyphicon glyphicon-step-backward"></span>Back
-    </a>
-</div><br>    
+<a href="/appointments">
+      <button type="button" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-fast-backward"></span> Back
+      </button>
+   </a><br>    

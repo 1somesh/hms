@@ -1,10 +1,10 @@
-<div class="card" align="left" style="width:250px;border-style:solid; ;border-width: thin;">
+<div class="card" align="left" style="width:220px;border-style:solid; ;border-width: thin;">
 	<img class="card-img-top" src=
 	<% if doctor.image.present? %>
 	 	<%=	doctor.image.image_url.to_s %>
 	<% end %> alt="Card image" style="width:100%">
 	<div class="card-body">
-  		<h4 class="card-title"><%= doctor.first_name %></h4>
+  		<h3 class="card-title"><i><%= doctor.first_name %></i></h3>
   		<p class="card-text"><%= doctor.first_name %> is <%= doctor.doctor_profile.experience %> years experienced, <br>specialized as <%= doctor.doctor_profile.specialization %></p>
 	</div>
 </div> <br>	
