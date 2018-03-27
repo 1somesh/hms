@@ -63,14 +63,15 @@ class User < ActiveRecord::Base
       end
   end
 
-  #Method to return or create new user for Twitter as provider
-  def self.create_with_omniauth(auth)
-      create! do |user|
-          user.provider = auth.provider
-          user.uid = auth.uid
-          user.first_name = auth.info.name
-          user.skip_confirmation! 
+  def self.from_omniauth(access_token)
+      data = access_token.info
+      user = User.where(email: data['email']).first
+      # users to be created if they don't exist
+      unless user
+        user = User.create(first_name: data['name'], email: data['email'], password: Devise.friendly_token[0,20])
       end
+      user.skip_confirmation!
+      user
   end
 
   #override
