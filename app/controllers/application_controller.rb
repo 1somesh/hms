@@ -8,11 +8,5 @@ class ApplicationController < ActionController::Base
   	 flash[:notice] = "Access Denied"
   	 redirect_to "/" 
   end
-
-  rescue_from ActionController::UnknownFormat, with: :format_not_supported
-
-  def format_not_supported
-    	render(text: 'This format is not supported by the Application', status: 404)
-  end
  
 end

@@ -1,28 +1,20 @@
 class AppointmentsController < ApplicationController
   
-  before_action :authenticate_user!
-  caches_page :index
 
-  #returns  the list of future appointments.
+
   def index
       @appointment_list = current_user.future_appointment_list.paginate(:page => params[:page], :per_page => 15)
-      respond_to do |format|
-          format.html 
-      end  
+  
   end
 
-  #renders the new apointment form 
   def new
       @appointment = current_user.patient_appointments.build
       @doctors_list = User.get_doctors_list
       @slots = Appointment.get_booked_slots(User.doctor.first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
       authorize! :new, @appointment 
-      respond_to do |format|
-          format.html 
-      end 
+
   end
 
-  #creates appointment and sets the sidekiq background worker
   def create
       @appointment = current_user.patient_appointments.new(appointment_params)
       authorize! :create, @appointment
@@ -34,7 +26,6 @@ class AppointmentsController < ApplicationController
           @appointment.create_image(params[:appointment][:image])
           flash[:success] = "Appointment Created!"
           expire_page '/appointments'
-          redirect_to '/appointments'
       else
           time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
           @slots = Appointment.get_booked_slots(@appointment.doctor.id,time.strftime("%Y-%m-%d"))
@@ -44,7 +35,6 @@ class AppointmentsController < ApplicationController
 
   end
 
-  #update the appointment and the sidekiq worker
   def update
       @appointment = Appointment.find_by_id params[:id]  
       authorize! :update, @appointment
@@ -62,48 +52,37 @@ class AppointmentsController < ApplicationController
          @appointment.update_attributes(appointment_update_params)
          @appointment.update_worker(params[:appointment][:start_time],duration)
       end
-      expire_page '/appointments'
       flash[:success] = "Appointment Updated!"
       redirect_to "/appointments" 
   end
 
-  #changes the status of appointment from pending to cancelled
   def destroy
       @appointment = Appointment.find_by_id params[:id]
       authorize! :destroy, @appointment
-      @appointment.cancelled!
-      expire_page '/appointments'
-      flash[:success] = "Appointment Cancelled!"
-      render json: {status: "cancelled"}
+      if @appointment.cancelled!
+          render json: {status: "cancelled"}
+      else
+          render json: {status: "not cancelled"}
+      end    
   end
 
-  #display ths appointment's notes and related informations
   def show
       @appointment = Appointment.find_by_id params[:id]
       authorize! :show, @appointment
       @patient = @appointment.patient
       @notes = @appointment.notes
-      respond_to do |format|
-          format.html 
-      end 
   end
 
-  #renders a edit page to modify curent booked appointment
   def edit
       @appointment = Appointment.find_by_id params[:id]
       authorize! :edit, @appointment    
-      @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date)
-      respond_to do |format|
-          format.html 
-      end 
+      @slots = Appointment.get_booked_slots(@appointment.doctor.id,@appointment.date) 
   end
 
-  #gives list of all archived, both completed and cancelled appointments
   def recent
       @appointments = current_user.past_appointment_list.paginate(:page => params[:page], :per_page => 15)
   end
 
-  #returns available slots for a doctor on the specified day
   def get_available_slots
       formatted_date = params[:date]
       if formatted_date.to_date > Date.today
