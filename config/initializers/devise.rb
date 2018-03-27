@@ -14,7 +14,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'mindfire06@gmail.com'
+  config.mailer_sender = Rails.application.secrets.COMPANY_EMAIL
   config.omniauth :facebook, Rails.application.secrets.FB_KEY  , Rails.application.secrets.FB_SECRET
   config.omniauth :google_oauth2, Rails.application.secrets.GOOGLE_KEY, Rails.application.secrets.GOOGLE_SECRET  
   config.omniauth :twitter, Rails.application.secrets.TWITTER_KEY, Rails.application.secrets.TWITTER_SECRET

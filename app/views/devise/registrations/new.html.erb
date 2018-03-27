@@ -37,13 +37,13 @@
               <br>
                 <div class="field">
                   <%= f.label :password %>
-                      <% if @minimum_password_length %>
-                      <em>(<%= @minimum_password_length %> characters minimum)</em>
-                      <% end %><br />
-                      <%= f.password_field :password, autocomplete: "off" ,class: "form-control"%>
-                      <% if @user.errors.messages[:password].present? %>
-                        <span class="error_span">Password <%= @user.errors.messages[:password][0] %></span><br><br>
-                      <% end %>
+                  <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                  <% end %><br />
+                  <%= f.password_field :password, autocomplete: "off" ,class: "form-control"%>
+                  <% if @user.errors.messages[:password].present? %>
+                    <span class="error_span">Password <%= @user.errors.messages[:password][0] %></span><br><br>
+                  <% end %>
               </div>
 
               <div class="field">

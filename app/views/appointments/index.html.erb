@@ -1,4 +1,4 @@
-<%= render 'carousel' %>
+
 <div>
 	<% if can? :create, Appointment %>
 		<div align="right">
@@ -6,10 +6,9 @@
 		</div>
 	<% end %>
 <div>
-<div class="heading" align="center">Appointment List</div>
+<h1 align="center"><b>Appointments</b></h1>
 </div>
-	<font  color="#005CB9" face="courier" size="3">
- 	<% if @appointment_list.size !=0 %>	
+ 	<% if @appointment_list.present? %>	
  		<div class="panel-group">
  	    	<% @appointment_list.each do |appointment| %><br />
  	 	        <div class="container" align="center">
@@ -46,7 +45,6 @@
    	<% else %>
        <i>	There are no Appointments.</i>
    	<% end %>
-  	</font>	  	
   	<div class="pagination"> <%= will_paginate @appointment_list %> </div>
 </div>
 
