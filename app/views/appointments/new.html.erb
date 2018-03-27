@@ -1,6 +1,6 @@
 <div align="center">
-	<div class="heading" >New Appointment</div>
-	<div   align="left" class="center_div_form">
+	<h1><b>New Appointment</b></h1><hr>
+	<div   align="left" class="center_div_form" style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: 200; line-height: 20px; margin: 0 0 16px;">
 		<%= form_for @appointment  do |f| %>
 			
 			<%= f.label :doctor_name %>	<br>
@@ -17,13 +17,13 @@
 			<% end %>	
 			<div class="slot_list">
 				<div  class="slot_item">
-					<% @slots.each do |slot| %>	
+					<%  @slots.each do |slot| %>	
 						<div class=slot_item >
-						  	<% if @appointment.start_time!=nil && @appointment.start_time.strftime("%H").to_i==slot  %>
+						  	<% if @appointment.start_time!=nil && @appointment.start_time.strftime("%H").to_i==slot %>
 								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]"  checked="checked">  
 								<%= slot %>:00 AM
 							<% else %>
-								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]" >  
+								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]">  
 								<%= slot %>:00 AM
 							<% end %>	
 						</div><br>	

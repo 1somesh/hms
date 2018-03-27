@@ -1,8 +1,6 @@
 <div>
 	<% if can? :create, Appointment %>
-		<div align="right">
-		   <%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
-		</div>
+		
 	<% end %>
 <div>
 <h1 align="center">
@@ -11,13 +9,16 @@
 			 Patient's Appointments
 		<% else %>
 			 Dcotor's Appointments
-		<% end %>		
+		<% end %><br><br>
+		<div>
+		   <%= link_to 'Create a new Appointment ', new_appointment_path(current_user.doctor_appointments.build),class: "btn btn-primary" %>
+		</div>
+		<hr>	
 	</b>
 </h1>
 </div>
  	<% if @appointment_list.size !=0 %>	
- 	    	<% @appointment_list.each do |appointment| %><br />
- 	    
+ 	    	<% @appointment_list.each do |appointment| %><br/>
 			<div class="container well" align="center">
               <div class="profile_image">
               	<% if current_user.patient? %>

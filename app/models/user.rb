@@ -4,8 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :twitter]
 
-  #fetch list of all doctors
-  scope :get_doctors_list, -> {all.doctor}      
+  scope :get_doctors_list, -> {doctor}      
 
   has_many :doctor_appointments, foreign_key: :doctor_id ,  class_name: :Appointment       
   has_many :patient_appointments, foreign_key: :patient_id , class_name: :Appointment
@@ -22,7 +21,6 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
 
-  #returns the list of future appointments of user
   def future_appointment_list      
       if self.doctor?
           @list = Appointment.includes(:patient).where(["date > ? AND doctor_id = ?" ,Time.now.strftime("%Y-%m-%d"),
@@ -33,7 +31,6 @@ class User < ActiveRecord::Base
       end
   end 
  
-  #returns the list of archived appointments of user both (completed and cancelled)
   def past_appointment_list
       if self.doctor?
           @list = Appointment.includes(:patient).where(doctor_id: self.id).where(["date <= ? OR status!= ?" ,
@@ -44,12 +41,12 @@ class User < ActiveRecord::Base
       end  
   end 
 
-  #creates a new imgae object for user
-  def create_image(image)
-      self.image = Image.new(image: image)
+  def initialize_image(image)
+    if Image.new(image: image).valid?
+      self.image =   Image.new(image: image)
+    end  
   end  
 
-  #Method to return or create new user for facebook and gmail providers
   def self.from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
           user.provider = auth.provider
@@ -66,7 +63,6 @@ class User < ActiveRecord::Base
   def self.from_omniauth(access_token)
       data = access_token.info
       user = User.where(email: data['email']).first
-      # users to be created if they don't exist
       unless user
         user = User.create(first_name: data['name'], email: data['email'], password: Devise.friendly_token[0,20])
       end

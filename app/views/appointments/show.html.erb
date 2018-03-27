@@ -1,13 +1,17 @@
-<h2 class="new_apppointment" >Appointment information</h2>
-<div>
-  Doctor: <i><%= @appointment.doctor.first_name %></i><br>
-  Date: <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
-  From: <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
-  To: <%= @appointment.finish_time.strftime("%H:%M") %> AM<br>
-  Status: <%= @appointment.status %> <br>
+<h1 align="center">
+  <b>
+  Appointment information
+</b>
+</h1><hr>
+<div style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 22px; font-weight: 250; line-height: 34px;">
+  <%= label_tag "Doctor:" %> <i><%= @appointment.doctor.first_name %></i><br>
+  <%= label_tag "Date:" %> <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
+  <%= label_tag "F`rom:" %> <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
+  <%= label_tag "To:" %> <%= @appointment.finish_time.strftime("%H:%M") %> AM<br>
+  <%= label_tag "Status:" %> <%= @appointment.status %> <br>
 </div>
 
-<h3 class="new_apppointment" >Notes:</h3><br>
+<h2><b>Notes:</b></h2><br>
 <div id="notes_list" class="panel-group">
     <% @notes.each_with_index do |note,index| %>
       <div align="left" class="panel panel-info" >

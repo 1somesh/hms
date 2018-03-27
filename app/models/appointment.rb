@@ -49,9 +49,10 @@ class Appointment < ActiveRecord::Base
     duration
   end
 
-  #creates a new image
-  def create_image(image)
-    self.images.create(image: image) if image.present?
+  def initialize_image(image)
+    if Image.new(image: image).valid?
+      self.images.create(image: image)
+    end
   end
 
 

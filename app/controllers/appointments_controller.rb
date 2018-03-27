@@ -23,8 +23,9 @@ class AppointmentsController < ApplicationController
     
       if @appointment.save
           ExpiredDateWorker.perform_in(@appointment.date + (duration.strftime("%H").to_i + params[:appointment][:start_time].to_i)*60*60,@appointment.id)
-          @appointment.create_image(params[:appointment][:image])
+          @appointment.initialize_image(params[:appointment][:image])
           flash[:success] = "Appointment Created!"
+          redirect_to appointments_path
       else
           time = @appointment.date!=nil ? @appointment.date : Time.now+1.day  
           @slots = Appointment.get_booked_slots(@appointment.doctor.id,time.strftime("%Y-%m-%d"))
@@ -41,7 +42,7 @@ class AppointmentsController < ApplicationController
       else  
         authorize! :update, @appointment
         duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
-        @appointment.create_image(params[:appointment][:image]) 
+        @appointment.initialize_image(params[:appointment][:image]) 
         new_date = Appointment.get_new_date(params.require(:appointment).permit(:date))
 
         if params[:appointment][:start_time].nil?
@@ -55,7 +56,7 @@ class AppointmentsController < ApplicationController
            @appointment.update_worker(params[:appointment][:start_time],duration)
         end
         flash[:success] = "Appointment Updated!"
-        redirect_to "/appointments" 
+        redirect_to appointments_path 
       end  
   end
 
