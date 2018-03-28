@@ -1,18 +1,14 @@
 class AppointmentsController < ApplicationController
   
-
-
   def index
       @appointment_list = current_user.future_appointment_list.paginate(:page => params[:page], :per_page => 5)
-  
   end
 
   def new
       @appointment = current_user.patient_appointments.build
       @doctors_list = User.get_doctors_list
       @slots = Appointment.get_booked_slots(User.doctor.first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
-      authorize! :new, @appointment 
-
+      authorize! :new, @appointment
   end
 
   def create
@@ -101,6 +97,7 @@ class AppointmentsController < ApplicationController
   end
 
   def get_available_slots
+      check_start_time
       formatted_date = params[:date]
       if formatted_date.to_date > Date.today
           slots = Appointment.get_booked_slots(params[:doctor_id],formatted_date)
@@ -108,6 +105,20 @@ class AppointmentsController < ApplicationController
       else
           render json: {status: "Select a Future Date"} 
       end    
+  end
+
+  def visited_patient_appointment
+      appointment = Appointment.find_by_id params[:id]
+      if appointment.blank? || appointment.date!=Date.today || 
+         appointment.finish_time<Time.now ||appointment.start_time>Time.now
+         redirect_to appointment and return
+      end
+      appointment.visited!
+      if appointment.save
+          redirect_to appointments_path, notice: 'Appointment Visited!'
+      else
+          render root_path, notice: 'Unable to change status, try again!'
+      end
   end
 
 end
@@ -121,6 +132,7 @@ end
   def appointment_update_params
       params.require(:appointment).permit(:date,:start_time)
   end
+
 
 
   

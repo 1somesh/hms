@@ -24,23 +24,11 @@ require 'sidekiq/web'
 
 
   get "appointments" => "appointments#index"
-
-  #show all recebt Appointments of user
-  
-
-  #show user profile
   get  "home/profile"
-
-  #shows the available slots of a doctor on a give date
   post "appointments/slots" => "appointments#get_available_slots"
-
-  #edit user profile
   get  "home/edit"
-
-  #change profile picture
   post "home/profile" => "home#change_profile_pciture"
-
-  #handling other urls
+  get 'appointments/:id/visited_patient_appointment' => "appointments#visited_patient_appointment"
   get '*path'   => 'home#error404'
 
   

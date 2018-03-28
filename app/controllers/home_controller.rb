@@ -18,8 +18,11 @@ class HomeController < ApplicationController
 	end 
 
 	def change_profile_pciture
-		image = params[:user][:image]
-		current_user.create_image(params[:user][:image])
+		image = Image.new image: params[:user][:image]
+		if image.valid?
+			current_user.image = image
+		end
+		
 		if current_user.save
 			redirect_to "/home/profile"
 		else

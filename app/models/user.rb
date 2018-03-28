@@ -41,11 +41,11 @@ class User < ActiveRecord::Base
       end  
   end 
 
-  def initialize_image(image)
-    if Image.new(image: image).valid?
-      self.image =   Image.new(image: image)
-    end  
-  end  
+  # def initialize_image(image)
+  #   if Image.new(image: image).valid?
+  #     self.image =  Image.new(image: image)
+  #   end  
+  # end  
 
   def self.from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|

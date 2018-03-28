@@ -6,9 +6,12 @@
 <div style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 22px; font-weight: 250; line-height: 34px;">
   <%= label_tag "Doctor:" %> <i><%= @appointment.doctor.first_name %></i><br>
   <%= label_tag "Date:" %> <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
-  <%= label_tag "F`rom:" %> <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
+  <%= label_tag "From:" %> <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
   <%= label_tag "To:" %> <%= @appointment.finish_time.strftime("%H:%M") %> AM<br>
   <%= label_tag "Status:" %> <%= @appointment.status %> <br>
+  <% if @appointment.start_time == Time.now && @appointment.date==Date.today %>
+    <%= link_to "Approve" , "/appointments/#{@appointment.id}/visited_patient_appointment" %><br>
+  <% end %>  
 </div>
 
 <h2><b>Notes:</b></h2><br>
@@ -45,4 +48,4 @@
       <button type="button" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-fast-backward"></span> Back
       </button>
-   </a><br>    
+   </a><br> <br>   

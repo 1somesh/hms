@@ -7,26 +7,22 @@ class Appointment < ActiveRecord::Base
 
 	validate :start_time_present?
 	validate :check_appointment_date
-
-  #status of Appointment
-	enum status: [:pending,:completed,:cancelled]
+	enum status: [:pending,:visited,:unvisited,:cancelled]
 	attr_accessor :note
 
-  #validates the presence of Appointment Time
+
   def start_time_present?
     if start_time.blank?
       errors.add('start_time',"Please select appointment time")
     end
   end  
 
-  #validates that the appointment's Date is in future
   def check_appointment_date
     if  date  < Date.today
       errors.add(:appointment_date, "can't be in the past")
     end
   end
 
-  #Updates the sidekiq worker to the new Date and Time
   def update_worker(start_time,duration)
       queue = Sidekiq::ScheduledSet.new
       queue.each do |job| 
@@ -37,12 +33,10 @@ class Appointment < ActiveRecord::Base
       end    
   end
 
-  #initialize a new note object
   def initialize_note(user_id,note)
   	self.notes.new(user_id: user_id, description: note)
   end
 
-  #returns the appointment_duration for a doctor
   def get_appointment_duration(start_time)
     duration = self.doctor.doctor_profile.appointment_duration
     self.finish_time = (start_time.to_time + duration.to_i).strftime("%H:%M:%S").to_time.strftime("%H:%M:%S") if start_time.present?
@@ -61,11 +55,10 @@ class Appointment < ActiveRecord::Base
     new_date.to_date
   end
 
-  #returns the booked slots for a given Doctor on a given Date
   def self.get_booked_slots(doctor_id,selected_date)
 
     duration = Doctorprofile.find_by(doctor_id: doctor_id).appointment_duration.strftime("%H").to_i
-    appointments = Appointment.where(doctor_id: doctor_id,date: selected_date).where("status != ?",2) 
+    appointments = Appointment.where(doctor_id: doctor_id,date: selected_date).where("status != ?","cancelled") 
     list = []
 
     time = 5

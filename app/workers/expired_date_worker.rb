@@ -6,8 +6,8 @@ class ExpiredDateWorker
   #Mark the appointment as completed is it isn't yet cancelled
   def perform(*args)
      appointment = Appointment.find_by(id: args[0])  
-     	if !appointment.cancelled?
-    		appointment.completed!
+     	if !appointment.cancelled? && !appointment.visited?
+    		appointment.unvisited!
    		    expire_page '/appointments'
     	end	 
   end

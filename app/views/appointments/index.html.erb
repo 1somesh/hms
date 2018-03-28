@@ -17,14 +17,14 @@
 	</b>
 </h1>
 </div>
- 	<% if @appointment_list.size !=0 %>	
+ 	<% if @appointment_list.present? %>	
  	    	<% @appointment_list.each do |appointment| %><br/>
 			<div class="container well" align="center">
               <div class="profile_image">
               	<% if current_user.patient? %>
                 	<%= render 'doctor', doctor: appointment.doctor %>
                 <% else %>
-                	 <%= render 'patient', patient: appointment.patient %>	
+                	<%= render 'patient', patient: appointment.patient %>	
                 <% end %>	 
               </div>
               <div id="profile_info" align="left" style="font-family: 'Open Sans', sans-serif; font-size: 28px; font-weight: 300; line-height: 40px; margin: 0 0 16px;">
