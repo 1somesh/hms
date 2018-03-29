@@ -1,13 +1,13 @@
 <div align="center">
   <h1><b>Edit Appointment</b></h1><hr>
-	<div align="left" style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 22px; font-weight: 300; line-height:  33px; margin: 0 0 16px;">
+	<div align="left" class="appointment-information">
 		<h2><b>Current Booking Status</b> </h2>
 		 <%= label_tag :Doctor %>: <i><%= @appointment.doctor.first_name %></i><br>
 		 <%= label_tag :Date %>: <i><%= @appointment.date.strftime("%A,%d-%B'%Y") %></i><br>
 		 <%= label_tag :From %>: <%= @appointment.start_time.strftime("%H:%M") %> AM<br>
 		 <%= label_tag :To %>: <%= @appointment.finish_time.strftime("%H:%M") %> AM<br><hr>
 	</div>
-	<div   align="left" class="center_div_form" style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: 200; line-height: 20px; margin: 0 0 16px;">
+	<div   align="left" class="center_div_form" class="appointment-information">
 		<%= form_for @appointment do |f| %>
 			<input type="hidden" id="appointment_doctor_id" value=<%= @appointment.doctor.id%> ><br>
 			 <%= f.label "New date" %> 

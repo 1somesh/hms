@@ -20,40 +20,40 @@
  	<% if @appointment_list.present? %>	
  	    	<% @appointment_list.each do |appointment| %><br/>
 			<div class="container well" align="center">
-              <div class="profile_image">
-              	<% if current_user.patient? %>
-                	<%= render 'doctor', doctor: appointment.doctor %>
-                <% else %>
-                	<%= render 'patient', patient: appointment.patient %>	
-                <% end %>	 
-              </div>
-              <div id="profile_info" align="left" style="font-family: 'Open Sans', sans-serif; font-size: 28px; font-weight: 300; line-height: 40px; margin: 0 0 16px;">
-                	<% if current_user.patient? %>
-                		<%= label_tag "Dcotor" %>:
-					    <%= appointment.doctor.first_name %> 
-		          	<% else %>
-		          	   	<%= label_tag "Patient" %>:
-		          		<%= appointment.patient.first_name %> 
-		          	<% end %><br>
+	              <div class="profile_image">
+	              	<% if current_user.patient? %>
+	                	<%= render 'doctor', doctor: appointment.doctor %>
+	                <% else %>
+	                	<%= render 'patient', patient: appointment.patient %>	
+	                <% end %>	 
+	              </div>
+	              <div id="profile_info" align="left" class="appointment-information">
+	                	<% if current_user.patient? %>
+	                		<%= label_tag "Dcotor" %>:
+						    <%= appointment.doctor.first_name %> 
+			          	<% else %>
+			          	   	<%= label_tag "Patient" %>:
+			          		<%= appointment.patient.first_name %> 
+			          	<% end %><br>
 
-                	<%= label_tag "Appointment Date" %>:
-	                <%= appointment.date.strftime("%A,%d-%B'%Y") %><br> 
-	                <b>From:</b> <%= appointment.start_time.strftime("%I:%M%p") %><br>
-	                <b>To:</b>   <%= appointment.finish_time.strftime("%I:%M%p") %> <br>
-	                <%= label_tag "Status" %>:
-	                <%= appointment.status %><br>
-	                <%= link_to 'Show', appointment%>&nbsp;
+	                	<%= label_tag "Appointment Date" %>:
+		                <%= appointment.date.strftime("%A,%d-%B'%Y") %><br> 
+		                <b>From:</b> <%= appointment.start_time.strftime("%I:%M%p") %><br>
+		                <b>To:</b>   <%= appointment.finish_time.strftime("%I:%M%p") %> <br>
+		                <%= label_tag "Status" %>:
+		                <%= appointment.status %><br>
+		                <%= link_to 'Show', appointment%>&nbsp;
 
-					<% if can? :update, appointment %>
-			        	<%= link_to 'Edit', edit_appointment_path(appointment) %>&nbsp;
-			        <% end %>
-			        <% if can? :destroy, appointment %>	
-		     			<%= link_to 'Delete', [appointment],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
-		     		<% end %>	
-							   
-							</div>
-			        	</div>
-			 	</div>
+						<% if can? :update, appointment %>
+				        	<%= link_to 'Edit', edit_appointment_path(appointment) %>&nbsp;
+				        <% end %>
+				        <% if can? :destroy, appointment %>	
+			     			<%= link_to 'Delete', [appointment],:method => "delete" ,data: {confirm: "Are you sure?"},remote: true %><br>
+			     		<% end %>	
+								   
+					</div>
+			    </div>
+</div>
 		 	<% end %>
 		</div>	 	
    	<% else %>

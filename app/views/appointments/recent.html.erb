@@ -18,7 +18,7 @@
                     <%= render 'patient', patient: appointments.patient %>
                 <% end %>       
               </div>
-              <div id="profile_info" align="left" style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 28px; font-weight: 300; line-height: 40px; margin: 0 0 16px;">
+              <div id="profile_info" align="left" class="appointment-information">
                     <% if current_user.patient? %>
                       <%= label_tag "Dcotor" %>:
                       <%= appointments.doctor.first_name %> 
@@ -39,7 +39,7 @@
 <% else %>
     <i> <br>There are no Passed appointments.</i>
 <% end %> 
-<div style="padding-left: 10px;">
+<div class="div_spaceing">
    <a href="/appointments">
       <button type="button" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-fast-backward"></span> Back

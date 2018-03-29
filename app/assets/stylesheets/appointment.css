@@ -77,6 +77,12 @@
     font-size: 23px;
 }
 
+.appointment-information{
+font-family: 'Open Sans', sans-serif; font-size: 28px; font-weight: 300; line-height: 40px; margin: 0 0 16px;
+
+
+}
+
 .user_name{
     font-size: 20px;
 }
