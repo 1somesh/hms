@@ -1,7 +1,5 @@
-.container{
+.appointment-div{
     height:380px;
-    /*background:#fcfdff;*/
-    /*font: italic small-caps bold 18px Georgia, sans-serif;*/
 }
 
 .heading{
@@ -78,9 +76,11 @@
 }
 
 .appointment-information{
-font-family: 'Open Sans', sans-serif; font-size: 28px; font-weight: 300; line-height: 40px; margin: 0 0 16px;
-
-
+font-family: 'Open Sans', sans-serif;
+font-size: 28px; 
+font-weight: 300; 
+line-height: 40px; 
+margin: 0 0 16px;
 }
 
 .user_name{

@@ -6,6 +6,7 @@ class AppointmentsController < ApplicationController
 
   def new
       @appointment = current_user.patient_appointments.build
+      @appointment.notes.build(user_id: current_user.id)
       @doctors_list = User.get_doctors_list
       @slots = Appointment.get_booked_slots(User.doctor.first.id,(Time.now+1.day).strftime("%Y-%m-%d"))
       authorize! :new, @appointment
@@ -13,8 +14,8 @@ class AppointmentsController < ApplicationController
 
   def create
       @appointment = current_user.patient_appointments.new(appointment_params)
+      @appointment.notes.first.user_id = current_user.id
       authorize! :create, @appointment
-      @appointment.initialize_note(current_user.id,@appointment.note)
       duration = @appointment.get_appointment_duration(params[:appointment][:start_time])
     
       if @appointment.save
@@ -33,7 +34,7 @@ class AppointmentsController < ApplicationController
 
   def update
       @appointment = Appointment.find_by_id params[:id] 
-       if @appointment.nil?
+      if @appointment.nil?
         redirect_to root_path
       else  
         authorize! :update, @appointment
@@ -97,7 +98,6 @@ class AppointmentsController < ApplicationController
   end
 
   def get_available_slots
-      check_start_time
       formatted_date = params[:date]
       if formatted_date.to_date > Date.today
           slots = Appointment.get_booked_slots(params[:doctor_id],formatted_date)
@@ -126,7 +126,7 @@ end
   private
 
   def appointment_params
-      params.require(:appointment).permit(:doctor_id,:date,:note,:start_time)
+      params.require(:appointment).permit(:doctor_id,:date,:start_time,notes_attributes: [:id, :description, :user_id])
   end
 
   def appointment_update_params

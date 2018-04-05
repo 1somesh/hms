@@ -4,12 +4,10 @@ class Appointment < ActiveRecord::Base
 	belongs_to :patient, class_name: :User
 	has_many :notes
 	has_many :images, as: :imageable
-
 	validate :start_time_present?
 	validate :check_appointment_date
 	enum status: [:pending,:visited,:unvisited,:cancelled]
-	attr_accessor :note
-
+	accepts_nested_attributes_for :notes
 
   def start_time_present?
     if start_time.blank?
@@ -58,7 +56,7 @@ class Appointment < ActiveRecord::Base
   def self.get_booked_slots(doctor_id,selected_date)
 
     duration = Doctorprofile.find_by(doctor_id: doctor_id).appointment_duration.strftime("%H").to_i
-    appointments = Appointment.where(doctor_id: doctor_id,date: selected_date).where("status != ?","cancelled") 
+    appointments = Appointment.where(doctor_id: doctor_id,date: selected_date).where("status != ?",3) 
     list = []
 
     time = 5

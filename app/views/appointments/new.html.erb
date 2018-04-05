@@ -1,6 +1,6 @@
 <div align="center">
 	<h1><b>New Appointment</b></h1><hr>
-	<div   align="left" class="appointment-information">
+	<div   align="left" class="center_div_form" style=" color: #; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: 200; line-height: 20px; margin: 0 0 16px;">
 		<%= form_for @appointment  do |f| %>
 			
 			<%= f.label :doctor_name %>	<br>
@@ -23,7 +23,7 @@
 								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]"  checked="checked">  
 								<%= slot %>:00 AM
 							<% else %>
-								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]">  
+								<input type=radio value=<%= "#{slot}:00:00" %> name="appointment[start_time]"> 
 								<%= slot %>:00 AM
 							<% end %>	
 						</div><br>	
@@ -32,8 +32,11 @@
 			</div>
 	 		<%= f.label "Upload Image" %>	<br>	 		
 			<%= f.file_field :image %><br>
-			<%= f.label :cause %><br>
-			<%= f.text_area :note,rows: 6,class: "form-control" %>
+			<%= f.fields_for :notes do |note_field| %>
+			  	<%= note_field.label :Note  %>
+			  	<br/>
+			  	<%= note_field.text_area :description, rows: 6,cols: 40 %>
+			<% end %>
 			<%if @appointment.errors.messages[:notes].present? %>
 				<span class="error_span">Enter the cause </span>
 			<% end %><br>	

@@ -2,11 +2,9 @@ jQuery(function() {
   $("a.fancybox").fancybox();
 });
 
-
 $(document).on('change','.appointment_dates',function () {
  	get_appointment_slot();
 });
-
 
 function get_appointment_slot(data,event){
 	year = $("#appointment_date_1i").val();
@@ -36,7 +34,7 @@ function get_appointment_slot(data,event){
 				    hide_slot_item();
 					alert("please select a future date");
 				}
-		},
+		},	
 		error: function(response){
 			alert(response);
 		}

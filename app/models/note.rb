@@ -1,5 +1,7 @@
 class Note < ActiveRecord::Base
 	belongs_to :appointment
+	
+
 	validate :description_present?
 
 	#Validates discription should be present

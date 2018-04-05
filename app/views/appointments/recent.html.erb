@@ -10,30 +10,36 @@
 
 <% if @appointments.present? %>
       <% @appointments.each do |appointments| %><br />
-          <div class="container well" align="center">
-              <div class="profile_image">
-                <% if current_user.patient? %>
-                    <%= render 'doctor', doctor: appointments.doctor %>
-                <% else %>
-                    <%= render 'patient', patient: appointments.patient %>
-                <% end %>       
-              </div>
-              <div id="profile_info" align="left" class="appointment-information">
+          <div class="well" >
+            <div class="row">
+              <div class="col-md-1 col-sm-1">
+                  <div class="profile_image">
                     <% if current_user.patient? %>
-                      <%= label_tag "Dcotor" %>:
-                      <%= appointments.doctor.first_name %> 
+                        <%= render 'doctor', doctor: appointments.doctor %>
                     <% else %>
-                      <%= label_tag "Patient" %>:
-                      <%= appointments.patient.first_name %> 
-                    <% end %><br>
-                    <%= label_tag "Appointment Date" %>:
-                    <%= appointments.date.strftime("%A,%d-%B'%Y") %><br> 
-                    <b> From:</b> <%= appointments.start_time.strftime("%I:%M%p") %><br>
-                    <b> To:</b>   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
-                    <%= label_tag "Status" %>:
-                    <%= appointments.status %><br>
-                    <%= link_to 'More Information', appointments%>&nbsp;
-              </div>
+                        <%= render 'patient', patient: appointments.patient %>
+                    <% end %>       
+                  </div>
+              </div>  
+              <div class="col-md-11 col-sm-11">  
+                  <div id="profile_info" align="left" class="appointment-information">
+                      <% if current_user.patient? %>
+                        <%= label_tag "Dcotor" %>:
+                        <%= appointments.doctor.first_name %> 
+                      <% else %>
+                        <%= label_tag "Patient" %>:
+                        <%= appointments.patient.first_name %> 
+                      <% end %><br>
+                      <%= label_tag "Appointment Date" %>:
+                      <%= appointments.date.strftime("%A,%d-%B'%Y") %><br> 
+                      <b> From:</b> <%= appointments.start_time.strftime("%I:%M%p") %><br>
+                      <b> To:</b>   <%= appointments.finish_time.strftime("%I:%M%p") %> <br>
+                      <%= label_tag "Status" %>:
+                      <%= appointments.status %><br>
+                      <%= link_to 'More Information', appointments%>&nbsp;
+                  </div>
+                </div>
+            </div>
           </div>
       <% end %>
 <% else %>
