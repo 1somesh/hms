@@ -1,3 +1,4 @@
+
 <div class="container">
 <h1 align="center">
 	<b>
@@ -35,7 +36,7 @@
 								    <%= appointment.doctor.first_name %> 
 					          	<% else %>
 					          	   	<%= label_tag "Patient" %>:
-					          		<%= appointment-informationment.patient.first_name %> 
+					          		<%= appointment.patient.first_name %> 
 					          	<% end %><br>
 
 			                	<%= label_tag "Appointment Date" %>:
@@ -65,4 +66,7 @@
   	<div class="pagination"> <%= will_paginate @appointment_list %> </div>
 </div>
 
-							       
+
+
+    <!-- Footer -->
+    
